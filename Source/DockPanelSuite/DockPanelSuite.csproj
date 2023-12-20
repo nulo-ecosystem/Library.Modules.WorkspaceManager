@@ -7,7 +7,6 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AssemblyName>libDPS</AssemblyName>
     <RootNamespace>Nulo.Modules.DockPanelSuite</RootNamespace>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
