@@ -10,22 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Set Checkout
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v4
 
       # Set Dotnet
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v2
+      - name: Setup .NET 8.x
+        uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '3.1'
-      
-      # Restore Dependencies
-      - name: Geração do pacote
-        run: dotnet build -c Release -o out
-
-      # Push no NuGet
-      - name: Push no NuGet
-        run: |
-          cd out
-          dotnet nuget push *.nupkg --source "https://nuget.pkg.github.com/funsys-inc/index.json" --skip-duplicate
+           dotnet-version: '8.x'
