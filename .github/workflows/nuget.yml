@@ -17,3 +17,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
            dotnet-version: '8.x'
+
+      # Build
+      - name: Package Generate
+        run: dotnet build --configuration Release Source/DockPanelSuite/DockPanelSuite.csproj
