@@ -8,7 +8,6 @@
     <AssemblyName>libDPS</AssemblyName>
     <RootNamespace>Nulo.Modules.DockPanelSuite</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <EnableWindowsTargeting>True</EnableWindowsTargeting>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
