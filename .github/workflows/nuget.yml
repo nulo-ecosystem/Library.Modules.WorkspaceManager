@@ -20,4 +20,4 @@ jobs:
 
       # Build
       - name: Package Generate
-        run: dotnet build -c Release Source/DockPanelSuite.Forms/DockPanelSuite.Forms.csproj
+        run: dotnet build -c Release Source/DockPanelSuite/DockPanelSuite.csproj
