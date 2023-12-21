@@ -7,8 +7,8 @@
 
     public interface ILayoutData {
 
-        System.Collections.Generic.List<Layout> LoadAllDefaultLayouts();
-        System.Collections.Generic.List<string> LoadAllUserLayouts();
+        List<Layout> LoadAllDefaultLayouts();
+        List<string> LoadAllUserLayouts();
 
         string LoadCurrentLayout();
         void SaveCurrentLayout(string content);

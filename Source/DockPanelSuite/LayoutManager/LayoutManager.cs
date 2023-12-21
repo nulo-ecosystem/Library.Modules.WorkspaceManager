@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using Nulo.Modules.DockPanelSuite.Docking;
+﻿using Nulo.Modules.DockPanelSuite.Docking;
 
 namespace Nulo.Modules.DockPanelSuite.LayoutManager {
 

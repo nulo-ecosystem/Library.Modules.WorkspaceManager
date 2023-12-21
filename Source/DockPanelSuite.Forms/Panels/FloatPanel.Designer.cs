@@ -1,5 +1,5 @@
-﻿namespace DockPanelSuite.Forms {
-    partial class PanelForm {
+﻿namespace DockPanelSuite.Forms.Panels {
+    partial class FloatPanel {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -25,14 +25,14 @@
         private void InitializeComponent() {
             SuspendLayout();
             // 
-            // PanelForm
+            // FloatPanel
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.White;
             ClientSize = new Size(800, 450);
-            Name = "PanelForm";
-            Text = "Panel";
+            Name = "FloatPanel";
+            ShowHint = Nulo.Modules.DockPanelSuite.Docking.DockState.Float;
+            Text = "Float Panel";
             ResumeLayout(false);
         }
 

@@ -17,10 +17,4 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="LayoutManager\**" />
-    <EmbeddedResource Remove="LayoutManager\**" />
-    <None Remove="LayoutManager\**" />
-  </ItemGroup>
-
 </Project>

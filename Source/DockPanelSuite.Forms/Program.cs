@@ -1,14 +1,21 @@
+using DockPanelSuite.Forms.Modules.LayoutManager;
+using DockPanelSuite.Forms.Pages;
+using Nulo.Modules.DockPanelSuite.LayoutManager;
+
 namespace DockPanelSuite.Forms {
+
     internal static class Program {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+
+        public static LayoutManager<LayoutTheme, LayoutData> LayoutManager;
+
         [STAThread]
         static void Main() {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new DockForm());
+
+            LayoutManager = new LayoutManager<LayoutTheme, LayoutData>();
+            LayoutManager.SetTheme(null);
+
+            Application.Run(new MainPage());
         }
     }
 }
