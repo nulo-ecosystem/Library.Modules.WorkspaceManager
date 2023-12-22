@@ -5,27 +5,22 @@ namespace DockPanelSuite.Forms.Modules.LayoutManager {
 
     public class LayoutData : ILayoutData {
 
-        //Gerenciamento do layout atual do usuário
+        #region Current Layout Manager
         public string LoadCurrentLayout() {
-            if(string.IsNullOrEmpty(Properties.Settings.Default.Layout)) {
-                return LoadDefaultLayout();
-            } else {
-                return Properties.Settings.Default.Layout;
-            }
+            return string.IsNullOrEmpty(Properties.Settings.Default.Layout) ? LoadDefaultLayout() : Properties.Settings.Default.Layout;
         }
         public void SaveCurrentLayout(string content) {
             Properties.Settings.Default.Layout = content;
             Properties.Settings.Default.Save();
         }
+        #endregion
 
-        //Gerenciamento dos layouts padrões do software
-        public List<Layout> LoadAllDefaultLayouts() {
-            return [
-                new("Default", nameof(DefaultLayouts.DefaultLayout)),
-                new("4 Split", nameof(DefaultLayouts.FourSplitLayout)),
-                new("Empty", nameof(DefaultLayouts.EmptyLayout))
-            ];
-        }
+        #region Default Layout Manager
+        public List<Layout> LoadAllDefaultLayouts() => [
+            new Layout("Default", nameof(DefaultLayouts.DefaultLayout)),
+            new Layout("4 Split", nameof(DefaultLayouts.FourSplitLayout)),
+            new Layout("Empty", nameof(DefaultLayouts.EmptyLayout))
+        ];
         public string LoadDefaultLayout(string key = null) {
             switch(key) {
                 case nameof(DefaultLayouts.DefaultLayout): { return DefaultLayouts.DefaultLayout; }
@@ -33,10 +28,12 @@ namespace DockPanelSuite.Forms.Modules.LayoutManager {
                 default: { return DefaultLayouts.EmptyLayout; }
             }
         }
+        #endregion
 
-        //Gerenciamento dos layouts do usuário
+        #region User Layout Manager
         public List<string> LoadAllUserLayouts() {
-            List<UserLayout> userLayouts = Properties.Settings.Default.UserLayouts;
+            var userLayouts = Properties.Settings.Default.UserLayouts;
+
             if(userLayouts == null) {
                 userLayouts = [];
                 Properties.Settings.Default.UserLayouts = userLayouts;
@@ -50,28 +47,28 @@ namespace DockPanelSuite.Forms.Modules.LayoutManager {
 
             return layouts;
         }
-        public string LoadUserLayout(string name) {
+        public string LoadUserLayout(string key) {
             List<UserLayout> userLayouts = Properties.Settings.Default.UserLayouts;
             foreach(UserLayout layout in userLayouts) {
-                if(layout.Name.Equals(name)) {
+                if(layout.Name.Equals(key)) {
                     return layout.Content;
                 }
             }
 
             return null;
         }
-        public bool SaveUserLayout(string name, string xmlContent) {
+        public bool SaveUserLayout(string key, string xmlContent) {
             List<UserLayout> userLayouts = Properties.Settings.Default.UserLayouts;
-            userLayouts.Add(new UserLayout { Name = name, Content = xmlContent });
+            userLayouts.Add(new UserLayout { Name = key, Content = xmlContent });
             Properties.Settings.Default.UserLayouts = userLayouts;
             Properties.Settings.Default.Save();
             return true;
         }
-        public bool RemoveUserLayout(string name) {
+        public bool RemoveUserLayout(string key) {
             List<UserLayout> userLayouts = Properties.Settings.Default.UserLayouts;
 
             foreach(UserLayout layout in userLayouts) {
-                if(layout.Name.Equals(name)) {
+                if(layout.Name.Equals(key)) {
                     userLayouts.Remove(layout);
                     Properties.Settings.Default.UserLayouts = userLayouts;
                     Properties.Settings.Default.Save();
@@ -81,6 +78,7 @@ namespace DockPanelSuite.Forms.Modules.LayoutManager {
 
             return false;
         }
+        #endregion
 
         //Carregamento de instâncias de paineis
         public IDockContent GetInstanceByPersistString(string persistString) {

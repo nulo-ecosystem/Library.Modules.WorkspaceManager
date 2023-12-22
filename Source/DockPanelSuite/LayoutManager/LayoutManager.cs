@@ -1,36 +1,38 @@
 ﻿using Nulo.Modules.DockPanelSuite.Docking;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Nulo.Modules.DockPanelSuite.LayoutManager {
 
-    public class LayoutManager<LayoutTheme, LayoutData> where LayoutTheme : ILayoutTheme where LayoutData : ILayoutData {
+    public class LayoutManager<LayoutTheme, LayoutData> : IDisposable where LayoutTheme : ILayoutTheme where LayoutData : ILayoutData {
 
-        #region Initialization
         private readonly DockPanel dock;
         private readonly ILayoutData layoutData;
         private readonly ILayoutTheme layoutTheme;
 
+        #region Initialization
         public LayoutManager() {
-            dock = new DockPanel();
+            dock = new DockPanel { Dock = DockStyle.Fill };
             layoutTheme = Activator.CreateInstance<LayoutTheme>();
             layoutData = Activator.CreateInstance<LayoutData>();
         }
         public void Init() {
-            //Definindo o estilo.
-            if (layoutTheme.GetTheme(null) is ThemeBase theme) {
+            // Set style
+            if(layoutTheme.GetTheme(null) is ThemeBase theme) {
                 SetStyle?.Invoke(new ToolStripExtender(theme));
             }
 
-            //Definindo o layout.
+            // Set layout
             var layout = layoutData.LoadCurrentLayout();
-            if (!string.IsNullOrEmpty(layout)) {
+            if(!string.IsNullOrEmpty(layout)) {
                 SetLayout(layout);
-            } else if (defaultLayouts != null && defaultLayouts.Count != 0) {
+            } else if(defaultLayouts != null && defaultLayouts.Count != 0) {
                 SetLayout(layoutData.LoadDefaultLayout(defaultLayouts[0].Key));
             }
         }
-        public DockPanel GetDock() {
-            return dock;
-        }
+        public DockPanel GetDock() => dock;
         #endregion
 
         #region Theme Manager
@@ -38,24 +40,24 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         public ThemeHandler SetStyle { get; set; }
 
         public void SetTheme(string nameTheme) {
-            if (layoutTheme.GetTheme(nameTheme) is ThemeBase theme) {
-                if (nameTheme is null) {
+            if(layoutTheme.GetTheme(nameTheme) is ThemeBase theme) {
+                if(nameTheme is null) {
                     dock.Theme = theme;
                     SetStyle?.Invoke(new ToolStripExtender(theme));
                 } else {
                     var xmlContent = dock.GenerateXml();
 
-                    while (dock.Contents.Count != 0) {
+                    while(dock.Contents.Count != 0) {
                         var content = (DockContent)dock.Contents[0];
                         content.DockPanel = null;
                         dockContents.Add(content);
                     }
-                    foreach (var window in dock.FloatWindows.ToList())
+                    foreach(var window in dock.FloatWindows.ToList())
                         window.Dispose();
 
                     dock.Theme = theme;
                     SetStyle?.Invoke(new ToolStripExtender(theme));
-                    if (currentPage != null) {
+                    if(currentPage != null) {
                         currentPage.SetStyle(new ToolStripExtender(theme));
                         currentPage.SetColors(theme.DockContentColorPalette);
                         currentPage.UpdateContent();
@@ -98,8 +100,8 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         private void DropDown_DropDownOpening(object sender, EventArgs e) {
             var dropDown = DropDownClear((ToolStripDropDownButton)sender);
 
-            if (userLayouts.Count != 0) {
-                for (int i = userLayouts.Count - 1; i > -1; i--) {
+            if(userLayouts.Count != 0) {
+                for(int i = userLayouts.Count - 1; i > -1; i--) {
                     var item = new ToolStripMenuItem(userLayouts[i]);
                     item.Click += SelectedItem_Click;
                     dropDown.DropDownItems.Add(item);
@@ -107,8 +109,8 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
                 dropDown.DropDownItems.Add(new ToolStripSeparator());
             }
 
-            if (defaultLayouts.Count != 0) {
-                foreach (var layout in defaultLayouts) {
+            if(defaultLayouts.Count != 0) {
+                foreach(var layout in defaultLayouts) {
                     var item = new ToolStripMenuItem(layout.Name) { Tag = layout };
                     item.Click += SelectedItem_Click;
                     dropDown.DropDownItems.Add(item);
@@ -117,12 +119,12 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
             }
 
             dropDown.DropDownItems.Add(itemNewLayout);
-            if (userLayouts.Count != 0)
+            if(userLayouts.Count != 0)
                 dropDown.DropDownItems.Add(itemRemoveLayout);
         }
         private ToolStripDropDownButton DropDownClear(ToolStripDropDownButton dropDown) {
-            for (int i = 0; i < dropDown.DropDownItems.Count - 3; i++)
-                if (dropDown.DropDownItems[i] is ToolStripMenuItem)
+            for(int i = 0; i < dropDown.DropDownItems.Count - 3; i++)
+                if(dropDown.DropDownItems[i] is ToolStripMenuItem)
                     dropDown.DropDownItems[i].Click -= SelectedItem_Click;
             dropDown.DropDownItems.Clear();
             return dropDown;
@@ -137,26 +139,26 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         private void SelectedItem_Click(object sender, EventArgs e) {
             var item = (ToolStripMenuItem)sender;
             var content = item.Tag is Layout layout ? layoutData.LoadDefaultLayout(layout.Key) : layoutData.LoadUserLayout(item.Text);
-            if (!string.IsNullOrEmpty(content))
+            if(!string.IsNullOrEmpty(content))
                 SetLayout(content);
         }
         private void ItemNewLayout_Click(object sender, EventArgs e) {
-            using (var dialog = new NewLayoutDialog(userLayouts, defaultLayouts)) {
-                if (dialog.ShowDialog() == DialogResult.OK && layoutData.SaveUserLayout(dialog.LayoutName, dock.GenerateXml())) {
+            using(var dialog = new NewLayoutDialog(userLayouts, defaultLayouts)) {
+                if(dialog.ShowDialog() == DialogResult.OK && layoutData.SaveUserLayout(dialog.LayoutName, dock.GenerateXml())) {
                     userLayouts.Add(dialog.LayoutName);
                 }
             }
         }
         private void ItemRemoveLayout_Click(object sender, EventArgs e) {
-            using (var dialog = new RemoveLayoutDialog(userLayouts)) {
-                if (dialog.ShowDialog() == DialogResult.OK && layoutData.RemoveUserLayout(userLayouts[dialog.IndexLayout])) {
+            using(var dialog = new RemoveLayoutDialog(userLayouts)) {
+                if(dialog.ShowDialog() == DialogResult.OK && layoutData.RemoveUserLayout(userLayouts[dialog.IndexLayout])) {
                     userLayouts.RemoveAt(dialog.IndexLayout);
                 }
             }
         }
 
         private void SetLayout(string xmlContent) {
-            while (dock.Contents.Count != 0) {
+            while(dock.Contents.Count != 0) {
                 var content = (DockContent)dock.Contents[0];
                 content.DockPanel = null;
                 dockContents.Add(content);
@@ -164,15 +166,15 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
 
             dock.LoadFromXml(xmlContent, GetInstanceByPersistString);
 
-            while (dockContents.Count != 0) {
+            while(dockContents.Count != 0) {
                 ((DockContent)dockContents[0]).Close();
                 dockContents.RemoveAt(0);
             }
         }
         public IDockContent GetInstanceByPersistString(string persistString) {
-            for (int i = 0; i < dockContents.Count; i++) {
+            for(int i = 0; i < dockContents.Count; i++) {
                 var content = dockContents[i];
-                if (content.GetType().FullName.Equals(persistString)) {
+                if(content.GetType().FullName.Equals(persistString)) {
                     dockContents.RemoveAt(i);
                     return content;
                 }
@@ -184,7 +186,7 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         }
 
         public void UpdateLayout() {
-            foreach (var panel in dock.Contents) {
+            foreach(var panel in dock.Contents) {
                 panel.UpdateContent();
             }
         }
@@ -193,7 +195,7 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         #region Panels Manager
         private DockContent currentPage;
         public void OpenPage<T>() where T : DockContent {
-            using (var page = Activator.CreateInstance<T>()) {
+            using(var page = Activator.CreateInstance<T>()) {
                 page.SetColors(dock.Theme.DockContentColorPalette);
                 page.SetStyle(new ToolStripExtender(dock.Theme));
                 page.Update();
@@ -207,7 +209,7 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
             return dialog;
         }
         public T OpenPanel<T>() where T : DockContent {
-            if (GetPanelByType<T>() is T panel) {
+            if(GetPanelByType<T>() is T panel) {
                 panel.Activate();
                 panel.UpdateContent();
             } else {
@@ -222,8 +224,8 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         }
 
         public DockContent GetPanelByType<T>() where T : DockContent {
-            foreach (DockContent content in dock.Contents) {
-                if (content.Name.Equals(typeof(T).Name)) {
+            foreach(DockContent content in dock.Contents) {
+                if(content.Name.Equals(typeof(T).Name)) {
                     return content;
                 }
             }
@@ -231,7 +233,7 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         }
         #endregion
 
-        public void Dispose() {
+        public virtual void Dispose() {
             layoutData.SaveCurrentLayout(dock.GenerateXml());
             GC.SuppressFinalize(this);
         }

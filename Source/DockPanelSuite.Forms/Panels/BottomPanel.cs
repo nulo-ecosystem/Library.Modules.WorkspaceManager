@@ -4,9 +4,7 @@ namespace DockPanelSuite.Forms.Panels {
 
     public partial class BottomPanel : DockContent {
 
-        public BottomPanel() {
-            InitializeComponent();
-        }
+        public BottomPanel() => InitializeComponent();
 
         public override void SetColors(DockContentColorPalette colorPalette) {
             BackColor = colorPalette.Background;

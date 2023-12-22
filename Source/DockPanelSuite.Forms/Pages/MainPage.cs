@@ -5,12 +5,9 @@ namespace DockPanelSuite.Forms.Pages {
 
     public partial class MainPage : Form {
 
-        public MainPage() {
-            InitializeComponent();
-        }
+        public MainPage() => InitializeComponent();
 
         private void DockForm_Load(object sender, EventArgs e) {
-            Program.LayoutManager.GetDock().Dock = DockStyle.Fill;
             DockPanel.Controls.Add(Program.LayoutManager.GetDock());
             Program.LayoutManager.SetStyle = LayoutManager_SetStyle;
             Program.LayoutManager.DropDown = ToolStripLayouts;

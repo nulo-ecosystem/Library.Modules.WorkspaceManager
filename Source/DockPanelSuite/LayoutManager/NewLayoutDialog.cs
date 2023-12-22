@@ -19,22 +19,23 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
 
         private void SetName() {
             var value = TextLayoutName.Text.Trim();
-            if (IsValidFileName(value)) {
+            if(IsValidFileName(value)) {
                 LayoutName = value;
                 DialogResult = DialogResult.OK;
                 Close();
             }
         }
         private bool IsValidFileName(string name) {
-            if (string.IsNullOrEmpty(name)) return false;
+            if(string.IsNullOrEmpty(name))
+                return false;
 
-            if (userLayouts.Contains(name) || defaultLayouts.FirstOrDefault(a => a.Name.Equals(name)) != null) {
+            if(userLayouts.Contains(name) || defaultLayouts.FirstOrDefault(a => a.Name.Equals(name)) != null) {
                 MessageBox.Show("O nome informado já existe! Por favor, tente novamente com outro nome", "Nome repetido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            foreach (var badChar in BADCHARS) {
-                if (name.IndexOf(badChar) != -1) {
+            foreach(var badChar in BADCHARS) {
+                if(name.IndexOf(badChar) != -1) {
                     MessageBox.Show($"O nome informado possui um ou mais caracteres inválidos! Por favor, evite usar {BADCHARS}", "Nome inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
@@ -45,7 +46,8 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
 
         private void AddButton_Click(object sender, System.EventArgs e) => SetName();
         private void TextLayoutName_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) SetName();
+            if(e.KeyCode == Keys.Enter)
+                SetName();
         }
     }
 }
