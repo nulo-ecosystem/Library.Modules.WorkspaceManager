@@ -5,16 +5,32 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <AssemblyName>libDPS</AssemblyName>
+    <AssemblyName>lib.dps</AssemblyName>
     <RootNamespace>Nulo.Modules.DockPanelSuite</RootNamespace>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Nulo.Modules.DockPanelSuite</PackageId>
+    <Title>DockPanelSuite</Title>
+    <Version>0.0.1</Version>
+    <Authors>kastney</Authors>
+    <Company>Nulo Ecosystem</Company>
+    <Product>Dock Panel Suite</Product>
+    <Description>📒 A library for docking panels for .Net WinForms. This library is adapted for the Nulo Ecosystem.</Description>
+    <Copyright></Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nulo-ecosystem/library-forms-DockPanelSuite</RepositoryUrl>
+    <PackageTags>nulo; windows-forms; docking-library; windows-desktop</PackageTags>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
 </Project>
