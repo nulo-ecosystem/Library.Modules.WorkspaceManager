@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Nulo.Modules.DockPanelSuite.LayoutManager {
+namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
 
-    public partial class RemoveLayoutDialog : Form {
+    public partial class RemoveWorkspaceDialog : Form {
 
-        public int IndexLayout { get; private set; }
+        public int IndexWorkspace { get; private set; }
 
-        public RemoveLayoutDialog(List<string> layouts) {
+        public RemoveWorkspaceDialog(List<string> layouts) {
             InitializeComponent();
             foreach (var layout in layouts) UserLayoutOptions.Items.Add(layout);
         }
@@ -15,7 +15,7 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         private void RemoveButton_Click(object sender, System.EventArgs e) {
             if (UserLayoutOptions.SelectedIndex == -1) return;
 
-            IndexLayout = UserLayoutOptions.SelectedIndex;
+            IndexWorkspace = UserLayoutOptions.SelectedIndex;
             DialogResult = DialogResult.OK;
             Close();
         }

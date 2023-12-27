@@ -1,19 +1,19 @@
-using DockPanelSuite.Forms.Modules.LayoutManager;
+using DockPanelSuite.Forms.Modules.WorkspaceManager;
 using DockPanelSuite.Forms.Pages;
-using Nulo.Modules.DockPanelSuite.LayoutManager;
+using Nulo.Modules.DockPanelSuite.WorkspaceManager;
 
 namespace DockPanelSuite.Forms {
 
     internal static class Program {
 
-        public static LayoutManager<LayoutTheme, LayoutData> LayoutManager;
+        public static WorkspaceManager<WorkspaceTheme, WorkspaceData> WorkspaceManager;
 
         [STAThread]
         static void Main() {
             ApplicationConfiguration.Initialize();
 
-            LayoutManager = new LayoutManager<LayoutTheme, LayoutData>();
-            LayoutManager.SetTheme(null);
+            //Properties.Settings.Default.Reset();
+            WorkspaceManager = new WorkspaceManager<WorkspaceTheme, WorkspaceData>();
 
             Application.Run(new MainPage());
         }

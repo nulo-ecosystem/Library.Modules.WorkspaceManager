@@ -36,16 +36,16 @@
             MenuStripThemeLight = new ToolStripMenuItem();
             MenuStripThemeDark = new ToolStripMenuItem();
             MenuStripWindow = new ToolStripMenuItem();
-            MenuStripWindowLayouts = new ToolStripMenuItem();
+            MenuStripWindowWorkspaces = new ToolStripMenuItem();
             MenuStripWindowSeparator1 = new ToolStripSeparator();
             MenuStripWindowLeftPanel = new ToolStripMenuItem();
             MenuStripWindowRightPanel = new ToolStripMenuItem();
             MenuStripWindowBottomPanel = new ToolStripMenuItem();
             MenuStripWindowDocumentPanel = new ToolStripMenuItem();
+            MenuStripWindowSeparator2 = new ToolStripSeparator();
             MenuStripWindowFloatPanel = new ToolStripMenuItem();
             DockPanel = new Panel();
             TopPanel = new Panel();
-            MenuStripWindowSeparator2 = new ToolStripSeparator();
             ToolStrip.SuspendLayout();
             StatusStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
@@ -137,16 +137,16 @@
             // 
             // MenuStripWindow
             // 
-            MenuStripWindow.DropDownItems.AddRange(new ToolStripItem[] { MenuStripWindowLayouts, MenuStripWindowSeparator1, MenuStripWindowLeftPanel, MenuStripWindowRightPanel, MenuStripWindowBottomPanel, MenuStripWindowDocumentPanel, MenuStripWindowSeparator2, MenuStripWindowFloatPanel });
+            MenuStripWindow.DropDownItems.AddRange(new ToolStripItem[] { MenuStripWindowWorkspaces, MenuStripWindowSeparator1, MenuStripWindowLeftPanel, MenuStripWindowRightPanel, MenuStripWindowBottomPanel, MenuStripWindowDocumentPanel, MenuStripWindowSeparator2, MenuStripWindowFloatPanel });
             MenuStripWindow.Name = "MenuStripWindow";
             MenuStripWindow.Size = new Size(94, 35);
             MenuStripWindow.Text = "Window";
             // 
-            // MenuStripWindowLayouts
+            // MenuStripWindowWorkspaces
             // 
-            MenuStripWindowLayouts.Name = "MenuStripWindowLayouts";
-            MenuStripWindowLayouts.Size = new Size(270, 34);
-            MenuStripWindowLayouts.Text = "Layouts";
+            MenuStripWindowWorkspaces.Name = "MenuStripWindowWorkspaces";
+            MenuStripWindowWorkspaces.Size = new Size(270, 34);
+            MenuStripWindowWorkspaces.Text = "Workspaces";
             // 
             // MenuStripWindowSeparator1
             // 
@@ -181,6 +181,11 @@
             MenuStripWindowDocumentPanel.Text = "Document Panel";
             MenuStripWindowDocumentPanel.Click += MenuStripWindowDocumentPanel_Click;
             // 
+            // MenuStripWindowSeparator2
+            // 
+            MenuStripWindowSeparator2.Name = "MenuStripWindowSeparator2";
+            MenuStripWindowSeparator2.Size = new Size(267, 6);
+            // 
             // MenuStripWindowFloatPanel
             // 
             MenuStripWindowFloatPanel.Name = "MenuStripWindowFloatPanel";
@@ -205,11 +210,6 @@
             TopPanel.Name = "TopPanel";
             TopPanel.Size = new Size(1058, 39);
             TopPanel.TabIndex = 0;
-            // 
-            // MenuStripWindowSeparator2
-            // 
-            MenuStripWindowSeparator2.Name = "MenuStripWindowSeparator2";
-            MenuStripWindowSeparator2.Size = new Size(267, 6);
             // 
             // MainPage
             // 
@@ -251,7 +251,7 @@
         private ToolStripMenuItem MenuStripFileExit;
         private ToolStripMenuItem MenuStripThemeDark;
         private ToolStripStatusLabel StatusStripLabel;
-        private ToolStripMenuItem MenuStripWindowLayouts;
+        private ToolStripMenuItem MenuStripWindowWorkspaces;
         private ToolStripSeparator MenuStripWindowSeparator1;
         private ToolStripMenuItem MenuStripWindowLeftPanel;
         private Panel TopPanel;

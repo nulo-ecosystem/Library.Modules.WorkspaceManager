@@ -1,5 +1,5 @@
-﻿namespace Nulo.Modules.DockPanelSuite.LayoutManager {
-    partial class RemoveLayoutDialog {
+﻿namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
+    partial class RemoveWorkspaceDialog {
         /// <summary>
         /// Required designer variable.
         /// </summary>

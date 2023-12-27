@@ -26,18 +26,6 @@ namespace DockPanelSuite.Forms.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Layout {
-            get {
-                return ((string)(this["Layout"]));
-            }
-            set {
-                this["Layout"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Dark")]
         public string Theme {
             get {
                 return ((string)(this["Theme"]));
@@ -49,12 +37,24 @@ namespace DockPanelSuite.Forms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Generic.List<DockPanelSuite.Forms.Modules.LayoutManager.UserLayout> UserLayouts {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Workspace {
             get {
-                return ((global::System.Collections.Generic.List<DockPanelSuite.Forms.Modules.LayoutManager.UserLayout>)(this["UserLayouts"]));
+                return ((string)(this["Workspace"]));
             }
             set {
-                this["UserLayouts"] = value;
+                this["Workspace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Generic.List<Nulo.Modules.DockPanelSuite.WorkspaceManager.UserWorkspace> UserWorkspaces {
+            get {
+                return ((global::System.Collections.Generic.List<Nulo.Modules.DockPanelSuite.WorkspaceManager.UserWorkspace>)(this["UserWorkspaces"]));
+            }
+            set {
+                this["UserWorkspaces"] = value;
             }
         }
     }

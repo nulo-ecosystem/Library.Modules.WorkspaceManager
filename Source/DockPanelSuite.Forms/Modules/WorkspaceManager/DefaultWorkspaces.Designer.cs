@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DockPanelSuite.Forms.Modules.LayoutManager {
+namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace DockPanelSuite.Forms.Modules.LayoutManager {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class DefaultLayouts {
+    internal class DefaultWorkspaces {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal DefaultLayouts() {
+        internal DefaultWorkspaces() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace DockPanelSuite.Forms.Modules.LayoutManager {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DockPanelSuite.Forms.Modules.LayoutManager.DefaultLayouts", typeof(DefaultLayouts).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DockPanelSuite.Forms.Modules.WorkspaceManager.DefaultWorkspaces", typeof(DefaultWorkspaces).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,27 +63,27 @@ namespace DockPanelSuite.Forms.Modules.LayoutManager {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;DockPanel FormatVersion=&quot;1.0&quot; DockLeftPortion=&quot;0.25&quot; DockRightPortion=&quot;0.25&quot; DockTopPortion=&quot;0.25&quot; DockBottomPortion=&quot;0.25&quot; ActiveDocumentPane=&quot;3&quot; ActivePane=&quot;3&quot;&gt;&lt;Contents Count=&quot;4&quot;&gt;&lt;Content ID=&quot;0&quot; PersistString=&quot;DockPanelSuite.Forms.Panels.LeftPanel&quot; AutoHidePortion=&quot;0.25&quot; IsHidden=&quot;False&quot; IsFloat=&quot;False&quot; /&gt;&lt;Content ID=&quot;1&quot; PersistString=&quot;DockPanelSuite.Forms.Panels.RightPanel&quot; AutoHidePortion=&quot;0.25&quot; IsHidden=&quot;False&quot; IsFloat=&quot;False&quot; /&gt;&lt;Content ID=&quot;2&quot; PersistString=&quot;Do [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string DefaultLayout {
+        internal static string Default {
             get {
-                return ResourceManager.GetString("DefaultLayout", resourceCulture);
+                return ResourceManager.GetString("Default", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;DockPanel FormatVersion=&quot;1.0&quot; DockLeftPortion=&quot;0.25&quot; DockRightPortion=&quot;0.25&quot; DockTopPortion=&quot;0.25&quot; DockBottomPortion=&quot;0.25&quot; ActiveDocumentPane=&quot;-1&quot; ActivePane=&quot;-1&quot;&gt;&lt;Contents Count=&quot;0&quot; /&gt;&lt;Panes Count=&quot;0&quot; /&gt;&lt;DockWindows&gt;&lt;DockWindow ID=&quot;0&quot; DockState=&quot;Document&quot; ZOrderIndex=&quot;1&quot;&gt;&lt;NestedPanes Count=&quot;0&quot; /&gt;&lt;/DockWindow&gt;&lt;DockWindow ID=&quot;1&quot; DockState=&quot;DockLeft&quot; ZOrderIndex=&quot;2&quot;&gt;&lt;NestedPanes Count=&quot;0&quot; /&gt;&lt;/DockWindow&gt;&lt;DockWindow ID=&quot;2&quot; DockState=&quot;DockRight&quot; ZOrderIndex=&quot;3&quot;&gt;&lt;NestedPa [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string EmptyLayout {
+        internal static string Empty {
             get {
-                return ResourceManager.GetString("EmptyLayout", resourceCulture);
+                return ResourceManager.GetString("Empty", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;DockPanel FormatVersion=&quot;1.0&quot; DockLeftPortion=&quot;0.25&quot; DockRightPortion=&quot;0.25&quot; DockTopPortion=&quot;0.25&quot; DockBottomPortion=&quot;0.25&quot; ActiveDocumentPane=&quot;0&quot; ActivePane=&quot;0&quot;&gt;&lt;Contents Count=&quot;4&quot;&gt;&lt;Content ID=&quot;0&quot; PersistString=&quot;DockPanelSuite.Forms.Panels.LeftPanel&quot; AutoHidePortion=&quot;0.25&quot; IsHidden=&quot;False&quot; IsFloat=&quot;False&quot; /&gt;&lt;Content ID=&quot;1&quot; PersistString=&quot;DockPanelSuite.Forms.Panels.RightPanel&quot; AutoHidePortion=&quot;0.25&quot; IsHidden=&quot;False&quot; IsFloat=&quot;False&quot; /&gt;&lt;Content ID=&quot;2&quot; PersistString=&quot;Do [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        internal static string FourSplitLayout {
+        internal static string FourSplit {
             get {
-                return ResourceManager.GetString("FourSplitLayout", resourceCulture);
+                return ResourceManager.GetString("FourSplit", resourceCulture);
             }
         }
     }

@@ -8,17 +8,17 @@ namespace DockPanelSuite.Forms.Pages {
         public MainPage() => InitializeComponent();
 
         private void DockForm_Load(object sender, EventArgs e) {
-            DockPanel.Controls.Add(Program.LayoutManager.GetDock());
-            Program.LayoutManager.SetStyle = LayoutManager_SetStyle;
-            Program.LayoutManager.DropDown = ToolStripLayouts;
-            Program.LayoutManager.Init();
+            DockPanel.Controls.Add(Program.WorkspaceManager.DockPanel);
+            Program.WorkspaceManager.Style = WorkspaceManager_Style;
+            Program.WorkspaceManager.DropDown = ToolStripLayouts;
+            Program.WorkspaceManager.Init();
         }
         private void DockForm_FormClosing(object sender, FormClosingEventArgs e) {
-            Program.LayoutManager.Dispose();
+            Program.WorkspaceManager.Dispose();
         }
 
-        private void LayoutManager_SetStyle(ToolStripExtender style) {
-            BackColor = Program.LayoutManager.GetTheme().ColorPalette.CommandBarMenuDefault.Background;
+        private void WorkspaceManager_Style(ToolStripExtender style) {
+            BackColor = Program.WorkspaceManager.Theme.ColorPalette.CommandBarMenuDefault.Background;
 
             style.SetStyle(MenuStrip);
             style.SetStyle(ToolStrip);
@@ -26,12 +26,12 @@ namespace DockPanelSuite.Forms.Pages {
         }
 
         private void MenuStripFileExit_Click(object sender, EventArgs e) => Application.Exit();
-        private void MenuStripThemeLight_Click(object sender, EventArgs e) => Program.LayoutManager.SetTheme("Light");
-        private void MenuStripThemeDark_Click(object sender, EventArgs e) => Program.LayoutManager.SetTheme("Dark");
-        private void MenuStripWindowLeftPanel_Click(object sender, EventArgs e) => Program.LayoutManager.OpenPanel<LeftPanel>();
-        private void MenuStripWindowRightPanel_Click(object sender, EventArgs e) => Program.LayoutManager.OpenPanel<RightPanel>();
-        private void MenuStripWindowBottomPanel_Click(object sender, EventArgs e) => Program.LayoutManager.OpenPanel<BottomPanel>();
-        private void MenuStripWindowDocumentPanel_Click(object sender, EventArgs e) => Program.LayoutManager.OpenPanel<DocumentPanel>();
-        private void MenuStripWindowFloatPanel_Click(object sender, EventArgs e) => Program.LayoutManager.OpenPanel<FloatPanel>();
+        private void MenuStripThemeLight_Click(object sender, EventArgs e) => Program.WorkspaceManager.SetTheme("light");
+        private void MenuStripThemeDark_Click(object sender, EventArgs e) => Program.WorkspaceManager.SetTheme("dark");
+        private void MenuStripWindowLeftPanel_Click(object sender, EventArgs e) => Program.WorkspaceManager.OpenPanel<LeftPanel>();
+        private void MenuStripWindowRightPanel_Click(object sender, EventArgs e) => Program.WorkspaceManager.OpenPanel<RightPanel>();
+        private void MenuStripWindowBottomPanel_Click(object sender, EventArgs e) => Program.WorkspaceManager.OpenPanel<BottomPanel>();
+        private void MenuStripWindowDocumentPanel_Click(object sender, EventArgs e) => Program.WorkspaceManager.OpenPanel<DocumentPanel>();
+        private void MenuStripWindowFloatPanel_Click(object sender, EventArgs e) => Program.WorkspaceManager.OpenPanel<FloatPanel>();
     }
 }

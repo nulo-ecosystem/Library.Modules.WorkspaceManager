@@ -1,5 +1,5 @@
-﻿namespace Nulo.Modules.DockPanelSuite.LayoutManager {
-    partial class NewLayoutDialog {
+﻿namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
+    partial class NewWorkspaceDialog {
         /// <summary>
         /// Required designer variable.
         /// </summary>

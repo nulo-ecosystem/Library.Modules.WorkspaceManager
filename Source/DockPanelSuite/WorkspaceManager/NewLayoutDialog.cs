@@ -2,16 +2,16 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Nulo.Modules.DockPanelSuite.LayoutManager {
+namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
 
-    public partial class NewLayoutDialog : Form {
+    public partial class NewWorkspaceDialog : Form {
 
-        public string LayoutName { get; private set; }
+        public string WorkspaceName { get; private set; }
         private const string BADCHARS = "\\/:*?\"<>|";
-        private readonly List<Layout> defaultLayouts;
+        private readonly List<DefaultWorkspace> defaultLayouts;
         private readonly List<string> userLayouts;
 
-        public NewLayoutDialog(List<string> userLayouts, List<Layout> defaultLayouts) {
+        public NewWorkspaceDialog(List<string> userLayouts, List<DefaultWorkspace> defaultLayouts) {
             InitializeComponent();
             this.userLayouts = userLayouts;
             this.defaultLayouts = defaultLayouts;
@@ -20,7 +20,7 @@ namespace Nulo.Modules.DockPanelSuite.LayoutManager {
         private void SetName() {
             var value = TextLayoutName.Text.Trim();
             if(IsValidFileName(value)) {
-                LayoutName = value;
+                WorkspaceName = value;
                 DialogResult = DialogResult.OK;
                 Close();
             }
