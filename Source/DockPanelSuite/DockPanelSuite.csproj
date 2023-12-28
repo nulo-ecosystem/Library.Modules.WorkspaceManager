@@ -10,17 +10,29 @@
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Nulo.Modules.DockPanelSuite</PackageId>
-    <Title>DockPanelSuite</Title>
-    <Version>0.0.1</Version>
+    <Title>Dock Panel Suite</Title>
+    <Version>1.0.0-alpha</Version>
     <Authors>kastney</Authors>
     <Company>Nulo Ecosystem</Company>
-    <Product>Dock Panel Suite</Product>
-    <Description>📒 A library for docking panels for .Net WinForms. This library is adapted for the Nulo Ecosystem.</Description>
-    <Copyright></Copyright>
-    <PackageProjectUrl></PackageProjectUrl>
+    <Product>Dock Panel Suite®</Product>
+    <Description>📒 A library for docking panels in .Net WinForms that facilitates the management of light and dark workspaces and themes. Tailored for the Nulo Ecosystem.</Description>
+    <Copyright>Copyright © Nulo Ecosystem 2024</Copyright>
+    <PackageProjectUrl>https://github.com/nulo-ecosystem/library-forms-DockPanelSuite/pkgs/nuget/Nulo.Modules.DockPanelSuite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nulo-ecosystem/library-forms-DockPanelSuite</RepositoryUrl>
-    <PackageTags>nulo; windows-forms; docking-library; windows-desktop</PackageTags>
+    <PackageTags>nulo-ecosystem; docking; library; workspaces; dark-theme; light-theme</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>1. Breaking changes
+...
+
+2. New features
+...
+
+3. Bug fixes
+...</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -32,5 +44,16 @@
     <DebugType>none</DebugType>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\app-desktop-NuloLiveShowStudio\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\..\app-desktop-NuloLiveShowStudio\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
