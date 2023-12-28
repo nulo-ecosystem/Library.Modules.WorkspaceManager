@@ -11,11 +11,11 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Nulo.Modules.DockPanelSuite</PackageId>
     <Title>Dock Panel Suite</Title>
-    <Version>1.0.0-alpha</Version>
+    <Version>1.0.1-alpha</Version>
     <Authors>kastney</Authors>
     <Company>Nulo Ecosystem</Company>
     <Product>Dock Panel Suite®</Product>
-    <Description>📒 A library for docking panels in .Net WinForms that facilitates the management of light and dark workspaces and themes. Tailored for the Nulo Ecosystem.</Description>
+    <Description>A library for docking panels in .Net WinForms that facilitates the management of light and dark workspaces and themes. Tailored for the Nulo Ecosystem.</Description>
     <Copyright>Copyright © Nulo Ecosystem 2024</Copyright>
     <PackageProjectUrl>https://github.com/nulo-ecosystem/library-forms-DockPanelSuite/pkgs/nuget/Nulo.Modules.DockPanelSuite</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nulo-ecosystem/library-forms-DockPanelSuite</RepositoryUrl>
@@ -33,6 +33,7 @@
 
 3. Bug fixes
 ...</PackageReleaseNotes>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -51,6 +52,10 @@
       <PackagePath>\</PackagePath>
     </None>
     <None Include="..\..\..\app-desktop-NuloLiveShowStudio\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\Graphics\icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
