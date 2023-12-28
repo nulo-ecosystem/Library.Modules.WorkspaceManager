@@ -7,13 +7,13 @@ namespace DockPanelSuite.Forms.Pages {
 
         public MainPage() => InitializeComponent();
 
-        private void DockForm_Load(object sender, EventArgs e) {
+        private void MainPage_Load(object sender, EventArgs e) {
             DockPanel.Controls.Add(Program.WorkspaceManager.DockPanel);
             Program.WorkspaceManager.Style = WorkspaceManager_Style;
             Program.WorkspaceManager.DropDown = ToolStripLayouts;
             Program.WorkspaceManager.Init();
         }
-        private void DockForm_FormClosing(object sender, FormClosingEventArgs e) {
+        private void MainPage_FormClosing(object sender, FormClosingEventArgs e) {
             Program.WorkspaceManager.Dispose();
         }
 

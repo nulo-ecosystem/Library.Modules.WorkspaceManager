@@ -224,8 +224,8 @@
             Name = "MainPage";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Main Form";
-            FormClosing += DockForm_FormClosing;
-            Load += DockForm_Load;
+            FormClosing += MainPage_FormClosing;
+            Load += MainPage_Load;
             ToolStrip.ResumeLayout(false);
             ToolStrip.PerformLayout();
             StatusStrip.ResumeLayout(false);
