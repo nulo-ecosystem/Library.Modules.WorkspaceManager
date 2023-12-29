@@ -191,51 +191,15 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
         }
         #endregion
 
-        public virtual void Dispose() {
-            workspaceData.SaveCurrentWorkspace(DockPanel.GenerateXml());
-            GC.SuppressFinalize(this);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         #region Panels Manager
         private DockContent currentPage;
         public void OpenPage<T>() where T : DockContent {
-            using(var page = Activator.CreateInstance<T>()) {
-                page.SetColors(DockPanel.Theme.DockContentColorPalette);
-                page.SetStyle(new ToolStripExtender(DockPanel.Theme));
-                page.Update();
-                currentPage = page;
-                page.ShowDialog();
-            }
+            using var page = Activator.CreateInstance<T>();
+            page.SetColors(DockPanel.Theme.DockContentColorPalette);
+            page.SetStyle(new ToolStripExtender(DockPanel.Theme));
+            page.Update();
+            currentPage = page;
+            page.ShowDialog();
         }
         public T OpenDialog<T>() where T : DockContent {
             var dialog = Activator.CreateInstance<T>();
@@ -258,7 +222,7 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
         }
 
         public DockContent GetPanelByType<T>() where T : DockContent {
-            foreach(DockContent content in DockPanel.Contents) {
+            foreach(DockContent content in DockPanel.Contents.Cast<DockContent>()) {
                 if(content.Name.Equals(typeof(T).Name)) {
                     return content;
                 }
@@ -266,5 +230,10 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
             return null;
         }
         #endregion
+
+        public virtual void Dispose() {
+            workspaceData.SaveCurrentWorkspace(DockPanel.GenerateXml());
+            GC.SuppressFinalize(this);
+        }
     }
 }

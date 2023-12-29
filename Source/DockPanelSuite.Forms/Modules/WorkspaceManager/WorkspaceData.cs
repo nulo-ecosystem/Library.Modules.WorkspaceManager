@@ -35,8 +35,7 @@ namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
             var userWorkspaces = Properties.Settings.Default.UserWorkspaces;
 
             if(userWorkspaces is null) {
-                userWorkspaces = [];
-                Properties.Settings.Default.UserWorkspaces = userWorkspaces;
+                Properties.Settings.Default.UserWorkspaces = userWorkspaces = [];
                 Properties.Settings.Default.Save();
             }
 
@@ -47,9 +46,7 @@ namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
         public string LoadUserWorkspace(string key = null) {
             var userWorkspaces = Properties.Settings.Default.UserWorkspaces;
             foreach(var workspace in userWorkspaces) {
-                if(workspace.Key.Equals(key)) {
-                    return workspace.Content;
-                }
+                if(workspace.Key.Equals(key)) { return workspace.Content; }
             }
 
             return null;
@@ -68,9 +65,9 @@ namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
         }
         public bool RemoveUserWorkspace(UserWorkspace workspace) {
             var userWorkspaces = Properties.Settings.Default.UserWorkspaces;
-            foreach(var _workspace in userWorkspaces) {
-                if(_workspace.Key.Equals(workspace.Key)) {
-                    userWorkspaces.Remove(_workspace);
+            foreach(var userWorkspace in userWorkspaces) {
+                if(userWorkspace.Key.Equals(workspace.Key)) {
+                    userWorkspaces.Remove(userWorkspace);
                     Properties.Settings.Default.UserWorkspaces = userWorkspaces;
                     Properties.Settings.Default.Save();
                     return true;
