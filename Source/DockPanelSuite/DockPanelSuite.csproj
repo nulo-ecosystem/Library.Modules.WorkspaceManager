@@ -47,11 +47,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\app-desktop-NuloLiveShowStudio\LICENSE">
+    <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\..\..\app-desktop-NuloLiveShowStudio\README.md">
+    <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
