@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
+namespace Nulo.Modules.WorkspaceManager {
 
     public partial class NewWorkspaceDialog : Form {
 
@@ -11,14 +11,17 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
         private readonly List<DefaultWorkspace> defaultLayouts;
         private readonly List<string> userLayouts;
 
-        public NewWorkspaceDialog(List<string> userLayouts, List<DefaultWorkspace> defaultLayouts) {
+        public NewWorkspaceDialog(List<string> userLayouts, List<DefaultWorkspace> defaultLayouts, Texts texts) {
             InitializeComponent();
             this.userLayouts = userLayouts;
             this.defaultLayouts = defaultLayouts;
+            Text = texts.NewWorkspaceTitle;
+            LabelWorkspaceName.Text = $"{texts.NewWorkspaceName}:";
+            AddButton.Text = texts.CommandSave;
         }
 
         private void SetName() {
-            var value = TextLayoutName.Text.Trim();
+            var value = TextWorkspaceName.Text.Trim();
             if(IsValidFileName(value)) {
                 WorkspaceName = value;
                 DialogResult = DialogResult.OK;

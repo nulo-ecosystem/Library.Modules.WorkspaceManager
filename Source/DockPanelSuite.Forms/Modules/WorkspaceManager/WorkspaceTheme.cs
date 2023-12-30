@@ -1,5 +1,5 @@
 ﻿using Nulo.Modules.DockPanelSuite.Docking;
-using Nulo.Modules.DockPanelSuite.WorkspaceManager;
+using Nulo.Modules.WorkspaceManager;
 
 namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
 

@@ -1,6 +1,6 @@
 using DockPanelSuite.Forms.Modules.WorkspaceManager;
 using DockPanelSuite.Forms.Pages;
-using Nulo.Modules.DockPanelSuite.WorkspaceManager;
+using Nulo.Modules.WorkspaceManager;
 
 namespace DockPanelSuite.Forms {
 

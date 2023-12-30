@@ -1,5 +1,5 @@
 ﻿using Nulo.Modules.DockPanelSuite.Docking;
-using Nulo.Modules.DockPanelSuite.WorkspaceManager;
+using Nulo.Modules.WorkspaceManager;
 
 namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
 
@@ -63,7 +63,7 @@ namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
                 return false;
             }
         }
-        public bool RemoveUserWorkspace(UserWorkspace workspace) {
+        public bool DeleteUserWorkspace(UserWorkspace workspace) {
             var userWorkspaces = Properties.Settings.Default.UserWorkspaces;
             foreach(var userWorkspace in userWorkspaces) {
                 if(userWorkspace.Key.Equals(workspace.Key)) {
@@ -76,6 +76,11 @@ namespace DockPanelSuite.Forms.Modules.WorkspaceManager {
             return false;
         }
         #endregion
+
+        public Texts GetTexts() {
+            return new Texts {
+            };
+        }
 
         public IDockContent GetInstanceByPanelType(string fullName) {
             try {

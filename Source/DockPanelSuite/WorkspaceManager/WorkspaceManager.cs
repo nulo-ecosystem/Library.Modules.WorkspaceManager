@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
+namespace Nulo.Modules.WorkspaceManager {
 
     public class WorkspaceManager<TWorkspaceTheme, TWorkspaceData> : IDisposable where TWorkspaceTheme : IWorkspaceTheme where TWorkspaceData : IWorkspaceData {
 
@@ -117,14 +117,14 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
             }
         }
         private void ItemNewWorkspace_Click(object sender, EventArgs e) {
-            using var dialog = new NewWorkspaceDialog(userWorkspaces, defaultWorkspaces);
+            using var dialog = new NewWorkspaceDialog(userWorkspaces, defaultWorkspaces, texts);
             if(dialog.ShowDialog() == DialogResult.OK && workspaceData.SaveUserWorkspace(new UserWorkspace { Key = dialog.WorkspaceName, Content = DockPanel.GenerateXml() })) {
                 userWorkspaces.Add(dialog.WorkspaceName);
             }
         }
-        private void ItemRemoveWorkspace_Click(object sender, EventArgs e) {
-            using var dialog = new RemoveWorkspaceDialog(userWorkspaces);
-            if(dialog.ShowDialog() == DialogResult.OK && workspaceData.RemoveUserWorkspace(new UserWorkspace { Key = userWorkspaces[dialog.IndexWorkspace] })) {
+        private void ItemDeleteWorkspace_Click(object sender, EventArgs e) {
+            using var dialog = new DeleteWorkspaceDialog(userWorkspaces, texts);
+            if(dialog.ShowDialog() == DialogResult.OK && workspaceData.DeleteUserWorkspace(new UserWorkspace { Key = userWorkspaces[dialog.IndexWorkspace] })) {
                 userWorkspaces.RemoveAt(dialog.IndexWorkspace);
             }
         }
@@ -136,7 +136,7 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
 
         #region Options Manager
         private ToolStripMenuItem itemSaveWorkspace;
-        private ToolStripMenuItem itemRemoveWorkspace;
+        private ToolStripMenuItem itemDeleteWorkspace;
 
         private ToolStripDropDownButton dropDown;
         public ToolStripDropDownButton DropDown {
@@ -150,8 +150,8 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
 
                 itemSaveWorkspace = new ToolStripMenuItem("Save layout...");
                 itemSaveWorkspace.Click += ItemNewWorkspace_Click;
-                itemRemoveWorkspace = new ToolStripMenuItem("Apagar layout...");
-                itemRemoveWorkspace.Click += ItemRemoveWorkspace_Click;
+                itemDeleteWorkspace = new ToolStripMenuItem("Apagar layout...");
+                itemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
 
                 dropDown.DropDownOpening += DropDown_DropDownOpening;
             }
@@ -179,7 +179,7 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
             }
 
             dropDown.DropDownItems.Add(itemSaveWorkspace);
-            if(userWorkspaces.Count != 0) { dropDown.DropDownItems.Add(itemRemoveWorkspace); }
+            if(userWorkspaces.Count != 0) { dropDown.DropDownItems.Add(itemDeleteWorkspace); }
         }
         private ToolStripDropDownButton GetClearDropDown(ToolStripDropDownButton dropDown) {
             for(int i = 0; i < dropDown.DropDownItems.Count; i++) {
@@ -228,6 +228,17 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
                 }
             }
             return null;
+        }
+        #endregion
+
+        #region Texts Manager
+        private Texts texts = new();
+        public void UpdateTexts() {
+            if(workspaceData.GetTexts() is Texts texts) {
+                this.texts = texts;
+                itemSaveWorkspace.Text = this.texts.SaveMenuItem;
+                itemDeleteWorkspace.Text = this.texts.DeleteMenuItem;
+            }
         }
         #endregion
 

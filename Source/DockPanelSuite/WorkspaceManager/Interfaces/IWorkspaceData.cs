@@ -1,7 +1,7 @@
 ﻿using Nulo.Modules.DockPanelSuite.Docking;
 using System.Collections.Generic;
 
-namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
+namespace Nulo.Modules.WorkspaceManager {
 
     public interface IWorkspaceData {
 
@@ -19,8 +19,10 @@ namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
         List<string> LoadAllUserWorkspaces();
         string LoadUserWorkspace(string key = null);
         bool SaveUserWorkspace(UserWorkspace workspace);
-        bool RemoveUserWorkspace(UserWorkspace workspace);
+        bool DeleteUserWorkspace(UserWorkspace workspace);
         #endregion
+
+        Texts GetTexts();
 
         IDockContent GetInstanceByPanelType(string fullName);
     }

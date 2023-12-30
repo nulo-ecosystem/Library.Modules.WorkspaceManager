@@ -1,4 +1,4 @@
-﻿namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
+﻿namespace Nulo.Modules.WorkspaceManager {
 
     public class UserWorkspace {
 

@@ -23,6 +23,8 @@ namespace DockPanelSuite.Forms.Pages {
             style.SetStyle(MenuStrip);
             style.SetStyle(ToolStrip);
             style.SetStyle(StatusStrip);
+
+            Program.WorkspaceManager.UpdateTexts();
         }
 
         private void MenuStripFileExit_Click(object sender, EventArgs e) => Application.Exit();

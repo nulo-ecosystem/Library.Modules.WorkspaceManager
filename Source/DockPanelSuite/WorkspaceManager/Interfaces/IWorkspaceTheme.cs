@@ -1,6 +1,6 @@
 ﻿using Nulo.Modules.DockPanelSuite.Docking;
 
-namespace Nulo.Modules.DockPanelSuite.WorkspaceManager {
+namespace Nulo.Modules.WorkspaceManager {
 
     public interface IWorkspaceTheme {
 

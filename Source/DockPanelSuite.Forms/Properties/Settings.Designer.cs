@@ -49,9 +49,9 @@ namespace DockPanelSuite.Forms.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Generic.List<Nulo.Modules.DockPanelSuite.WorkspaceManager.UserWorkspace> UserWorkspaces {
+        public global::System.Collections.Generic.List<Nulo.Modules.WorkspaceManager.UserWorkspace> UserWorkspaces {
             get {
-                return ((global::System.Collections.Generic.List<Nulo.Modules.DockPanelSuite.WorkspaceManager.UserWorkspace>)(this["UserWorkspaces"]));
+                return ((global::System.Collections.Generic.List<Nulo.Modules.WorkspaceManager.UserWorkspace>)(this["UserWorkspaces"]));
             }
             set {
                 this["UserWorkspaces"] = value;
