@@ -44,13 +44,13 @@
             UserWorkspaceOptions.Location = new System.Drawing.Point(129, 15);
             UserWorkspaceOptions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             UserWorkspaceOptions.Name = "UserWorkspaceOptions";
-            UserWorkspaceOptions.Size = new System.Drawing.Size(337, 33);
+            UserWorkspaceOptions.Size = new System.Drawing.Size(437, 33);
             UserWorkspaceOptions.TabIndex = 1;
             // 
             // DeleteButton
             // 
             DeleteButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            DeleteButton.Location = new System.Drawing.Point(336, 54);
+            DeleteButton.Location = new System.Drawing.Point(436, 54);
             DeleteButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.Size = new System.Drawing.Size(130, 35);
@@ -63,7 +63,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.SystemColors.Window;
-            ClientSize = new System.Drawing.Size(478, 99);
+            ClientSize = new System.Drawing.Size(578, 99);
             Controls.Add(DeleteButton);
             Controls.Add(LabelSelected);
             Controls.Add(UserWorkspaceOptions);
