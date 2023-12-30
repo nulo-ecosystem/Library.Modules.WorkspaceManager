@@ -1,5 +1,5 @@
 ﻿namespace Nulo.Modules.WorkspaceManager {
-    partial class NewWorkspaceDialog {
+    internal partial class NewWorkspaceDialog {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+            if(disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);

@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Nulo.Modules.WorkspaceManager {
 
-    public partial class NewWorkspaceDialog : Form {
+    internal partial class NewWorkspaceDialog : Form {
 
         public string WorkspaceName { get; private set; }
         private const string BADCHARS = "\\/:*?\"<>|";
@@ -29,8 +29,7 @@ namespace Nulo.Modules.WorkspaceManager {
             }
         }
         private bool IsValidFileName(string name) {
-            if(string.IsNullOrEmpty(name))
-                return false;
+            if(string.IsNullOrEmpty(name)) { return false; }
 
             if(userLayouts.Contains(name) || defaultLayouts.FirstOrDefault(a => a.Name.Equals(name)) != null) {
                 MessageBox.Show("O nome informado já existe! Por favor, tente novamente com outro nome", "Nome repetido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -38,7 +37,7 @@ namespace Nulo.Modules.WorkspaceManager {
             }
 
             foreach(var badChar in BADCHARS) {
-                if(name.IndexOf(badChar) != -1) {
+                if(name.Contains(badChar)) {
                     MessageBox.Show($"O nome informado possui um ou mais caracteres inválidos! Por favor, evite usar {BADCHARS}", "Nome inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }

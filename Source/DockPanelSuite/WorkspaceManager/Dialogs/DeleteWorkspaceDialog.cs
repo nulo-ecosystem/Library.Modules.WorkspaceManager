@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Nulo.Modules.WorkspaceManager {
 
-    public partial class DeleteWorkspaceDialog : Form {
+    internal partial class DeleteWorkspaceDialog : Form {
 
         public int IndexWorkspace { get; private set; }
 
