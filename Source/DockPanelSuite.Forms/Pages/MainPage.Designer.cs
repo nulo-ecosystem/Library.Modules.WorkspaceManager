@@ -46,6 +46,7 @@
             MenuStripWindowFloatPanel = new ToolStripMenuItem();
             DockPanel = new Panel();
             TopPanel = new Panel();
+            MenuStripFileUpdate = new ToolStripMenuItem();
             ToolStrip.SuspendLayout();
             StatusStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
@@ -59,9 +60,9 @@
             ToolStrip.ImageScalingSize = new Size(24, 24);
             ToolStrip.Items.AddRange(new ToolStripItem[] { ToolStripWorkspaces });
             ToolStrip.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            ToolStrip.Location = new Point(966, 0);
+            ToolStrip.Location = new Point(1012, 0);
             ToolStrip.Name = "ToolStrip";
-            ToolStrip.Size = new Size(92, 39);
+            ToolStrip.Size = new Size(46, 39);
             ToolStrip.TabIndex = 1;
             // 
             // ToolStripWorkspaces
@@ -97,12 +98,12 @@
             MenuStrip.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
             MenuStrip.Location = new Point(0, 0);
             MenuStrip.Name = "MenuStrip";
-            MenuStrip.Size = new Size(966, 39);
+            MenuStrip.Size = new Size(1012, 39);
             MenuStrip.TabIndex = 3;
             // 
             // MenuStripFile
             // 
-            MenuStripFile.DropDownItems.AddRange(new ToolStripItem[] { MenuStripFileExit });
+            MenuStripFile.DropDownItems.AddRange(new ToolStripItem[] { MenuStripFileUpdate, MenuStripFileExit });
             MenuStripFile.Name = "MenuStripFile";
             MenuStripFile.Size = new Size(54, 35);
             MenuStripFile.Text = "File";
@@ -110,7 +111,7 @@
             // MenuStripFileExit
             // 
             MenuStripFileExit.Name = "MenuStripFileExit";
-            MenuStripFileExit.Size = new Size(141, 34);
+            MenuStripFileExit.Size = new Size(270, 34);
             MenuStripFileExit.Text = "Exit";
             MenuStripFileExit.Click += MenuStripFileExit_Click;
             // 
@@ -145,51 +146,51 @@
             // MenuStripWindowWorkspaces
             // 
             MenuStripWindowWorkspaces.Name = "MenuStripWindowWorkspaces";
-            MenuStripWindowWorkspaces.Size = new Size(270, 34);
+            MenuStripWindowWorkspaces.Size = new Size(243, 34);
             MenuStripWindowWorkspaces.Text = "Workspaces";
             // 
             // MenuStripWindowSeparator1
             // 
             MenuStripWindowSeparator1.Name = "MenuStripWindowSeparator1";
-            MenuStripWindowSeparator1.Size = new Size(267, 6);
+            MenuStripWindowSeparator1.Size = new Size(240, 6);
             // 
             // MenuStripWindowLeftPanel
             // 
             MenuStripWindowLeftPanel.Name = "MenuStripWindowLeftPanel";
-            MenuStripWindowLeftPanel.Size = new Size(270, 34);
+            MenuStripWindowLeftPanel.Size = new Size(243, 34);
             MenuStripWindowLeftPanel.Text = "Left Panel";
             MenuStripWindowLeftPanel.Click += MenuStripWindowLeftPanel_Click;
             // 
             // MenuStripWindowRightPanel
             // 
             MenuStripWindowRightPanel.Name = "MenuStripWindowRightPanel";
-            MenuStripWindowRightPanel.Size = new Size(270, 34);
+            MenuStripWindowRightPanel.Size = new Size(243, 34);
             MenuStripWindowRightPanel.Text = "Right Panel";
             MenuStripWindowRightPanel.Click += MenuStripWindowRightPanel_Click;
             // 
             // MenuStripWindowBottomPanel
             // 
             MenuStripWindowBottomPanel.Name = "MenuStripWindowBottomPanel";
-            MenuStripWindowBottomPanel.Size = new Size(270, 34);
+            MenuStripWindowBottomPanel.Size = new Size(243, 34);
             MenuStripWindowBottomPanel.Text = "Bottom Panel";
             MenuStripWindowBottomPanel.Click += MenuStripWindowBottomPanel_Click;
             // 
             // MenuStripWindowDocumentPanel
             // 
             MenuStripWindowDocumentPanel.Name = "MenuStripWindowDocumentPanel";
-            MenuStripWindowDocumentPanel.Size = new Size(270, 34);
+            MenuStripWindowDocumentPanel.Size = new Size(243, 34);
             MenuStripWindowDocumentPanel.Text = "Document Panel";
             MenuStripWindowDocumentPanel.Click += MenuStripWindowDocumentPanel_Click;
             // 
             // MenuStripWindowSeparator2
             // 
             MenuStripWindowSeparator2.Name = "MenuStripWindowSeparator2";
-            MenuStripWindowSeparator2.Size = new Size(267, 6);
+            MenuStripWindowSeparator2.Size = new Size(240, 6);
             // 
             // MenuStripWindowFloatPanel
             // 
             MenuStripWindowFloatPanel.Name = "MenuStripWindowFloatPanel";
-            MenuStripWindowFloatPanel.Size = new Size(270, 34);
+            MenuStripWindowFloatPanel.Size = new Size(243, 34);
             MenuStripWindowFloatPanel.Text = "Float Panel";
             MenuStripWindowFloatPanel.Click += MenuStripWindowFloatPanel_Click;
             // 
@@ -210,6 +211,13 @@
             TopPanel.Name = "TopPanel";
             TopPanel.Size = new Size(1058, 39);
             TopPanel.TabIndex = 0;
+            // 
+            // MenuStripFileUpdate
+            // 
+            MenuStripFileUpdate.Name = "MenuStripFileUpdate";
+            MenuStripFileUpdate.Size = new Size(270, 34);
+            MenuStripFileUpdate.Text = "Update";
+            MenuStripFileUpdate.Click += MenuStripFileUpdate_Click;
             // 
             // MainPage
             // 
@@ -259,5 +267,6 @@
         private ToolStripMenuItem MenuStripWindowDocumentPanel;
         private ToolStripMenuItem MenuStripWindowFloatPanel;
         private ToolStripSeparator MenuStripWindowSeparator2;
+        private ToolStripMenuItem MenuStripFileUpdate;
     }
 }

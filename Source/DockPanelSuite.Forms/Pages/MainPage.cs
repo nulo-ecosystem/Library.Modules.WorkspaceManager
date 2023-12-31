@@ -27,6 +27,7 @@ namespace DockPanelSuite.Forms.Pages {
             Program.WorkspaceManager.UpdateTexts();
         }
 
+        private void MenuStripFileUpdate_Click(object sender, EventArgs e) => Program.WorkspaceManager.UpdateWorkspace();
         private void MenuStripFileExit_Click(object sender, EventArgs e) => Application.Exit();
         private void MenuStripThemeLight_Click(object sender, EventArgs e) => Program.WorkspaceManager.SetTheme("light");
         private void MenuStripThemeDark_Click(object sender, EventArgs e) => Program.WorkspaceManager.SetTheme("dark");
