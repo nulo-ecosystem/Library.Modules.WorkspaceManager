@@ -135,30 +135,35 @@ namespace Nulo.Modules.WorkspaceManager {
         #endregion
 
         #region Options Manager
-        private ToolStripMenuItem itemSaveWorkspace;
-        private ToolStripMenuItem itemDeleteWorkspace;
+        private ToolStripMenuItem menuItemSaveWorkspace;
+        private ToolStripMenuItem menuItemDeleteWorkspace;
 
-        private ToolStripDropDownButton dropDown;
-        public ToolStripDropDownButton DropDown {
-            get { return dropDown; }
-            set {
-                dropDown = value;
+        private ToolStripDropDownButton toolStripWorkspaces;
+        public void SetToolStripWorkspaces(ToolStripDropDownButton toolStripWorkspaces) {
+            this.toolStripWorkspaces = toolStripWorkspaces;
 
-                defaultWorkspaces ??= workspaceData.LoadAllDefaultWorkspaces();
-                userWorkspaces ??= workspaceData.LoadAllUserWorkspaces();
-                currentPanels ??= [];
+            defaultWorkspaces ??= workspaceData.LoadAllDefaultWorkspaces();
+            userWorkspaces ??= workspaceData.LoadAllUserWorkspaces();
+            currentPanels ??= [];
 
-                itemSaveWorkspace = new ToolStripMenuItem("Save layout...");
-                itemSaveWorkspace.Click += ItemNewWorkspace_Click;
-                itemDeleteWorkspace = new ToolStripMenuItem("Apagar layout...");
-                itemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
-
-                dropDown.DropDownOpening += DropDown_DropDownOpening;
+            if(menuItemSaveWorkspace is null) {
+                menuItemSaveWorkspace = new ToolStripMenuItem();
+                menuItemSaveWorkspace.Click += ItemNewWorkspace_Click;
             }
-        }
+            if(menuItemDeleteWorkspace is null) {
+                menuItemDeleteWorkspace = new ToolStripMenuItem();
+                menuItemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
+            }
 
-        private void DropDown_DropDownOpening(object sender, EventArgs e) {
-            var dropDown = GetClearDropDown((ToolStripDropDownButton)sender);
+            this.toolStripWorkspaces.DropDownOpening += ToolStripWorksoaces_DropDownOpening;
+        }
+        private void ToolStripWorksoaces_DropDownOpening(object sender, EventArgs e) {
+            var dropDown = (ToolStripDropDownButton)sender;
+            for(int i = 0; i < dropDown.DropDownItems.Count; i++) {
+                if(dropDown.DropDownItems[i] is not ToolStripMenuItem) { continue; }
+                dropDown.DropDownItems[i].Click -= SelectedItem_Click;
+            }
+            dropDown.DropDownItems.Clear();
 
             if(userWorkspaces.Count != 0) {
                 for(int i = userWorkspaces.Count - 1; i > -1; i--) {
@@ -178,16 +183,59 @@ namespace Nulo.Modules.WorkspaceManager {
                 dropDown.DropDownItems.Add(new ToolStripSeparator());
             }
 
-            dropDown.DropDownItems.Add(itemSaveWorkspace);
-            if(userWorkspaces.Count != 0) { dropDown.DropDownItems.Add(itemDeleteWorkspace); }
+            dropDown.DropDownItems.Add(menuItemSaveWorkspace);
+            if(userWorkspaces.Count != 0) { dropDown.DropDownItems.Add(menuItemDeleteWorkspace); }
         }
-        private ToolStripDropDownButton GetClearDropDown(ToolStripDropDownButton dropDown) {
-            for(int i = 0; i < dropDown.DropDownItems.Count; i++) {
-                if(dropDown.DropDownItems[i] is not ToolStripMenuItem) { continue; }
-                dropDown.DropDownItems[i].Click -= SelectedItem_Click;
+
+        private ToolStripMenuItem menuStripWindow;
+        private ToolStripMenuItem menuStripWindowWorkspaces;
+        public void SetMenuStripWorkspaces(ToolStripMenuItem menuStripWindow, ToolStripMenuItem menuStripWindowWorkspaces) {
+            this.menuStripWindow = menuStripWindow;
+            this.menuStripWindowWorkspaces = menuStripWindowWorkspaces;
+
+            defaultWorkspaces ??= workspaceData.LoadAllDefaultWorkspaces();
+            userWorkspaces ??= workspaceData.LoadAllUserWorkspaces();
+            currentPanels ??= [];
+
+            if(menuItemSaveWorkspace is null) {
+                menuItemSaveWorkspace = new ToolStripMenuItem();
+                menuItemSaveWorkspace.Click += ItemNewWorkspace_Click;
             }
-            dropDown.DropDownItems.Clear();
-            return dropDown;
+            if(menuItemDeleteWorkspace is null) {
+                menuItemDeleteWorkspace = new ToolStripMenuItem();
+                menuItemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
+            }
+
+            this.menuStripWindow.DropDownOpening += MenuStripWorkspaces_DropDownOpening;
+        }
+        private void MenuStripWorkspaces_DropDownOpening(object sender, EventArgs e) {
+            if(menuStripWindowWorkspaces is null) { return; }
+            for(int i = 0; i < menuStripWindowWorkspaces.DropDownItems.Count; i++) {
+                if(menuStripWindowWorkspaces.DropDownItems[i] is not ToolStripMenuItem) { continue; }
+                menuStripWindowWorkspaces.DropDownItems[i].Click -= SelectedItem_Click;
+            }
+            menuStripWindowWorkspaces.DropDownItems.Clear();
+
+            if(userWorkspaces.Count != 0) {
+                for(int i = userWorkspaces.Count - 1; i > -1; i--) {
+                    var item = new ToolStripMenuItem(userWorkspaces[i]);
+                    item.Click += SelectedItem_Click;
+                    menuStripWindowWorkspaces.DropDownItems.Add(item);
+                }
+                menuStripWindowWorkspaces.DropDownItems.Add(new ToolStripSeparator());
+            }
+
+            if(defaultWorkspaces.Count != 0) {
+                foreach(var workspace in defaultWorkspaces) {
+                    var item = new ToolStripMenuItem(workspace.Name) { Tag = workspace };
+                    item.Click += SelectedItem_Click;
+                    menuStripWindowWorkspaces.DropDownItems.Add(item);
+                }
+                menuStripWindowWorkspaces.DropDownItems.Add(new ToolStripSeparator());
+            }
+
+            menuStripWindowWorkspaces.DropDownItems.Add(menuItemSaveWorkspace);
+            if(userWorkspaces.Count != 0) { menuStripWindowWorkspaces.DropDownItems.Add(menuItemDeleteWorkspace); }
         }
         #endregion
 
@@ -236,13 +284,17 @@ namespace Nulo.Modules.WorkspaceManager {
         public void UpdateTexts() {
             if(workspaceData.GetTexts() is Texts texts) {
                 this.texts = texts;
-                itemSaveWorkspace.Text = this.texts.SaveMenuItem;
-                itemDeleteWorkspace.Text = this.texts.DeleteMenuItem;
+                if(menuItemSaveWorkspace is not null) {
+                    menuItemSaveWorkspace.Text = this.texts.SaveMenuItem;
+                    menuItemDeleteWorkspace.Text = this.texts.DeleteMenuItem;
+                }
             }
         }
         #endregion
 
         public virtual void Dispose() {
+            if(toolStripWorkspaces is not null) { toolStripWorkspaces.DropDownOpening -= ToolStripWorksoaces_DropDownOpening; }
+            if(menuStripWindow is not null) { menuStripWindow.DropDownOpening -= MenuStripWorkspaces_DropDownOpening; }
             workspaceData.SaveCurrentWorkspace(DockPanel.GenerateXml());
             GC.SuppressFinalize(this);
         }

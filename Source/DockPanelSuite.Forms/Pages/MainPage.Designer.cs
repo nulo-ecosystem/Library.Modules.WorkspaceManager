@@ -26,7 +26,7 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             ToolStrip = new ToolStrip();
-            ToolStripLayouts = new ToolStripDropDownButton();
+            ToolStripWorkspaces = new ToolStripDropDownButton();
             StatusStrip = new StatusStrip();
             StatusStripLabel = new ToolStripStatusLabel();
             MenuStrip = new MenuStrip();
@@ -57,21 +57,21 @@
             ToolStrip.Dock = DockStyle.Right;
             ToolStrip.GripStyle = ToolStripGripStyle.Hidden;
             ToolStrip.ImageScalingSize = new Size(24, 24);
-            ToolStrip.Items.AddRange(new ToolStripItem[] { ToolStripLayouts });
+            ToolStrip.Items.AddRange(new ToolStripItem[] { ToolStripWorkspaces });
             ToolStrip.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            ToolStrip.Location = new Point(1012, 0);
+            ToolStrip.Location = new Point(966, 0);
             ToolStrip.Name = "ToolStrip";
-            ToolStrip.Size = new Size(46, 39);
+            ToolStrip.Size = new Size(92, 39);
             ToolStrip.TabIndex = 1;
             // 
-            // ToolStripLayouts
+            // ToolStripWorkspaces
             // 
-            ToolStripLayouts.Alignment = ToolStripItemAlignment.Right;
-            ToolStripLayouts.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            ToolStripLayouts.Image = (Image)resources.GetObject("ToolStripLayouts.Image");
-            ToolStripLayouts.ImageTransparentColor = Color.Magenta;
-            ToolStripLayouts.Name = "ToolStripLayouts";
-            ToolStripLayouts.Size = new Size(42, 34);
+            ToolStripWorkspaces.Alignment = ToolStripItemAlignment.Right;
+            ToolStripWorkspaces.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ToolStripWorkspaces.Image = (Image)resources.GetObject("ToolStripWorkspaces.Image");
+            ToolStripWorkspaces.ImageTransparentColor = Color.Magenta;
+            ToolStripWorkspaces.Name = "ToolStripWorkspaces";
+            ToolStripWorkspaces.Size = new Size(42, 34);
             // 
             // StatusStrip
             // 
@@ -97,7 +97,7 @@
             MenuStrip.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
             MenuStrip.Location = new Point(0, 0);
             MenuStrip.Name = "MenuStrip";
-            MenuStrip.Size = new Size(1012, 39);
+            MenuStrip.Size = new Size(966, 39);
             MenuStrip.TabIndex = 3;
             // 
             // MenuStripFile
@@ -225,7 +225,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Main Form";
             FormClosing += MainPage_FormClosing;
-            Load += MainPage_Load;
             ToolStrip.ResumeLayout(false);
             ToolStrip.PerformLayout();
             StatusStrip.ResumeLayout(false);
@@ -240,7 +239,7 @@
 
         #endregion
         private ToolStrip ToolStrip;
-        private ToolStripDropDownButton ToolStripLayouts;
+        private ToolStripDropDownButton ToolStripWorkspaces;
         private StatusStrip StatusStrip;
         private MenuStrip MenuStrip;
         private ToolStripMenuItem MenuStripTheme;

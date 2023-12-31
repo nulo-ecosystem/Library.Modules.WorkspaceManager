@@ -5,12 +5,12 @@ namespace DockPanelSuite.Forms.Pages {
 
     public partial class MainPage : Form {
 
-        public MainPage() => InitializeComponent();
-
-        private void MainPage_Load(object sender, EventArgs e) {
+        public MainPage() {
+            InitializeComponent();
             DockPanel.Controls.Add(Program.WorkspaceManager.DockPanel);
             Program.WorkspaceManager.Style = WorkspaceManager_Style;
-            Program.WorkspaceManager.DropDown = ToolStripLayouts;
+            Program.WorkspaceManager.SetToolStripWorkspaces(ToolStripWorkspaces);
+            Program.WorkspaceManager.SetMenuStripWorkspaces(MenuStripWindow, MenuStripWindowWorkspaces);
             Program.WorkspaceManager.Init();
         }
         private void MainPage_FormClosing(object sender, FormClosingEventArgs e) {
