@@ -1,0 +1,118 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Nulo.Modules.WorkspaceManager</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>lib.wsm</AssemblyName>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Nulo.Modules.WorkspaceManager</PackageId>
+    <Title>Workspace Manager</Title>
+    <Version>1.1.0</Version>
+    <Authors>kastney</Authors>
+    <Company>Nulo Ecosystem</Company>
+    <Product>Workspace Manager ®</Product>
+    <Description>A library for docking panels in .Net WinForms that facilitates the management of light and dark workspaces and themes. Tailored for the Nulo Ecosystem.</Description>
+    <Copyright>Copyright © 2024 Nulo Ecosystem</Copyright>
+    <PackageProjectUrl>https://github.com/nulo-ecosystem/library-forms-WorkspaceManager/pkgs/nuget/Nulo.Modules.WorkspaceManager</PackageProjectUrl>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/nulo-ecosystem/library-modules-WorkspaceManager</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>nulo-ecosystem; docking; library; workspaces; dark-theme; light-theme</PackageTags>
+    <PackageReleaseNotes>1. Breaking changes
+...
+
+2. New features
+...
+
+3. Bug fixes
+...</PackageReleaseNotes>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Themes\Default\Resources\Dockindicator_PaneDiamond_Hotspot.png" />
+    <None Remove="Themes\Default\Resources\DockIndicator_PaneDiamond_HotspotIndex.png" />
+    <None Remove="Themes\Default\Resources\MaskArrowBottom.png" />
+    <None Remove="Themes\Default\Resources\MaskArrowLeft.png" />
+    <None Remove="Themes\Default\Resources\MaskArrowRight.png" />
+    <None Remove="Themes\Default\Resources\MaskArrowTop.png" />
+    <None Remove="Themes\Default\Resources\MaskCoreBottom.png" />
+    <None Remove="Themes\Default\Resources\MaskCoreCenter.png" />
+    <None Remove="Themes\Default\Resources\MaskCoreLeft.png" />
+    <None Remove="Themes\Default\Resources\MaskCoreRight.png" />
+    <None Remove="Themes\Default\Resources\MaskCoreTop.png" />
+    <None Remove="Themes\Default\Resources\MaskDock.png" />
+    <None Remove="Themes\Default\Resources\MaskDockFive.png" />
+    <None Remove="Themes\Default\Resources\MaskTabClose.png" />
+    <None Remove="Themes\Default\Resources\MaskTabList.png" />
+    <None Remove="Themes\Default\Resources\MaskTabOverflow.png" />
+    <None Remove="Themes\Default\Resources\MaskToolWindowAutoHide.png" />
+    <None Remove="Themes\Default\Resources\MaskToolWindowClose.png" />
+    <None Remove="Themes\Default\Resources\MaskToolWindowDock.png" />
+    <None Remove="Themes\Default\Resources\MaskToolWindowOption.png" />
+    <None Remove="Themes\Default\Resources\MaskWindowBottom.png" />
+    <None Remove="Themes\Default\Resources\MaskWindowCenter.png" />
+    <None Remove="Themes\Default\Resources\MaskWindowLeft.png" />
+    <None Remove="Themes\Default\Resources\MaskWindowRight.png" />
+    <None Remove="Themes\Default\Resources\MaskWindowTop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Themes\Default\Resources\Dockindicator_PaneDiamond_Hotspot.png" />
+    <Content Include="Themes\Default\Resources\DockIndicator_PaneDiamond_HotspotIndex.png" />
+    <Content Include="Themes\Default\Resources\MaskArrowBottom.png" />
+    <Content Include="Themes\Default\Resources\MaskArrowLeft.png" />
+    <Content Include="Themes\Default\Resources\MaskArrowRight.png" />
+    <Content Include="Themes\Default\Resources\MaskArrowTop.png" />
+    <Content Include="Themes\Default\Resources\MaskCoreBottom.png" />
+    <Content Include="Themes\Default\Resources\MaskCoreCenter.png" />
+    <Content Include="Themes\Default\Resources\MaskCoreLeft.png" />
+    <Content Include="Themes\Default\Resources\MaskCoreRight.png" />
+    <Content Include="Themes\Default\Resources\MaskCoreTop.png" />
+    <Content Include="Themes\Default\Resources\MaskDock.png" />
+    <Content Include="Themes\Default\Resources\MaskDockFive.png" />
+    <Content Include="Themes\Default\Resources\MaskTabClose.png" />
+    <Content Include="Themes\Default\Resources\MaskTabList.png" />
+    <Content Include="Themes\Default\Resources\MaskTabOverflow.png" />
+    <Content Include="Themes\Default\Resources\MaskToolWindowAutoHide.png" />
+    <Content Include="Themes\Default\Resources\MaskToolWindowClose.png" />
+    <Content Include="Themes\Default\Resources\MaskToolWindowDock.png" />
+    <Content Include="Themes\Default\Resources\MaskToolWindowOption.png" />
+    <Content Include="Themes\Default\Resources\MaskWindowBottom.png" />
+    <Content Include="Themes\Default\Resources\MaskWindowCenter.png" />
+    <Content Include="Themes\Default\Resources\MaskWindowLeft.png" />
+    <Content Include="Themes\Default\Resources\MaskWindowRight.png" />
+    <Content Include="Themes\Default\Resources\MaskWindowTop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\Resources\Icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,1 +1,1 @@
-# library-forms-DockPanelSuite
+# Workspace Manager

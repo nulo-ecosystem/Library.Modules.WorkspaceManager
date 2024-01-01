@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workspace Manager", "Source\Workspace Manager\Workspace Manager.csproj", "{E8A1F88E-5535-40BC-84A8-A8CEFE82018E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workspace Manager.Forms", "Source\Workspace Manager.Forms\Workspace Manager.Forms.csproj", "{85B8A4AE-08CF-403A-A058-D3B354335526}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8A1F88E-5535-40BC-84A8-A8CEFE82018E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8A1F88E-5535-40BC-84A8-A8CEFE82018E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8A1F88E-5535-40BC-84A8-A8CEFE82018E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8A1F88E-5535-40BC-84A8-A8CEFE82018E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85B8A4AE-08CF-403A-A058-D3B354335526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85B8A4AE-08CF-403A-A058-D3B354335526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85B8A4AE-08CF-403A-A058-D3B354335526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85B8A4AE-08CF-403A-A058-D3B354335526}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E042F51-36C0-4311-B91B-3C440648CC41}
+	EndGlobalSection
+EndGlobal
