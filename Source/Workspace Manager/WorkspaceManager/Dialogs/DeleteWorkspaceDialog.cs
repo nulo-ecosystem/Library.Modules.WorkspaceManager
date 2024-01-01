@@ -4,7 +4,6 @@ using System.Windows.Forms;
 namespace Nulo.Modules.WorkspaceManager {
 
     internal partial class DeleteWorkspaceDialog : Form {
-
         public int IndexWorkspace { get; private set; }
 
         public DeleteWorkspaceDialog(List<string> layouts, Texts texts) {
@@ -14,7 +13,6 @@ namespace Nulo.Modules.WorkspaceManager {
             Text = texts.DeleteWorkspaceTitle;
             LabelSelected.Text = $"{texts.DeleteWorkspaceSelect}:";
             DeleteButton.Text = texts.CommandDelete;
-
         }
 
         private void RemoveButton_Click(object sender, System.EventArgs e) {

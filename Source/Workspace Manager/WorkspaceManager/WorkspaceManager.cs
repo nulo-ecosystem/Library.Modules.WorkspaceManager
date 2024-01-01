@@ -7,18 +7,19 @@ using System.Windows.Forms;
 namespace Nulo.Modules.WorkspaceManager {
 
     public class WorkspaceManager<TWorkspaceTheme, TWorkspaceData> : IDisposable where TWorkspaceTheme : IWorkspaceTheme where TWorkspaceData : IWorkspaceData {
-
         private readonly IWorkspaceData workspaceData;
         private readonly IWorkspaceTheme workspaceTheme;
 
         public DockPanel DockPanel { get; private set; } = new DockPanel { Dock = DockStyle.Fill };
 
         #region Initialization
+
         public WorkspaceManager() {
             workspaceData = Activator.CreateInstance<TWorkspaceData>();
             workspaceTheme = Activator.CreateInstance<TWorkspaceTheme>();
             SetTheme(null);
         }
+
         public void Init() {
             // Set style
             if(Theme != null) { Style?.Invoke(new ToolStripExtender(Theme)); }
@@ -30,9 +31,11 @@ namespace Nulo.Modules.WorkspaceManager {
                 SetWorkspace(workspaceData.LoadDefaultWorkspace(defaultWorkspaces[0].Key));
             }
         }
-        #endregion
+
+        #endregion Initialization
 
         #region Theme
+
         public ThemeBase Theme { get; private set; }
         public StyleHandler Style { get; set; }
 
@@ -66,9 +69,11 @@ namespace Nulo.Modules.WorkspaceManager {
                 UpdateWorkspace();
             }
         }
-        #endregion
+
+        #endregion Theme
 
         #region Workspaces Manager
+
         private List<IDockContent> currentPanels;
         private List<string> userWorkspaces;
         private List<DefaultWorkspace> defaultWorkspaces;
@@ -91,6 +96,7 @@ namespace Nulo.Modules.WorkspaceManager {
                 }
             }
         }
+
         public IDockContent GetInstanceByPanelType(string fullName) {
             if(currentPanels != null) {
                 for(int i = 0; i < currentPanels.Count; i++) {
@@ -116,12 +122,14 @@ namespace Nulo.Modules.WorkspaceManager {
                 if(!string.IsNullOrEmpty(content)) { SetWorkspace(content); }
             }
         }
+
         private void ItemNewWorkspace_Click(object sender, EventArgs e) {
             using var dialog = new NewWorkspaceDialog(userWorkspaces, defaultWorkspaces, texts);
             if(dialog.ShowDialog() == DialogResult.OK && workspaceData.SaveUserWorkspace(new UserWorkspace { Key = dialog.WorkspaceName, Content = DockPanel.GenerateXml() })) {
                 userWorkspaces.Add(dialog.WorkspaceName);
             }
         }
+
         private void ItemDeleteWorkspace_Click(object sender, EventArgs e) {
             using var dialog = new DeleteWorkspaceDialog(userWorkspaces, texts);
             if(dialog.ShowDialog() == DialogResult.OK && workspaceData.DeleteUserWorkspace(new UserWorkspace { Key = userWorkspaces[dialog.IndexWorkspace] })) {
@@ -132,13 +140,16 @@ namespace Nulo.Modules.WorkspaceManager {
         public void UpdateWorkspace() {
             foreach(var panel in DockPanel.Contents) { panel.UpdateContent(); }
         }
-        #endregion
+
+        #endregion Workspaces Manager
 
         #region Options Manager
+
         private ToolStripMenuItem menuItemSaveWorkspace;
         private ToolStripMenuItem menuItemDeleteWorkspace;
 
         private ToolStripDropDownButton toolStripWorkspaces;
+
         public void SetToolStripWorkspaces(ToolStripDropDownButton toolStripWorkspaces) {
             this.toolStripWorkspaces = toolStripWorkspaces;
 
@@ -157,6 +168,7 @@ namespace Nulo.Modules.WorkspaceManager {
 
             this.toolStripWorkspaces.DropDownOpening += ToolStripWorksoaces_DropDownOpening;
         }
+
         private void ToolStripWorksoaces_DropDownOpening(object sender, EventArgs e) {
             var dropDown = (ToolStripDropDownButton)sender;
             for(int i = 0; i < dropDown.DropDownItems.Count; i++) {
@@ -189,6 +201,7 @@ namespace Nulo.Modules.WorkspaceManager {
 
         private ToolStripMenuItem menuStripWindow;
         private ToolStripMenuItem menuStripWindowWorkspaces;
+
         public void SetMenuStripWorkspaces(ToolStripMenuItem menuStripWindow, ToolStripMenuItem menuStripWindowWorkspaces) {
             this.menuStripWindow = menuStripWindow;
             this.menuStripWindowWorkspaces = menuStripWindowWorkspaces;
@@ -208,6 +221,7 @@ namespace Nulo.Modules.WorkspaceManager {
 
             this.menuStripWindow.DropDownOpening += MenuStripWorkspaces_DropDownOpening;
         }
+
         private void MenuStripWorkspaces_DropDownOpening(object sender, EventArgs e) {
             if(menuStripWindowWorkspaces is null) { return; }
             for(int i = 0; i < menuStripWindowWorkspaces.DropDownItems.Count; i++) {
@@ -237,10 +251,13 @@ namespace Nulo.Modules.WorkspaceManager {
             menuStripWindowWorkspaces.DropDownItems.Add(menuItemSaveWorkspace);
             if(userWorkspaces.Count != 0) { menuStripWindowWorkspaces.DropDownItems.Add(menuItemDeleteWorkspace); }
         }
-        #endregion
+
+        #endregion Options Manager
 
         #region Panels Manager
+
         private DockContent currentPage;
+
         public void OpenPage<T>() where T : DockContent {
             using var page = Activator.CreateInstance<T>();
             page.SetColors(DockPanel.Theme.DockContentColorPalette);
@@ -249,11 +266,13 @@ namespace Nulo.Modules.WorkspaceManager {
             currentPage = page;
             page.ShowDialog();
         }
+
         public T OpenDialog<T>() where T : DockContent {
             var dialog = Activator.CreateInstance<T>();
             dialog.SetColors(DockPanel.Theme.DockContentColorPalette);
             return dialog;
         }
+
         public T OpenPanel<T>() where T : DockContent {
             if(GetPanelByType<T>() is T panel) {
                 panel.Activate();
@@ -277,10 +296,13 @@ namespace Nulo.Modules.WorkspaceManager {
             }
             return null;
         }
-        #endregion
+
+        #endregion Panels Manager
 
         #region Texts Manager
+
         private Texts texts = new();
+
         public void UpdateTexts() {
             if(workspaceData.GetTexts() is Texts texts) {
                 this.texts = texts;
@@ -290,7 +312,8 @@ namespace Nulo.Modules.WorkspaceManager {
                 }
             }
         }
-        #endregion
+
+        #endregion Texts Manager
 
         public virtual void Dispose() {
             if(toolStripWorkspaces is not null) { toolStripWorkspaces.DropDownOpening -= ToolStripWorksoaces_DropDownOpening; }

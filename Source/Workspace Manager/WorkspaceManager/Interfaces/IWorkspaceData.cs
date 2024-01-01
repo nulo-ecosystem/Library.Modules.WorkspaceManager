@@ -6,21 +6,32 @@ namespace Nulo.Modules.WorkspaceManager {
     public interface IWorkspaceData {
 
         #region Current Workspace
+
         string LoadCurrentWorkspace();
+
         void SaveCurrentWorkspace(string content);
-        #endregion
+
+        #endregion Current Workspace
 
         #region Default Workspaces
+
         List<DefaultWorkspace> LoadAllDefaultWorkspaces();
+
         string LoadDefaultWorkspace(string key = null);
-        #endregion
+
+        #endregion Default Workspaces
 
         #region User Workspaces
+
         List<string> LoadAllUserWorkspaces();
+
         string LoadUserWorkspace(string key = null);
+
         bool SaveUserWorkspace(UserWorkspace workspace);
+
         bool DeleteUserWorkspace(UserWorkspace workspace);
-        #endregion
+
+        #endregion User Workspaces
 
         Texts GetTexts();
 

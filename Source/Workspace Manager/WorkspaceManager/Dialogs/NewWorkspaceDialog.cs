@@ -5,7 +5,6 @@ using System.Windows.Forms;
 namespace Nulo.Modules.WorkspaceManager {
 
     internal partial class NewWorkspaceDialog : Form {
-
         public string WorkspaceName { get; private set; }
         private const string BADCHARS = "\\/:*?\"<>|";
         private readonly List<DefaultWorkspace> defaultLayouts;
@@ -31,6 +30,7 @@ namespace Nulo.Modules.WorkspaceManager {
                 Close();
             }
         }
+
         private bool IsValidFileName(string name) {
             if(string.IsNullOrEmpty(name)) { return false; }
 
@@ -50,9 +50,11 @@ namespace Nulo.Modules.WorkspaceManager {
         }
 
         private void SaveButton_Click(object sender, System.EventArgs e) => SetName();
+
         private void WorkspaceNameText_KeyDown(object sender, KeyEventArgs e) {
             if(e.KeyCode == Keys.Enter) { SetName(); }
         }
+
         private void WorkspaceNameText_TextChanged(object sender, System.EventArgs e) => MessageErrorLabel.Text = string.Empty;
     }
 }
