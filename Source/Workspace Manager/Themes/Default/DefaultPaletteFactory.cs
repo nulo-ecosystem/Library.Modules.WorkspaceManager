@@ -6,14 +6,9 @@ using System.Xml.Linq;
 
 namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
-    public class DefaultPaletteFactory : IPaletteFactory {
-
+    public class DefaultPaletteFactory(byte[] file) : IPaletteFactory {
         private const string Env = "Environment";
-        private XDocument _xml;
-
-        public DefaultPaletteFactory(byte[] file) {
-            _xml = XDocument.Load(new StreamReader(new MemoryStream(file)));
-        }
+        private readonly XDocument _xml = XDocument.Load(new StreamReader(new MemoryStream(file)));
 
         public void Initialize(DockPanelColorPalette palette) {
             palette.AutoHideStripDefault.Background = ColorTranslatorFromHtml("AutoHideTabBackgroundBegin");
@@ -189,7 +184,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 .Elements("Category").FirstOrDefault(item => item.Attribute("Name").Value == Env)?
                 .Elements("Color").FirstOrDefault(item => item.Attribute("Name").Value == name)?
                 .Element(foreground ? "Foreground" : "Background").Attribute("Source").Value;
-            if (color == null) {
+            if(color == null) {
                 return Color.Transparent;
             }
 

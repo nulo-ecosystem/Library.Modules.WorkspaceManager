@@ -1,6 +1,5 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -11,12 +10,10 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         public DefaultDockPane(IDockContent content, DockState visibleState, bool show) : base(content, visibleState, show) { }
 
-        [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters", MessageId = "1#")]
         public DefaultDockPane(IDockContent content, FloatWindow floatWindow, bool show) : base(content, floatWindow, show) { }
 
         public DefaultDockPane(IDockContent content, DockPane previousPane, DockAlignment alignment, double proportion, bool show) : base(content, previousPane, alignment, proportion, show) { }
 
-        [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters", MessageId = "1#")]
         public DefaultDockPane(IDockContent content, Rectangle floatWindowBounds, bool show) : base(content, floatWindowBounds, show) { }
 
         protected override void OnPaint(PaintEventArgs e) {
@@ -28,7 +25,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         protected internal override Rectangle ContentRectangle {
             get {
                 var rect = base.ContentRectangle;
-                if (DockState == DockState.Document || Contents.Count == 1) {
+                if(DockState == DockState.Document || Contents.Count == 1) {
                     rect.Height--;
                 }
 

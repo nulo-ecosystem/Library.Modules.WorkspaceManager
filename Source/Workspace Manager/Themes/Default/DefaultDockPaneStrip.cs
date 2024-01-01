@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Nulo.Modules.WorkspaceManager.Themes.Default {
@@ -10,30 +11,30 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
     [ToolboxItem(false)]
     internal class DefaultDockPaneStrip : DockPaneStripBase {
 
-        private class TabDefault : Tab {
-            public TabDefault(IDockContent content)
-                : base(content) {
-            }
-
+        private class TabDefault(IDockContent content) : Tab(content) {
             private int m_tabX;
+
             public int TabX {
                 get { return m_tabX; }
                 set { m_tabX = value; }
             }
 
             private int m_tabWidth;
+
             public int TabWidth {
                 get { return m_tabWidth; }
                 set { m_tabWidth = value; }
             }
 
             private int m_maxWidth;
+
             public int MaxWidth {
                 get { return m_maxWidth; }
                 set { m_maxWidth = value; }
             }
 
             private bool m_flag;
+
             protected internal bool Flag {
                 get { return m_flag; }
                 set { m_flag = value; }
@@ -45,15 +46,10 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         [ToolboxItem(false)]
-        private sealed class InertButton : InertButtonBase {
-            private Bitmap _hovered, _normal, _pressed;
-
-            public InertButton(Bitmap hovered, Bitmap normal, Bitmap pressed)
-                : base() {
-                _hovered = hovered;
-                _normal = normal;
-                _pressed = pressed;
-            }
+        private sealed class InertButton(Bitmap hovered, Bitmap normal, Bitmap pressed) : InertButtonBase() {
+            private readonly Bitmap _hovered = hovered;
+            private readonly Bitmap _normal = normal;
+            private readonly Bitmap _pressed = pressed;
 
             public override Bitmap Image {
                 get { return _normal; }
@@ -101,7 +97,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         private const int _DocumentIconWidth = 16;
         private const int _DocumentTextGapRight = 6;
 
-        #endregion
+        #endregion Constants
 
         #region Members
 
@@ -120,16 +116,18 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         private Rectangle _activeClose;
         private int _selectMenuMargin = 5;
         private bool m_suspendDrag = false;
-        #endregion
+
+        #endregion Members
 
         #region Properties
 
         private Rectangle TabStripRectangle {
             get {
-                if (Appearance == DockPane.AppearanceStyle.Document)
+                if(Appearance == DockPane.AppearanceStyle.Document) {
                     return TabStripRectangle_Document;
-                else
+                } else {
                     return TabStripRectangle_ToolWindow;
+                }
             }
         }
 
@@ -149,8 +147,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private Rectangle TabsRectangle {
             get {
-                if (Appearance == DockPane.AppearanceStyle.ToolWindow)
-                    return TabStripRectangle;
+                if(Appearance == DockPane.AppearanceStyle.ToolWindow) { return TabStripRectangle; }
 
                 Rectangle rectWindow = TabStripRectangle;
                 int x = rectWindow.X;
@@ -181,7 +178,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private InertButton ButtonOverflow {
             get {
-                if (m_buttonOverflow == null) {
+                if(m_buttonOverflow == null) {
                     m_buttonOverflow = new InertButton(
                         DockPane.DockPanel.Theme.ImageService.DockPaneHover_OptionOverflow,
                         DockPane.DockPanel.Theme.ImageService.DockPane_OptionOverflow,
@@ -196,7 +193,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private InertButton ButtonWindowList {
             get {
-                if (m_buttonWindowList == null) {
+                if(m_buttonWindowList == null) {
                     m_buttonWindowList = new InertButton(
                         DockPane.DockPanel.Theme.ImageService.DockPaneHover_List,
                         DockPane.DockPanel.Theme.ImageService.DockPane_List,
@@ -223,13 +220,12 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private Font BoldFont {
             get {
-                if (IsDisposed)
-                    return null;
+                if(IsDisposed) { return null; }
 
-                if (m_boldFont == null) {
+                if(m_boldFont == null) {
                     m_font = TextFont;
                     m_boldFont = new Font(TextFont, FontStyle.Bold);
-                } else if (m_font != TextFont) {
+                } else if(m_font != TextFont) {
                     m_boldFont.Dispose();
                     m_font = TextFont;
                     m_boldFont = new Font(TextFont, FontStyle.Bold);
@@ -259,8 +255,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private bool DocumentTabsOverflow {
             set {
-                if (m_documentTabsOverflow == value)
-                    return;
+                if(m_documentTabsOverflow == value) { return; }
 
                 m_documentTabsOverflow = value;
                 SetInertButtons();
@@ -323,8 +318,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private static string ToolTipSelect {
             get {
-                if (m_toolTipSelect == null)
-                    m_toolTipSelect = DefaultStrings.DockPaneStrip_ToolTipWindowList;
+                if(m_toolTipSelect == null) { m_toolTipSelect = DefaultStrings.DockPaneStrip_ToolTipWindowList; }
                 return m_toolTipSelect;
             }
         }
@@ -335,10 +329,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                     TextFormatFlags.HorizontalCenter |
                     TextFormatFlags.SingleLine |
                     TextFormatFlags.VerticalCenter;
-                if (RightToLeft == RightToLeft.Yes)
+                if(RightToLeft == RightToLeft.Yes) {
                     return textFormat | TextFormatFlags.RightToLeft | TextFormatFlags.Right;
-                else
+                } else {
                     return textFormat;
+                }
             }
         }
 
@@ -356,10 +351,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                     TextFormatFlags.SingleLine |
                     TextFormatFlags.VerticalCenter |
                     TextFormatFlags.HorizontalCenter;
-                if (RightToLeft == RightToLeft.Yes)
+                if(RightToLeft == RightToLeft.Yes) {
                     return textFormat | TextFormatFlags.RightToLeft;
-                else
+                } else {
                     return textFormat;
+                }
             }
         }
 
@@ -419,12 +415,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             get { return _DocumentTextGapRight; }
         }
 
-        #endregion
+        #endregion Customizable Properties
 
-        #endregion
+        #endregion Properties
 
-        public DefaultDockPaneStrip(DockPane pane)
-            : base(pane) {
+        public DefaultDockPaneStrip(DockPane pane) : base(pane) {
             SetStyle(ControlStyles.ResizeRedraw |
                 ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint |
@@ -441,9 +436,9 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         protected override void Dispose(bool disposing) {
-            if (disposing) {
+            if(disposing) {
                 Components.Dispose();
-                if (m_boldFont != null) {
+                if(m_boldFont != null) {
                     m_boldFont.Dispose();
                     m_boldFont = null;
                 }
@@ -452,15 +447,15 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         protected internal override int MeasureHeight() {
-            if (Appearance == DockPane.AppearanceStyle.ToolWindow)
+            if(Appearance == DockPane.AppearanceStyle.ToolWindow) {
                 return MeasureHeight_ToolWindow();
-            else
+            } else {
                 return MeasureHeight_Document();
+            }
         }
 
         private int MeasureHeight_ToolWindow() {
-            if (DockPane.IsAutoHide || Tabs.Count <= 1)
-                return 0;
+            if(DockPane.IsAutoHide || Tabs.Count <= 1) { return 0; }
 
             int height = Math.Max(TextFont.Height + (PatchController.EnableHighDpi == true ? DocumentIconGapBottom : 0),
                 ToolWindowImageHeight + ToolWindowImageGapTop + ToolWindowImageGapBottom)
@@ -480,9 +475,8 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
             CalculateTabs();
-            if (Appearance == DockPane.AppearanceStyle.Document && DockPane.ActiveContent != null) {
-                if (EnsureDocumentTabVisible(DockPane.ActiveContent, false))
-                    CalculateTabs();
+            if(Appearance == DockPane.AppearanceStyle.Document && DockPane.ActiveContent != null) {
+                if(EnsureDocumentTabVisible(DockPane.ActiveContent, false)) { CalculateTabs(); }
             }
 
             DrawTabStrip(e.Graphics);
@@ -494,10 +488,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         public override GraphicsPath GetOutline(int index) {
-            if (Appearance == DockPane.AppearanceStyle.Document)
+            if(Appearance == DockPane.AppearanceStyle.Document) {
                 return GetOutline_Document(index);
-            else
+            } else {
                 return GetOutline_ToolWindow(index);
+            }
         }
 
         private GraphicsPath GetOutline_Document(int index) {
@@ -507,11 +502,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             rectTab = RectangleToScreen(DrawHelper.RtlTransform(this, rectTab));
             Rectangle rectPaneClient = DockPane.RectangleToScreen(DockPane.ClientRectangle);
 
-            GraphicsPath path = new GraphicsPath();
+            GraphicsPath path = new();
             GraphicsPath pathTab = GetTabOutline_Document(Tabs[index], true, true, true);
             path.AddPath(pathTab, true);
 
-            if (DockPane.DockPanel.DocumentTabStripLocation == DocumentTabStripLocation.Bottom) {
+            if(DockPane.DockPanel.DocumentTabStripLocation == DocumentTabStripLocation.Bottom) {
                 path.AddLine(rectTab.Right, rectTab.Top, rectPaneClient.Right, rectTab.Top);
                 path.AddLine(rectPaneClient.Right, rectTab.Top, rectPaneClient.Right, rectPaneClient.Top);
                 path.AddLine(rectPaneClient.Right, rectPaneClient.Top, rectPaneClient.Left, rectPaneClient.Top);
@@ -533,7 +528,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             rectTab = RectangleToScreen(DrawHelper.RtlTransform(this, rectTab));
             Rectangle rectPaneClient = DockPane.RectangleToScreen(DockPane.ClientRectangle);
 
-            GraphicsPath path = new GraphicsPath();
+            GraphicsPath path = new();
             GraphicsPath pathTab = GetTabOutline(Tabs[index], true, true);
             path.AddPath(pathTab, true);
             path.AddLine(rectTab.Left, rectTab.Top, rectPaneClient.Left, rectTab.Top);
@@ -545,38 +540,38 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         private void CalculateTabs() {
-            if (Appearance == DockPane.AppearanceStyle.ToolWindow)
+            if(Appearance == DockPane.AppearanceStyle.ToolWindow) {
                 CalculateTabs_ToolWindow();
-            else
+            } else {
                 CalculateTabs_Document();
+            }
         }
 
         private void CalculateTabs_ToolWindow() {
-            if (Tabs.Count <= 1 || DockPane.IsAutoHide)
-                return;
+            if(Tabs.Count <= 1 || DockPane.IsAutoHide) { return; }
 
             Rectangle rectTabStrip = TabStripRectangle;
 
             // Calculate tab widths
             int countTabs = Tabs.Count;
-            foreach (TabDefault tab in Tabs) {
+            foreach(TabDefault tab in Tabs.Cast<TabDefault>()) {
                 tab.MaxWidth = GetMaxTabWidth(Tabs.IndexOf(tab));
                 tab.Flag = false;
             }
 
-            // Set tab whose max width less than average width
-            bool anyWidthWithinAverage = true;
             int totalWidth = rectTabStrip.Width - ToolWindowStripGapLeft - ToolWindowStripGapRight;
             int totalAllocatedWidth = 0;
             int averageWidth = totalWidth / countTabs;
             int remainedTabs = countTabs;
-            for (anyWidthWithinAverage = true; anyWidthWithinAverage && remainedTabs > 0;) {
-                anyWidthWithinAverage = false;
-                foreach (TabDefault tab in Tabs) {
-                    if (tab.Flag)
-                        continue;
 
-                    if (tab.MaxWidth <= averageWidth) {
+            // Set tab whose max width less than average width
+            bool anyWidthWithinAverage;
+            for(anyWidthWithinAverage = true; anyWidthWithinAverage && remainedTabs > 0;) {
+                anyWidthWithinAverage = false;
+                foreach(TabDefault tab in Tabs.Cast<TabDefault>()) {
+                    if(tab.Flag) { continue; }
+
+                    if(tab.MaxWidth <= averageWidth) {
                         tab.Flag = true;
                         tab.TabWidth = tab.MaxWidth;
                         totalAllocatedWidth += tab.TabWidth;
@@ -584,29 +579,28 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                         remainedTabs--;
                     }
                 }
-                if (remainedTabs != 0)
-                    averageWidth = (totalWidth - totalAllocatedWidth) / remainedTabs;
+                if(remainedTabs != 0) { averageWidth = (totalWidth - totalAllocatedWidth) / remainedTabs; }
             }
 
             // If any tab width not set yet, set it to the average width
-            if (remainedTabs > 0) {
+            if(remainedTabs > 0) {
                 int roundUpWidth = (totalWidth - totalAllocatedWidth) - (averageWidth * remainedTabs);
-                foreach (TabDefault tab in Tabs) {
-                    if (tab.Flag)
-                        continue;
+                foreach(TabDefault tab in Tabs.Cast<TabDefault>()) {
+                    if(tab.Flag) { continue; }
 
                     tab.Flag = true;
-                    if (roundUpWidth > 0) {
+                    if(roundUpWidth > 0) {
                         tab.TabWidth = averageWidth + 1;
                         roundUpWidth--;
-                    } else
+                    } else {
                         tab.TabWidth = averageWidth;
+                    }
                 }
             }
 
             // Set the X position of the tabs
             int x = rectTabStrip.X + ToolWindowStripGapLeft;
-            foreach (TabDefault tab in Tabs) {
+            foreach(TabDefault tab in Tabs.Cast<TabDefault>()) {
                 tab.TabX = x;
                 x += tab.TabWidth;
             }
@@ -618,7 +612,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             var tab = Tabs[index] as TabDefault;
             tab.MaxWidth = GetMaxTabWidth(index);
             int width = Math.Min(tab.MaxWidth, DocumentTabMaxWidth);
-            if (x + width < rectTabStrip.Right || index == StartDisplayingTab) {
+            if(x + width < rectTabStrip.Right || index == StartDisplayingTab) {
                 tab.TabX = x;
                 tab.TabWidth = width;
                 EndDisplayingTab = index;
@@ -636,8 +630,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         /// Calculate which tabs are displayed and in what order.
         /// </summary>
         private void CalculateTabs_Document() {
-            if (m_startDisplayingTab >= Tabs.Count)
-                m_startDisplayingTab = 0;
+            if(m_startDisplayingTab >= Tabs.Count) { m_startDisplayingTab = 0; }
 
             Rectangle rectTabStrip = TabsRectangle;
 
@@ -649,14 +642,15 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             // the far left (assuming not right to left) and the tabs on the
             // right were dropped from view. If StartDisplayingTab is not 0
             // then we are dealing with making sure a specific tab is kept in focus.
-            if (m_startDisplayingTab > 0) {
+            if(m_startDisplayingTab > 0) {
                 int tempX = x;
                 var tab = Tabs[m_startDisplayingTab] as TabDefault;
                 tab.MaxWidth = GetMaxTabWidth(m_startDisplayingTab);
 
                 // Add the active tab and tabs to the left
-                for (int i = StartDisplayingTab; i >= 0; i--)
+                for(int i = StartDisplayingTab; i >= 0; i--) {
                     CalculateDocumentTab(rectTabStrip, ref tempX, i);
+                }
 
                 // Store which tab is the first one displayed so that it
                 // will be drawn correctly (without part of the tab cut off)
@@ -667,26 +661,28 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 // Start with the first tab displayed - name is a little misleading.
                 // Loop through each tab and set its location. If there is not enough
                 // room for all of them overflow will be returned.
-                for (int i = EndDisplayingTab; i < Tabs.Count; i++)
+                for(int i = EndDisplayingTab; i < Tabs.Count; i++) {
                     overflow = CalculateDocumentTab(rectTabStrip, ref tempX, i);
+                }
 
                 // If not all tabs are shown then we have an overflow.
-                if (FirstDisplayingTab != 0)
-                    overflow = true;
+                if(FirstDisplayingTab != 0) { overflow = true; }
             } else {
-                for (int i = StartDisplayingTab; i < Tabs.Count; i++)
+                for(int i = StartDisplayingTab; i < Tabs.Count; i++) {
                     overflow = CalculateDocumentTab(rectTabStrip, ref x, i);
-                for (int i = 0; i < StartDisplayingTab; i++)
+                }
+                for(int i = 0; i < StartDisplayingTab; i++) {
                     overflow = CalculateDocumentTab(rectTabStrip, ref x, i);
+                }
 
                 FirstDisplayingTab = StartDisplayingTab;
             }
 
-            if (!overflow) {
+            if(!overflow) {
                 m_startDisplayingTab = 0;
                 FirstDisplayingTab = 0;
                 x = rectTabStrip.X;
-                foreach (TabDefault tab in Tabs) {
+                foreach(TabDefault tab in Tabs.Cast<TabDefault>()) {
                     tab.TabX = x;
                     x += tab.TabWidth;
                 }
@@ -696,8 +692,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         protected internal override void EnsureTabVisible(IDockContent content) {
-            if (Appearance != DockPane.AppearanceStyle.Document || !Tabs.Contains(content))
-                return;
+            if(Appearance != DockPane.AppearanceStyle.Document || !Tabs.Contains(content)) { return; }
 
             CalculateTabs();
             EnsureDocumentTabVisible(content, true);
@@ -705,32 +700,30 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private bool EnsureDocumentTabVisible(IDockContent content, bool repaint) {
             int index = Tabs.IndexOf(content);
-            if (index == -1) // TODO: should prevent it from being -1;
-                return false;
+            // TODO: should prevent it from being -1;
+            if(index == -1) { return false; }
 
             var tab = Tabs[index] as TabDefault;
-            if (tab.TabWidth != 0)
-                return false;
+            if(tab.TabWidth != 0) { return false; }
 
             StartDisplayingTab = index;
-            if (repaint)
-                Invalidate();
+            if(repaint) { Invalidate(); }
 
             return true;
         }
 
         private int GetMaxTabWidth(int index) {
-            if (Appearance == DockPane.AppearanceStyle.ToolWindow)
+            if(Appearance == DockPane.AppearanceStyle.ToolWindow) {
                 return GetMaxTabWidth_ToolWindow(index);
-            else
+            } else {
                 return GetMaxTabWidth_Document(index);
+            }
         }
 
         private int GetMaxTabWidth_ToolWindow(int index) {
             IDockContent content = Tabs[index].Content;
             Size sizeString = TextRenderer.MeasureText(content.DockHandler.TabText, TextFont);
-            return ToolWindowImageWidth + sizeString.Width + ToolWindowImageGapLeft
-                + ToolWindowImageGapRight + ToolWindowTextGapRight;
+            return ToolWindowImageWidth + sizeString.Width + ToolWindowImageGapLeft + ToolWindowImageGapRight + ToolWindowTextGapRight;
         }
 
         private const int TAB_CLOSE_BUTTON_WIDTH = 30;
@@ -741,10 +734,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             Size sizeText = TextRenderer.MeasureText(content.DockHandler.TabText, BoldFont, new Size(DocumentTabMaxWidth, height), DocumentTextFormat);
 
             int width;
-            if (DockPane.DockPanel.ShowDocumentIcon)
+            if(DockPane.DockPanel.ShowDocumentIcon) {
                 width = sizeText.Width + DocumentIconWidth + DocumentIconGapLeft + DocumentIconGapRight + DocumentTextGapRight;
-            else
+            } else {
                 width = sizeText.Width + DocumentIconGapLeft + DocumentTextGapRight;
+            }
 
             width += TAB_CLOSE_BUTTON_WIDTH;
             return width;
@@ -755,34 +749,34 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             Rectangle rectTabStrip = TabStripRectangle;
             g.FillRectangle(DockPane.DockPanel.Theme.PaintingService.GetBrush(DockPane.DockPanel.Theme.ColorPalette.MainWindowActive.Background), rectTabStrip);
 
-            if (Appearance == DockPane.AppearanceStyle.Document)
+            if(Appearance == DockPane.AppearanceStyle.Document) {
                 DrawTabStrip_Document(g);
-            else
+            } else {
                 DrawTabStrip_ToolWindow(g);
+            }
         }
 
         private void DrawTabStrip_Document(Graphics g) {
             int count = Tabs.Count;
-            if (count == 0)
-                return;
+            if(count == 0) { return; }
 
-            Rectangle rectTabStrip = new Rectangle(TabStripRectangle.Location, TabStripRectangle.Size);
+            Rectangle rectTabStrip = new(TabStripRectangle.Location, TabStripRectangle.Size);
             rectTabStrip.Height += 1;
 
             // Draw the tabs
             Rectangle rectTabOnly = TabsRectangle;
-            Rectangle rectTab = Rectangle.Empty;
             TabDefault tabActive = null;
             g.SetClip(DrawHelper.RtlTransform(this, rectTabOnly));
-            for (int i = 0; i < count; i++) {
+            Rectangle rectTab;
+            for(int i = 0; i < count; i++) {
                 rectTab = GetTabRectangle(i);
-                if (Tabs[i].Content == DockPane.ActiveContent) {
+                if(Tabs[i].Content == DockPane.ActiveContent) {
                     tabActive = Tabs[i] as TabDefault;
                     tabActive.Rectangle = rectTab;
                     continue;
                 }
 
-                if (rectTab.IntersectsWith(rectTabOnly)) {
+                if(rectTab.IntersectsWith(rectTabOnly)) {
                     var tab = Tabs[i] as TabDefault;
                     tab.Rectangle = rectTab;
                     DrawTab(g, tab);
@@ -791,21 +785,22 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
             g.SetClip(rectTabStrip);
 
-            if (DockPane.DockPanel.DocumentTabStripLocation == DocumentTabStripLocation.Bottom) {
+            if(DockPane.DockPanel.DocumentTabStripLocation == DocumentTabStripLocation.Bottom) {
             } else {
                 Color tabUnderLineColor;
-                if (tabActive != null && DockPane.IsActiveDocumentPane)
+                if(tabActive != null && DockPane.IsActiveDocumentPane) {
                     tabUnderLineColor = DockPane.DockPanel.Theme.ColorPalette.TabSelectedActive.Background;
-                else
+                } else {
                     tabUnderLineColor = DockPane.DockPanel.Theme.ColorPalette.TabSelectedInactive.Background;
+                }
 
                 g.DrawLine(DockPane.DockPanel.Theme.PaintingService.GetPen(tabUnderLineColor, 4), rectTabStrip.Left, rectTabStrip.Bottom, rectTabStrip.Right, rectTabStrip.Bottom);
             }
 
             g.SetClip(DrawHelper.RtlTransform(this, rectTabOnly));
-            if (tabActive != null) {
+            if(tabActive != null) {
                 rectTab = tabActive.Rectangle.Value;
-                if (rectTab.IntersectsWith(rectTabOnly)) {
+                if(rectTab.IntersectsWith(rectTabOnly)) {
                     rectTab.Intersect(rectTabOnly);
                     tabActive.Rectangle = rectTab;
                     DrawTab(g, tabActive);
@@ -820,7 +815,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             g.DrawLine(DockPane.DockPanel.Theme.PaintingService.GetPen(borderColor), rect.Left, rect.Top,
                 rect.Right, rect.Top);
 
-            for (int i = 0; i < Tabs.Count; i++) {
+            for(int i = 0; i < Tabs.Count; i++) {
                 var tab = Tabs[i] as TabDefault;
                 tab.Rectangle = GetTabRectangle(i);
                 DrawTab(g, tab);
@@ -828,10 +823,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         private Rectangle GetTabRectangle(int index) {
-            if (Appearance == DockPane.AppearanceStyle.ToolWindow)
+            if(Appearance == DockPane.AppearanceStyle.ToolWindow) {
                 return GetTabRectangle_ToolWindow(index);
-            else
+            } else {
                 return GetTabRectangle_Document(index);
+            }
         }
 
         private Rectangle GetTabRectangle_ToolWindow(int index) {
@@ -845,39 +841,41 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             Rectangle rectTabStrip = TabStripRectangle;
             var tab = (TabDefault)Tabs[index];
 
-            Rectangle rect = new Rectangle();
-            rect.X = tab.TabX;
-            rect.Width = tab.TabWidth;
-            rect.Height = rectTabStrip.Height - DocumentTabGapTop;
+            Rectangle rect = new() {
+                X = tab.TabX,
+                Width = tab.TabWidth,
+                Height = rectTabStrip.Height - DocumentTabGapTop
+            };
 
-            if (DockPane.DockPanel.DocumentTabStripLocation == DocumentTabStripLocation.Bottom)
+            if(DockPane.DockPanel.DocumentTabStripLocation == DocumentTabStripLocation.Bottom) {
                 rect.Y = rectTabStrip.Y + DocumentStripGapBottom;
-            else
+            } else {
                 rect.Y = rectTabStrip.Y + DocumentTabGapTop;
+            }
 
             return rect;
         }
 
         private void DrawTab(Graphics g, TabDefault tab) {
-            if (Appearance == DockPane.AppearanceStyle.ToolWindow)
+            if(Appearance == DockPane.AppearanceStyle.ToolWindow) {
                 DrawTab_ToolWindow(g, tab);
-            else
+            } else {
                 DrawTab_Document(g, tab);
+            }
         }
 
         private GraphicsPath GetTabOutline(Tab tab, bool rtlTransform, bool toScreen) {
-            if (Appearance == DockPane.AppearanceStyle.ToolWindow)
+            if(Appearance == DockPane.AppearanceStyle.ToolWindow) {
                 return GetTabOutline_ToolWindow(tab, rtlTransform, toScreen);
-            else
+            } else {
                 return GetTabOutline_Document(tab, rtlTransform, toScreen, false);
+            }
         }
 
         private GraphicsPath GetTabOutline_ToolWindow(Tab tab, bool rtlTransform, bool toScreen) {
             Rectangle rect = GetTabRectangle(Tabs.IndexOf(tab));
-            if (rtlTransform)
-                rect = DrawHelper.RtlTransform(this, rect);
-            if (toScreen)
-                rect = RectangleToScreen(rect);
+            if(rtlTransform) { rect = DrawHelper.RtlTransform(this, rect); }
+            if(toScreen) { rect = RectangleToScreen(rect); }
 
             DrawHelper.GetRoundedCornerTab(GraphicsPath, rect, false);
             return GraphicsPath;
@@ -891,10 +889,8 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             rect.Intersect(TabsRectangle);
             rect.Width--;
 
-            if (rtlTransform)
-                rect = DrawHelper.RtlTransform(this, rect);
-            if (toScreen)
-                rect = RectangleToScreen(rect);
+            if(rtlTransform) { rect = DrawHelper.RtlTransform(this, rect); }
+            if(toScreen) { rect = RectangleToScreen(rect); }
 
             GraphicsPath.AddRectangle(rect);
             return GraphicsPath;
@@ -902,7 +898,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private void DrawTab_ToolWindow(Graphics g, TabDefault tab) {
             var rect = tab.Rectangle.Value;
-            Rectangle rectIcon = new Rectangle(
+            Rectangle rectIcon = new(
                 rect.X + ToolWindowImageGapLeft,
                 rect.Y + rect.Height - ToolWindowImageGapBottom - ToolWindowImageHeight,
                 ToolWindowImageWidth, ToolWindowImageHeight);
@@ -921,11 +917,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             rectIcon = DrawHelper.RtlTransform(this, rectIcon);
             Color borderColor = DockPane.DockPanel.Theme.ColorPalette.ToolWindowBorder;
 
-            Color separatorColor = DockPane.DockPanel.Theme.ColorPalette.ToolWindowSeparator;
-            if (DockPane.ActiveContent == tab.Content) {
+            _ = DockPane.DockPanel.Theme.ColorPalette.ToolWindowSeparator;
+            if(DockPane.ActiveContent == tab.Content) {
                 Color textColor;
                 Color backgroundColor;
-                if (DockPane.IsActiveDocumentPane) {
+                if(DockPane.IsActiveDocumentPane) {
                     textColor = DockPane.DockPanel.Theme.ColorPalette.ToolWindowTabSelectedActive.Text;
                     backgroundColor = DockPane.DockPanel.Theme.ColorPalette.ToolWindowTabSelectedActive.Background;
                 } else {
@@ -944,7 +940,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             } else {
                 Color textColor;
                 Color backgroundColor;
-                if (tab.Content == DockPane.MouseOverTab) {
+                if(tab.Content == DockPane.MouseOverTab) {
                     textColor = DockPane.DockPanel.Theme.ColorPalette.ToolWindowTabUnselectedHovered.Text;
                     backgroundColor = DockPane.DockPanel.Theme.ColorPalette.ToolWindowTabUnselectedHovered.Background;
                 } else {
@@ -953,22 +949,20 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 }
 
                 g.FillRectangle(DockPane.DockPanel.Theme.PaintingService.GetBrush(backgroundColor), rect);
-                g.DrawLine(DockPane.DockPanel.Theme.PaintingService.GetPen(borderColor), rect.Left, rect.Top,
-                   rect.Right, rect.Top);
+                g.DrawLine(DockPane.DockPanel.Theme.PaintingService.GetPen(borderColor), rect.Left, rect.Top, rect.Right, rect.Top);
                 TextRenderer.DrawText(g, tab.Content.DockHandler.TabText, TextFont, rectText, textColor, ToolWindowTextFormat);
             }
 
-            if (rectTab.Contains(rectIcon))
-                g.DrawIcon(tab.Content.DockHandler.Icon, rectIcon);
+            if(rectTab.Contains(rectIcon)) { g.DrawIcon(tab.Content.DockHandler.Icon, rectIcon); }
         }
 
         private void DrawTab_Document(Graphics g, TabDefault tab) {
             var rect = tab.Rectangle.Value;
-            if (tab.TabWidth == 0)
+            if(tab.TabWidth == 0)
                 return;
 
             var rectCloseButton = GetCloseButtonRect(rect);
-            Rectangle rectIcon = new Rectangle(
+            Rectangle rectIcon = new(
                 rect.X + DocumentIconGapLeft,
                 rect.Y + rect.Height - DocumentIconGapBottom - DocumentIconHeight,
                 DocumentIconWidth, DocumentIconHeight);
@@ -978,7 +972,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                     rect.Y + rect.Height - DocumentIconGapBottom - TextFont.Height,
                     DocumentIconWidth, TextFont.Height)
                 : rectIcon;
-            if (DockPane.DockPanel.ShowDocumentIcon) {
+            if(DockPane.DockPanel.ShowDocumentIcon) {
                 rectText.X += rectIcon.Width + DocumentIconGapRight;
                 rectText.Y = rect.Y;
                 rectText.Width = rect.Width - rectIcon.Width - DocumentIconGapLeft - DocumentIconGapRight - DocumentTextGapRight - rectCloseButton.Width;
@@ -1008,8 +1002,8 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             Image image = null;
             Color paint;
             var imageService = DockPane.DockPanel.Theme.ImageService;
-            if (DockPane.ActiveContent == tab.Content) {
-                if (DockPane.IsActiveDocumentPane) {
+            if(DockPane.ActiveContent == tab.Content) {
+                if(DockPane.IsActiveDocumentPane) {
                     paint = activeColor;
                     text = activeText;
                     image = IsMouseDown
@@ -1027,7 +1021,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                             : imageService.TabLostFocus_Close;
                 }
             } else {
-                if (tab.Content == DockPane.MouseOverTab) {
+                if(tab.Content == DockPane.MouseOverTab) {
                     paint = mouseHoverColor;
                     text = mouseHoverText;
                     image = IsMouseDown
@@ -1043,19 +1037,16 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
             g.FillRectangle(DockPane.DockPanel.Theme.PaintingService.GetBrush(paint), rect);
             TextRenderer.DrawText(g, tab.Content.DockHandler.TabText, TextFont, rectText, text, DocumentTextFormat);
-            if (image != null)
-                g.DrawImage(image, rectCloseButton);
-
-            if (rectTab.Contains(rectIcon) && DockPane.DockPanel.ShowDocumentIcon)
-                g.DrawIcon(tab.Content.DockHandler.Icon, rectIcon);
+            if(image != null) { g.DrawImage(image, rectCloseButton); }
+            if(rectTab.Contains(rectIcon) && DockPane.DockPanel.ShowDocumentIcon) { g.DrawIcon(tab.Content.DockHandler.Icon, rectIcon); }
         }
 
         private bool m_isMouseDown = false;
+
         protected bool IsMouseDown {
             get { return m_isMouseDown; }
             private set {
-                if (m_isMouseDown == value)
-                    return;
+                if(m_isMouseDown == value) { return; }
 
                 m_isMouseDown = value;
                 Invalidate();
@@ -1064,37 +1055,35 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         protected override void OnMouseUp(MouseEventArgs e) {
             base.OnMouseUp(e);
-            if (IsMouseDown)
-                IsMouseDown = false;
+            if(IsMouseDown) { IsMouseDown = false; }
         }
 
         protected override void OnMouseDown(MouseEventArgs e) {
             base.OnMouseDown(e);
             // suspend drag if mouse is down on active close button.
-            this.m_suspendDrag = ActiveCloseHitTest(e.Location);
-            if (!IsMouseDown)
-                IsMouseDown = true;
+            m_suspendDrag = ActiveCloseHitTest(e.Location);
+            if(!IsMouseDown) { IsMouseDown = true; }
         }
 
         protected override void OnMouseMove(MouseEventArgs e) {
-            if (!this.m_suspendDrag)
-                base.OnMouseMove(e);
+            if(!m_suspendDrag) { base.OnMouseMove(e); }
 
             int index = HitTest(PointToClient(MousePosition));
             string toolTip = string.Empty;
 
             bool tabUpdate = false;
-            bool buttonUpdate = false;
-            if (index != -1) {
+            bool buttonUpdate;
+            if(index != -1) {
                 var tab = Tabs[index] as TabDefault;
-                if (Appearance == DockPane.AppearanceStyle.ToolWindow || Appearance == DockPane.AppearanceStyle.Document) {
+                if(Appearance == DockPane.AppearanceStyle.ToolWindow || Appearance == DockPane.AppearanceStyle.Document) {
                     tabUpdate = SetMouseOverTab(tab.Content == DockPane.ActiveContent ? null : tab.Content);
                 }
 
-                if (!String.IsNullOrEmpty(tab.Content.DockHandler.ToolTipText))
+                if(!string.IsNullOrEmpty(tab.Content.DockHandler.ToolTipText)) {
                     toolTip = tab.Content.DockHandler.ToolTipText;
-                else if (tab.MaxWidth > tab.TabWidth)
+                } else if(tab.MaxWidth > tab.TabWidth) {
                     toolTip = tab.Content.DockHandler.TabText;
+                }
 
                 var mousePos = PointToClient(MousePosition);
                 var tabRect = tab.Rectangle.Value;
@@ -1106,10 +1095,10 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 buttonUpdate = SetActiveClose(Rectangle.Empty);
             }
 
-            if (tabUpdate || buttonUpdate)
+            if(tabUpdate || buttonUpdate)
                 Invalidate();
 
-            if (m_toolTip.GetToolTip(this) != toolTip) {
+            if(m_toolTip.GetToolTip(this) != toolTip) {
                 m_toolTip.Active = false;
                 m_toolTip.SetToolTip(this, toolTip);
                 m_toolTip.Active = true;
@@ -1118,25 +1107,20 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         protected override void OnMouseClick(MouseEventArgs e) {
             base.OnMouseClick(e);
-            if (e.Button != MouseButtons.Left || Appearance != DockPane.AppearanceStyle.Document)
-                return;
+            if(e.Button != MouseButtons.Left || Appearance != DockPane.AppearanceStyle.Document) { return; }
 
             var indexHit = HitTest();
-            if (indexHit > -1)
-                TabCloseButtonHit(indexHit);
+            if(indexHit > -1) { TabCloseButtonHit(indexHit); }
         }
 
         private void TabCloseButtonHit(int index) {
             var mousePos = PointToClient(MousePosition);
             var tabRect = GetTabBounds(Tabs[index]);
-            if (tabRect.Contains(ActiveClose) && ActiveCloseHitTest(mousePos))
-                TryCloseTab(index);
+            if(tabRect.Contains(ActiveClose) && ActiveCloseHitTest(mousePos)) { TryCloseTab(index); }
         }
 
         private Rectangle GetCloseButtonRect(Rectangle rectTab) {
-            if (Appearance != DockPane.AppearanceStyle.Document) {
-                return Rectangle.Empty;
-            }
+            if(Appearance != DockPane.AppearanceStyle.Document) { return Rectangle.Empty; }
 
             const int gap = 3;
             var imageSize = PatchController.EnableHighDpi == true ? rectTab.Height - gap * 2 : 15;
@@ -1145,7 +1129,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private void WindowList_Click(object sender, EventArgs e) {
             SelectMenu.Items.Clear();
-            foreach (TabDefault tab in Tabs) {
+            foreach(TabDefault tab in Tabs.Cast<TabDefault>()) {
                 IDockContent content = tab.Content;
                 ToolStripItem item = SelectMenu.Items.Add(content.DockHandler.TabText, content.DockHandler.Icon.ToBitmap());
                 item.Tag = tab.Content;
@@ -1155,14 +1139,14 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             var workingArea = Screen.GetWorkingArea(ButtonWindowList.PointToScreen(new Point(ButtonWindowList.Width / 2, ButtonWindowList.Height / 2)));
             var menu = new Rectangle(ButtonWindowList.PointToScreen(new Point(0, ButtonWindowList.Location.Y + ButtonWindowList.Height)), SelectMenu.Size);
             var menuMargined = new Rectangle(menu.X - SelectMenuMargin, menu.Y - SelectMenuMargin, menu.Width + SelectMenuMargin, menu.Height + SelectMenuMargin);
-            if (workingArea.Contains(menuMargined)) {
+            if(workingArea.Contains(menuMargined)) {
                 SelectMenu.Show(menu.Location);
             } else {
                 var newPoint = menu.Location;
                 newPoint.X = DrawHelper.Balance(SelectMenu.Width, SelectMenuMargin, newPoint.X, workingArea.Left, workingArea.Right);
                 newPoint.Y = DrawHelper.Balance(SelectMenu.Size.Height, SelectMenuMargin, newPoint.Y, workingArea.Top, workingArea.Bottom);
                 var button = ButtonWindowList.PointToScreen(new Point(0, ButtonWindowList.Height));
-                if (newPoint.Y < button.Y) {
+                if(newPoint.Y < button.Y) {
                     // flip the menu up to be above the button.
                     newPoint.Y = button.Y - ButtonWindowList.Height;
                     SelectMenu.Show(newPoint, ToolStripDropDownDirection.AboveRight);
@@ -1174,19 +1158,16 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private void ContextMenuItem_Click(object sender, EventArgs e) {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
-            if (item != null) {
+            if(item != null) {
                 IDockContent content = (IDockContent)item.Tag;
                 DockPane.ActiveContent = content;
             }
         }
 
         private void SetInertButtons() {
-            if (Appearance == DockPane.AppearanceStyle.ToolWindow) {
-                if (m_buttonOverflow != null)
-                    m_buttonOverflow.Left = -m_buttonOverflow.Width;
-
-                if (m_buttonWindowList != null)
-                    m_buttonWindowList.Left = -m_buttonWindowList.Width;
+            if(Appearance == DockPane.AppearanceStyle.ToolWindow) {
+                if(m_buttonOverflow != null) { m_buttonOverflow.Left = -m_buttonOverflow.Width; }
+                if(m_buttonWindowList != null) { m_buttonWindowList.Left = -m_buttonWindowList.Width; }
             } else {
                 ButtonOverflow.Visible = m_documentTabsOverflow;
                 ButtonOverflow.RefreshChanges();
@@ -1197,7 +1178,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         protected override void OnLayout(LayoutEventArgs levent) {
-            if (Appearance == DockPane.AppearanceStyle.Document) {
+            if(Appearance == DockPane.AppearanceStyle.Document) {
                 LayoutButtons();
                 OnRefreshChanges();
             }
@@ -1212,7 +1193,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             int buttonWidth = ButtonOverflow.Image.Width;
             int buttonHeight = ButtonOverflow.Image.Height;
             int height = rectTabStrip.Height - DocumentButtonGapTop - DocumentButtonGapBottom;
-            if (buttonHeight < height) {
+            if(buttonHeight < height) {
                 buttonWidth = buttonWidth * height / buttonHeight;
                 buttonHeight = height;
             }
@@ -1231,19 +1212,15 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private void Close_Click(object sender, EventArgs e) {
             DockPane.CloseActiveContent();
-            if (PatchController.EnableMemoryLeakFix == true) {
-                ContentClosed();
-            }
+            if(PatchController.EnableMemoryLeakFix == true) { ContentClosed(); }
         }
 
         protected internal override int HitTest(Point point) {
-            if (!TabsRectangle.Contains(point))
-                return -1;
+            if(!TabsRectangle.Contains(point)) { return -1; }
 
-            foreach (Tab tab in Tabs) {
+            foreach(Tab tab in Tabs) {
                 GraphicsPath path = GetTabOutline(tab, true, false);
-                if (path.IsVisible(point))
-                    return Tabs.IndexOf(tab);
+                if(path.IsVisible(point)) { return Tabs.IndexOf(tab); }
             }
 
             return -1;
@@ -1251,7 +1228,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         protected override bool MouseDownActivateTest(MouseEventArgs e) {
             bool result = base.MouseDownActivateTest(e);
-            if (result && (e.Button == MouseButtons.Left) && (Appearance == DockPane.AppearanceStyle.Document)) {
+            if(result && (e.Button == MouseButtons.Left) && (Appearance == DockPane.AppearanceStyle.Document)) {
                 // don't activate if mouse is down on active close button
                 result = !ActiveCloseHitTest(e.Location);
             }
@@ -1260,7 +1237,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         private bool ActiveCloseHitTest(Point ptMouse) {
             bool result = false;
-            if (!ActiveClose.IsEmpty) {
+            if(!ActiveClose.IsEmpty) {
                 var mouseRect = new Rectangle(ptMouse, new Size(1, 1));
                 result = ActiveClose.IntersectsWith(mouseRect);
             }
@@ -1278,16 +1255,14 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         private bool SetActiveClose(Rectangle rectangle) {
-            if (_activeClose == rectangle)
-                return false;
+            if(_activeClose == rectangle) { return false; }
 
             _activeClose = rectangle;
             return true;
         }
 
         private bool SetMouseOverTab(IDockContent content) {
-            if (DockPane.MouseOverTab == content)
-                return false;
+            if(DockPane.MouseOverTab == content) { return false; }
 
             DockPane.MouseOverTab = content;
             return true;
@@ -1296,8 +1271,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         protected override void OnMouseLeave(EventArgs e) {
             var tabUpdate = SetMouseOverTab(null);
             var buttonUpdate = SetActiveClose(Rectangle.Empty);
-            if (tabUpdate || buttonUpdate)
-                Invalidate();
+            if(tabUpdate || buttonUpdate) { Invalidate(); }
 
             base.OnMouseLeave(e);
         }

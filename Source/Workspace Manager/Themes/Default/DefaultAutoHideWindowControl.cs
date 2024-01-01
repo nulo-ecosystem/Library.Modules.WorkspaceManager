@@ -7,24 +7,22 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
     using System.ComponentModel;
 
     [ToolboxItem(false)]
-    internal class DefaultAutoHideWindowControl : DockPanel.AutoHideWindowControl {
-
-        public DefaultAutoHideWindowControl(DockPanel dockPanel) : base(dockPanel) { }
+    internal class DefaultAutoHideWindowControl(DockPanel dockPanel) : DockPanel.AutoHideWindowControl(dockPanel) {
 
         protected override Rectangle DisplayingRectangle {
             get {
                 Rectangle rect = ClientRectangle;
 
                 // exclude the border and the splitter
-                if (DockState == DockState.DockBottomAutoHide) {
+                if(DockState == DockState.DockBottomAutoHide) {
                     rect.Y += DockPanel.Theme.Measures.AutoHideSplitterSize;
                     rect.Height -= DockPanel.Theme.Measures.AutoHideSplitterSize;
-                } else if (DockState == DockState.DockRightAutoHide) {
+                } else if(DockState == DockState.DockRightAutoHide) {
                     rect.X += DockPanel.Theme.Measures.AutoHideSplitterSize;
                     rect.Width -= DockPanel.Theme.Measures.AutoHideSplitterSize;
-                } else if (DockState == DockState.DockTopAutoHide) {
+                } else if(DockState == DockState.DockTopAutoHide) {
                     rect.Height -= DockPanel.Theme.Measures.AutoHideSplitterSize;
-                } else if (DockState == DockState.DockLeftAutoHide) {
+                } else if(DockState == DockState.DockLeftAutoHide) {
                     rect.Width -= DockPanel.Theme.Measures.AutoHideSplitterSize;
                 }
 
@@ -34,27 +32,26 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         protected override void OnLayout(LayoutEventArgs levent) {
             DockPadding.All = 0;
-            if (DockState == DockState.DockLeftAutoHide) {
+            if(DockState == DockState.DockLeftAutoHide) {
                 m_splitter.Dock = DockStyle.Right;
-            } else if (DockState == DockState.DockRightAutoHide) {
+            } else if(DockState == DockState.DockRightAutoHide) {
                 m_splitter.Dock = DockStyle.Left;
-            } else if (DockState == DockState.DockTopAutoHide) {
+            } else if(DockState == DockState.DockTopAutoHide) {
                 m_splitter.Dock = DockStyle.Bottom;
-            } else if (DockState == DockState.DockBottomAutoHide) {
+            } else if(DockState == DockState.DockBottomAutoHide) {
                 m_splitter.Dock = DockStyle.Top;
             }
 
             Rectangle rectDisplaying = DisplayingRectangle;
-            Rectangle rectHidden = new Rectangle(-rectDisplaying.Width, rectDisplaying.Y, rectDisplaying.Width, rectDisplaying.Height);
-            foreach (Control c in Controls) {
-                DockPane pane = c as DockPane;
-                if (pane == null)
-                    continue;
+            Rectangle rectHidden = new(-rectDisplaying.Width, rectDisplaying.Y, rectDisplaying.Width, rectDisplaying.Height);
+            foreach(Control c in Controls) {
+                if(c is not DockPane pane) { continue; }
 
-                if (pane == ActivePane)
+                if(pane == ActivePane) {
                     pane.Bounds = rectDisplaying;
-                else
+                } else {
                     pane.Bounds = rectHidden;
+                }
             }
 
             base.OnLayout(levent);

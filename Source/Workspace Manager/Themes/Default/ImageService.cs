@@ -4,7 +4,6 @@ using System.Drawing;
 namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
     public class ImageService : IImageService {
-
         public Bitmap Dockindicator_PaneDiamond { get; internal set; }
         public Bitmap Dockindicator_PaneDiamond_Fill { get; internal set; }
         public Bitmap Dockindicator_PaneDiamond_Hotspot { get; internal set; }
@@ -48,10 +47,9 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         public Image TabPressInactive_Close { get; }
         public Image TabPressLostFocus_Close { get; }
 
-        readonly DockPanelColorPalette _palette;
+        private readonly DockPanelColorPalette _palette;
 
         public ImageService(ThemeBase theme) {
-
             _palette = theme.ColorPalette;
             Dockindicator_PaneDiamond_Hotspot = Resources.Dockindicator_PaneDiamond_Hotspot;
             DockIndicator_PaneDiamond_HotspotIndex = Resources.DockIndicator_PaneDiamond_HotspotIndex;
@@ -65,11 +63,11 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             var core = _palette.DockTarget.GlyphBackground;
             var drawCore = core.ToArgb() != background.ToArgb();
 
-            using (var layerArrow = ImageServiceHelper.GetLayerImage(arrow, 32, theme.PaintingService))
-            using (var layerWindow = ImageServiceHelper.GetLayerImage(window, 32, theme.PaintingService))
-            using (var layerCore = drawCore ? ImageServiceHelper.GetLayerImage(core, 32, theme.PaintingService) : null)
-            using (var layerBorder = ImageServiceHelper.GetBackground(innerBorder, outerBorder, 40, theme.PaintingService))
-            using (var bottom = ImageServiceHelper.GetDockIcon(
+            using(var layerArrow = ImageServiceHelper.GetLayerImage(arrow, 32, theme.PaintingService))
+            using(var layerWindow = ImageServiceHelper.GetLayerImage(window, 32, theme.PaintingService))
+            using(var layerCore = drawCore ? ImageServiceHelper.GetLayerImage(core, 32, theme.PaintingService) : null)
+            using(var layerBorder = ImageServiceHelper.GetBackground(innerBorder, outerBorder, 40, theme.PaintingService))
+            using(var bottom = ImageServiceHelper.GetDockIcon(
                 Resources.MaskArrowBottom,
                 layerArrow,
                 Resources.MaskWindowBottom,
@@ -80,7 +78,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 Resources.MaskCoreBottom,
                 layerCore,
                 separator))
-            using (var center = ImageServiceHelper.GetDockIcon(
+            using(var center = ImageServiceHelper.GetDockIcon(
                 null,
                 null,
                 Resources.MaskWindowCenter,
@@ -91,7 +89,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 Resources.MaskCoreCenter,
                 layerCore,
                 separator))
-            using (var left = ImageServiceHelper.GetDockIcon(
+            using(var left = ImageServiceHelper.GetDockIcon(
                 Resources.MaskArrowLeft,
                 layerArrow,
                 Resources.MaskWindowLeft,
@@ -102,7 +100,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 Resources.MaskCoreLeft,
                 layerCore,
                 separator))
-            using (var right = ImageServiceHelper.GetDockIcon(
+            using(var right = ImageServiceHelper.GetDockIcon(
                 Resources.MaskArrowRight,
                 layerArrow,
                 Resources.MaskWindowRight,
@@ -113,7 +111,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 Resources.MaskCoreRight,
                 layerCore,
                 separator))
-            using (var top = ImageServiceHelper.GetDockIcon(
+            using(var top = ImageServiceHelper.GetDockIcon(
                 Resources.MaskArrowTop,
                 layerArrow,
                 Resources.MaskWindowTop,
@@ -130,10 +128,9 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 DockIndicator_PanelRight = ImageServiceHelper.GetDockImage(right, layerBorder);
                 DockIndicator_PanelTop = ImageServiceHelper.GetDockImage(top, layerBorder);
 
-                using (var five = ImageServiceHelper.GetFiveBackground(Resources.MaskDockFive, innerBorder, outerBorder, theme.PaintingService)) {
-                    Dockindicator_PaneDiamond = ImageServiceHelper.CombineFive(five, bottom, center, left, right, top);
-                    Dockindicator_PaneDiamond_Fill = ImageServiceHelper.CombineFive(five, bottom, center, left, right, top);
-                }
+                using var five = ImageServiceHelper.GetFiveBackground(Resources.MaskDockFive, innerBorder, outerBorder, theme.PaintingService);
+                Dockindicator_PaneDiamond = ImageServiceHelper.CombineFive(five, bottom, center, left, right, top);
+                Dockindicator_PaneDiamond_Fill = ImageServiceHelper.CombineFive(five, bottom, center, left, right, top);
             }
 
             TabActive_Close = ImageServiceHelper.GetImage(Resources.MaskTabClose, _palette.TabSelectedActive.Button, _palette.TabSelectedActive.Background);

@@ -1,5 +1,4 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 
 namespace Nulo.Modules.WorkspaceManager.Themes.Default {
@@ -10,7 +9,6 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             return new DefaultDockPane(content, visibleState, show);
         }
 
-        [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters", MessageId = "1#")]
         public DockPane CreateDockPane(IDockContent content, FloatWindow floatWindow, bool show) {
             return new DefaultDockPane(content, floatWindow, show);
         }
@@ -19,7 +17,6 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             return new DefaultDockPane(content, previousPane, alignment, proportion, show);
         }
 
-        [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters", MessageId = "1#")]
         public DockPane CreateDockPane(IDockContent content, Rectangle floatWindowBounds, bool show) {
             return new DefaultDockPane(content, floatWindowBounds, show);
         }

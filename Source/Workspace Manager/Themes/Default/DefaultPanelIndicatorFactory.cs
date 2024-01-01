@@ -13,16 +13,16 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
         [ToolboxItem(false)]
         private class DefaultPanelIndicator : PictureBox, DockPanel.IPanelIndicator {
-            private Image _imagePanelLeft;
-            private Image _imagePanelRight;
-            private Image _imagePanelTop;
-            private Image _imagePanelBottom;
-            private Image _imagePanelFill;
-            private Image _imagePanelLeftActive;
-            private Image _imagePanelRightActive;
-            private Image _imagePanelTopActive;
-            private Image _imagePanelBottomActive;
-            private Image _imagePanelFillActive;
+            private readonly Image _imagePanelLeft;
+            private readonly Image _imagePanelRight;
+            private readonly Image _imagePanelTop;
+            private readonly Image _imagePanelBottom;
+            private readonly Image _imagePanelFill;
+            private readonly Image _imagePanelLeftActive;
+            private readonly Image _imagePanelRightActive;
+            private readonly Image _imagePanelTopActive;
+            private readonly Image _imagePanelBottomActive;
+            private readonly Image _imagePanelFillActive;
 
             public DefaultPanelIndicator(DockStyle dockStyle, ThemeBase theme) {
                 _imagePanelLeft = theme.ImageService.DockIndicator_PanelLeft;
@@ -52,11 +52,8 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             public DockStyle Status {
                 get { return m_status; }
                 set {
-                    if (value != DockStyle && value != DockStyle.None)
-                        throw new InvalidEnumArgumentException();
-
-                    if (m_status == value)
-                        return;
+                    if(value != DockStyle && value != DockStyle.None) { throw new InvalidEnumArgumentException(); }
+                    if(m_status == value) { return; }
 
                     m_status = value;
                     IsActivated = (m_status != DockStyle.None);
@@ -65,35 +62,37 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
             private Image ImageInactive {
                 get {
-                    if (DockStyle == DockStyle.Left)
+                    if(DockStyle == DockStyle.Left) {
                         return _imagePanelLeft;
-                    else if (DockStyle == DockStyle.Right)
+                    } else if(DockStyle == DockStyle.Right) {
                         return _imagePanelRight;
-                    else if (DockStyle == DockStyle.Top)
+                    } else if(DockStyle == DockStyle.Top) {
                         return _imagePanelTop;
-                    else if (DockStyle == DockStyle.Bottom)
+                    } else if(DockStyle == DockStyle.Bottom) {
                         return _imagePanelBottom;
-                    else if (DockStyle == DockStyle.Fill)
+                    } else if(DockStyle == DockStyle.Fill) {
                         return _imagePanelFill;
-                    else
+                    } else {
                         return null;
+                    }
                 }
             }
 
             private Image ImageActive {
                 get {
-                    if (DockStyle == DockStyle.Left)
+                    if(DockStyle == DockStyle.Left) {
                         return _imagePanelLeftActive;
-                    else if (DockStyle == DockStyle.Right)
+                    } else if(DockStyle == DockStyle.Right) {
                         return _imagePanelRightActive;
-                    else if (DockStyle == DockStyle.Top)
+                    } else if(DockStyle == DockStyle.Top) {
                         return _imagePanelTopActive;
-                    else if (DockStyle == DockStyle.Bottom)
+                    } else if(DockStyle == DockStyle.Bottom) {
                         return _imagePanelBottomActive;
-                    else if (DockStyle == DockStyle.Fill)
+                    } else if(DockStyle == DockStyle.Fill) {
                         return _imagePanelFillActive;
-                    else
+                    } else {
                         return null;
+                    }
                 }
             }
 
@@ -108,7 +107,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             }
 
             public DockStyle HitTest(Point pt) {
-                return this.Visible && ClientRectangle.Contains(PointToClient(pt)) ? DockStyle : DockStyle.None;
+                return Visible && ClientRectangle.Contains(PointToClient(pt)) ? DockStyle : DockStyle.None;
             }
         }
     }

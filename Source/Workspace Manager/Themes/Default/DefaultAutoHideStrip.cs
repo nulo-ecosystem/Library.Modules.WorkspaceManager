@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Nulo.Modules.WorkspaceManager.Docking {
@@ -11,9 +12,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         private class TabDefault : Tab {
 
-            internal TabDefault(IDockContent content)
-                : base(content) {
-            }
+            internal TabDefault(IDockContent content) : base(content) { }
 
             /// <summary>
             /// X for this <see href="TabDefault"/> inside the logical strip rectangle.
@@ -31,20 +30,20 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         private const int TextGapLeft = 0;
         private const int TextGapRight = 0;
         private const int TextGapBottom = 3;
-        private const int TabGapTop = 3;
-        private const int TabGapBottom = 8;
         private const int TabGapLeft = 0;
         private const int TabGapBetween = 12;
 
         #region Customizable Properties
+
         public Font TextFont {
             get { return DockPanel.Theme.Skin.AutoHideStripSkin.TextFont; }
         }
 
         private static StringFormat _stringFormatTabHorizontal;
+
         private StringFormat StringFormatTabHorizontal {
             get {
-                if (_stringFormatTabHorizontal == null) {
+                if(_stringFormatTabHorizontal == null) {
                     _stringFormatTabHorizontal = new StringFormat();
                     _stringFormatTabHorizontal.Alignment = StringAlignment.Near;
                     _stringFormatTabHorizontal.LineAlignment = StringAlignment.Center;
@@ -52,7 +51,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                     _stringFormatTabHorizontal.Trimming = StringTrimming.None;
                 }
 
-                if (RightToLeft == RightToLeft.Yes)
+                if(RightToLeft == RightToLeft.Yes)
                     _stringFormatTabHorizontal.FormatFlags |= StringFormatFlags.DirectionRightToLeft;
                 else
                     _stringFormatTabHorizontal.FormatFlags &= ~StringFormatFlags.DirectionRightToLeft;
@@ -62,16 +61,17 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private static StringFormat _stringFormatTabVertical;
+
         private StringFormat StringFormatTabVertical {
             get {
-                if (_stringFormatTabVertical == null) {
+                if(_stringFormatTabVertical == null) {
                     _stringFormatTabVertical = new StringFormat();
                     _stringFormatTabVertical.Alignment = StringAlignment.Near;
                     _stringFormatTabVertical.LineAlignment = StringAlignment.Center;
                     _stringFormatTabVertical.FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.DirectionVertical;
                     _stringFormatTabVertical.Trimming = StringTrimming.None;
                 }
-                if (RightToLeft == RightToLeft.Yes)
+                if(RightToLeft == RightToLeft.Yes)
                     _stringFormatTabVertical.FormatFlags |= StringFormatFlags.DirectionRightToLeft;
                 else
                     _stringFormatTabVertical.FormatFlags &= ~StringFormatFlags.DirectionRightToLeft;
@@ -80,17 +80,19 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             }
         }
 
-        #endregion
+        #endregion Customizable Properties
 
-        private static Matrix _matrixIdentity = new Matrix();
+        private static readonly Matrix _matrixIdentity = new();
+
         private static Matrix MatrixIdentity {
             get { return _matrixIdentity; }
         }
 
         private static DockState[] _dockStates;
+
         private static DockState[] DockStates {
             get {
-                if (_dockStates == null) {
+                if(_dockStates == null) {
                     _dockStates = new DockState[4];
                     _dockStates[0] = DockState.DockLeftAutoHide;
                     _dockStates[1] = DockState.DockRightAutoHide;
@@ -102,17 +104,15 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private static GraphicsPath _graphicsPath;
+
         internal static GraphicsPath GraphicsPath {
             get {
-                if (_graphicsPath == null)
-                    _graphicsPath = new GraphicsPath();
-
+                _graphicsPath ??= new GraphicsPath();
                 return _graphicsPath;
             }
         }
 
-        public DefaultAutoHideStrip(DockPanel panel)
-            : base(panel) {
+        public DefaultAutoHideStrip(DockPanel panel) : base(panel) {
             SetStyle(ControlStyles.ResizeRedraw |
                 ControlStyles.UserPaint |
                 ControlStyles.AllPaintingInWmPaint |
@@ -141,20 +141,21 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         private void DrawTabStrip(Graphics g, DockState dockState) {
             Rectangle rectTabStrip = GetLogicalTabStripRectangle(dockState);
 
-            if (rectTabStrip.IsEmpty)
+            if(rectTabStrip.IsEmpty)
                 return;
 
             Matrix matrixIdentity = g.Transform;
-            if (dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide) {
-                Matrix matrixRotated = new Matrix();
-                matrixRotated.RotateAt(90, new PointF((float)rectTabStrip.X + (float)rectTabStrip.Height / 2,
-                    (float)rectTabStrip.Y + (float)rectTabStrip.Height / 2));
+            if(dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide) {
+                Matrix matrixRotated = new();
+                matrixRotated.RotateAt(90, new PointF(rectTabStrip.X + (float)rectTabStrip.Height / 2,
+                    rectTabStrip.Y + (float)rectTabStrip.Height / 2));
                 g.Transform = matrixRotated;
             }
 
-            foreach (Pane pane in GetPanes(dockState)) {
-                foreach (TabDefault tab in pane.AutoHideTabs)
+            foreach(Pane pane in GetPanes(dockState)) {
+                foreach(TabDefault tab in pane.AutoHideTabs.Cast<TabDefault>()) {
                     DrawTab(g, tab);
+                }
             }
 
             g.Transform = matrixIdentity;
@@ -171,8 +172,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             Rectangle rectTabStrip = GetLogicalTabStripRectangle(dockState);
 
             int x = TabGapLeft + rectTabStrip.X;
-            foreach (Pane pane in GetPanes(dockState)) {
-                foreach (TabDefault tab in pane.AutoHideTabs) {
+            foreach(Pane pane in GetPanes(dockState)) {
+                foreach(TabDefault tab in pane.AutoHideTabs.Cast<TabDefault>()) {
                     int width = TextRenderer.MeasureText(tab.Content.DockHandler.TabText, TextFont).Width +
                         TextGapLeft + TextGapRight;
                     tab.TabX = x;
@@ -184,7 +185,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         private Rectangle RtlTransform(Rectangle rect, DockState dockState) {
             Rectangle rectTransformed;
-            if (dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide)
+            if(dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide)
                 rectTransformed = rect;
             else
                 rectTransformed = DrawHelper.RtlTransform(this, rect);
@@ -195,10 +196,10 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         private GraphicsPath GetTabOutline(TabDefault tab, bool rtlTransform) {
             DockState dockState = tab.Content.DockHandler.DockState;
             Rectangle rectTab = GetTabRectangle(tab);
-            if (rtlTransform)
+            if(rtlTransform)
                 rectTab = RtlTransform(rectTab, dockState);
 
-            if (GraphicsPath != null) {
+            if(GraphicsPath != null) {
                 GraphicsPath.Reset();
                 GraphicsPath.AddRectangle(rectTab);
             }
@@ -208,8 +209,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         private void DrawTab(Graphics g, TabDefault tab) {
             Rectangle rectTabOrigin = GetTabRectangle(tab);
-            if (rectTabOrigin.IsEmpty)
-                return;
+            if(rectTabOrigin.IsEmpty) { return; }
 
             DockState dockState = tab.Content.DockHandler.DockState;
             IDockContent content = tab.Content;
@@ -221,7 +221,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             Color borderColor;
             Color backgroundColor;
             Color textColor;
-            if (tab.IsMouseOver) {
+            if(tab.IsMouseOver) {
                 borderColor = DockPanel.Theme.ColorPalette.AutoHideStripHovered.Border;
                 backgroundColor = DockPanel.Theme.ColorPalette.AutoHideStripHovered.Background;
                 textColor = DockPanel.Theme.ColorPalette.AutoHideStripHovered.Text;
@@ -239,10 +239,11 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             // Draw the text
             Rectangle rectText = GetTextRectangle(rectTabOrigin, dockState);
 
-            if (dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide)
+            if(dockState == DockState.DockLeftAutoHide || dockState == DockState.DockRightAutoHide) {
                 g.DrawString(content.DockHandler.TabText, TextFont, DockPanel.Theme.PaintingService.GetBrush(textColor), rectText, StringFormatTabVertical);
-            else
+            } else {
                 g.DrawString(content.DockHandler.TabText, TextFont, DockPanel.Theme.PaintingService.GetBrush(textColor), rectText, StringFormatTabHorizontal);
+            }
 
             // Set rotate back
             g.Transform = matrixRotate;
@@ -250,14 +251,14 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         private Rectangle GetBorderRectangle(Rectangle tab, DockState state, int width) {
             var result = new Rectangle(tab.Location, tab.Size);
-            if (state == DockState.DockLeftAutoHide) {
+            if(state == DockState.DockLeftAutoHide) {
                 result.Height = width;
                 result.Width = DockPanel.Theme.Measures.AutoHideTabLineWidth;
                 result.Y += TextGapLeft;
                 return result;
             }
 
-            if (state == DockState.DockRightAutoHide) {
+            if(state == DockState.DockRightAutoHide) {
                 result.Height = width;
                 result.Width = DockPanel.Theme.Measures.AutoHideTabLineWidth;
                 result.X += tab.Width - result.Width;
@@ -265,7 +266,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                 return result;
             }
 
-            if (state == DockState.DockBottomAutoHide) {
+            if(state == DockState.DockBottomAutoHide) {
                 result.Width = width;
                 result.Height = DockPanel.Theme.Measures.AutoHideTabLineWidth;
                 result.X += TextGapLeft;
@@ -273,7 +274,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                 return result;
             }
 
-            if (state == DockState.DockTopAutoHide) {
+            if(state == DockState.DockTopAutoHide) {
                 result.Width = width;
                 result.Height = DockPanel.Theme.Measures.AutoHideTabLineWidth;
                 result.X += TextGapLeft;
@@ -285,8 +286,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         public Rectangle GetLogicalTabStripRectangle(DockState state) {
             var rectStrip = GetTabStripRectangle(state);
-            var location = rectStrip.Location;
-            if (state == DockState.DockLeftAutoHide || state == DockState.DockRightAutoHide) {
+            _ = rectStrip.Location;
+            if(state == DockState.DockLeftAutoHide || state == DockState.DockRightAutoHide) {
                 return new Rectangle(0, 0, rectStrip.Height, rectStrip.Width);
             }
 
@@ -297,7 +298,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             var state = tab.Content.DockHandler.DockState;
             var rectStrip = GetTabStripRectangle(state);
             var location = rectStrip.Location;
-            if (state == DockState.DockLeftAutoHide || state == DockState.DockRightAutoHide) {
+            if(state == DockState.DockLeftAutoHide || state == DockState.DockRightAutoHide) {
                 location.Y += tab.TabX;
                 return new Rectangle(location.X, location.Y, rectStrip.Width, tab.TabWidth);
             }
@@ -306,9 +307,9 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             return new Rectangle(location.X, location.Y, tab.TabWidth, rectStrip.Height);
         }
 
-        private Rectangle GetTextRectangle(Rectangle tab, DockState state) {
+        private static Rectangle GetTextRectangle(Rectangle tab, DockState state) {
             var result = new Rectangle(tab.Location, tab.Size);
-            if (state == DockState.DockLeftAutoHide) {
+            if(state == DockState.DockLeftAutoHide) {
                 result.X += TextGapBottom;
                 result.Y += TextGapLeft;
                 result.Height -= TextGapLeft + TextGapRight;
@@ -316,21 +317,21 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                 return result;
             }
 
-            if (state == DockState.DockRightAutoHide) {
+            if(state == DockState.DockRightAutoHide) {
                 result.Y += TextGapLeft;
                 result.Height -= TextGapLeft + TextGapRight;
                 result.Width -= TextGapBottom;
                 return result;
             }
 
-            if (state == DockState.DockBottomAutoHide) {
+            if(state == DockState.DockBottomAutoHide) {
                 result.X += TextGapLeft;
                 result.Width -= TextGapLeft + TextGapRight;
                 result.Height -= TextGapBottom;
                 return result;
             }
 
-            if (state == DockState.DockTopAutoHide) {
+            if(state == DockState.DockTopAutoHide) {
                 result.X += TextGapLeft;
                 result.Y += TextGapBottom;
                 result.Width -= TextGapLeft + TextGapRight;
@@ -343,11 +344,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override IDockContent HitTest(Point point) {
             Tab tab = TabHitTest(point);
-
-            if (tab != null)
-                return tab.Content;
-            else
-                return null;
+            return tab?.Content;
         }
 
         protected override Rectangle GetTabBounds(Tab tab) {
@@ -357,16 +354,14 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         protected Tab TabHitTest(Point ptMouse) {
-            foreach (DockState state in DockStates) {
+            foreach(DockState state in DockStates) {
                 Rectangle rectTabStrip = GetTabStripRectangle(state);
-                if (!rectTabStrip.Contains(ptMouse))
-                    continue;
+                if(!rectTabStrip.Contains(ptMouse)) { continue; }
 
-                foreach (Pane pane in GetPanes(state)) {
-                    foreach (TabDefault tab in pane.AutoHideTabs) {
+                foreach(Pane pane in GetPanes(state)) {
+                    foreach(TabDefault tab in pane.AutoHideTabs.Cast<TabDefault>()) {
                         GraphicsPath path = GetTabOutline(tab, true);
-                        if (path.IsVisible(ptMouse))
-                            return tab;
+                        if(path.IsVisible(ptMouse)) { return tab; }
                     }
                 }
             }
@@ -379,13 +374,13 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         protected override void OnMouseMove(MouseEventArgs e) {
             base.OnMouseMove(e);
             var tab = (TabDefault)TabHitTest(PointToClient(MousePosition));
-            if (tab != null) {
+            if(tab != null) {
                 tab.IsMouseOver = true;
                 Invalidate();
             }
 
-            if (lastSelectedTab != tab) {
-                if (lastSelectedTab != null) {
+            if(lastSelectedTab != tab) {
+                if(lastSelectedTab != null) {
                     lastSelectedTab.IsMouseOver = false;
                     Invalidate();
                 }
@@ -396,9 +391,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override void OnMouseLeave(EventArgs e) {
             base.OnMouseLeave(e);
-
-            if (lastSelectedTab != null)
-                lastSelectedTab.IsMouseOver = false;
+            if(lastSelectedTab != null) { lastSelectedTab.IsMouseOver = false; }
             Invalidate();
         }
 

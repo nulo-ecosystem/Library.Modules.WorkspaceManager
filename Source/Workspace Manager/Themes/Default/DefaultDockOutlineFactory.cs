@@ -12,6 +12,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         }
 
         private class DefaultLightDockOutline : DockOutlineBase {
+
             public DefaultLightDockOutline() {
                 m_dragForm = new DragForm();
                 SetDragForm(Rectangle.Empty);
@@ -22,7 +23,8 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
                 DragForm.Show(false);
             }
 
-            DragForm m_dragForm;
+            private readonly DragForm m_dragForm;
+
             private DragForm DragForm {
                 get { return m_dragForm; }
             }
@@ -36,17 +38,17 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             }
 
             private void CalculateRegion() {
-                if (SameAsOldValue)
-                    return;
+                if(SameAsOldValue) { return; }
 
-                if (!FloatWindowBounds.IsEmpty)
+                if(!FloatWindowBounds.IsEmpty) {
                     SetOutline(FloatWindowBounds);
-                else if (DockTo is DockPanel)
+                } else if(DockTo is DockPanel) {
                     SetOutline(DockTo as DockPanel, Dock, (ContentIndex != 0));
-                else if (DockTo is DockPane)
+                } else if(DockTo is DockPane) {
                     SetOutline(DockTo as DockPane, Dock, ContentIndex);
-                else
+                } else {
                     SetOutline();
+                }
             }
 
             private void SetOutline() {
@@ -60,19 +62,19 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             private void SetOutline(DockPanel dockPanel, DockStyle dock, bool fullPanelEdge) {
                 Rectangle rect = fullPanelEdge ? dockPanel.DockArea : dockPanel.DocumentWindowBounds;
                 rect.Location = dockPanel.PointToScreen(rect.Location);
-                if (dock == DockStyle.Top) {
+                if(dock == DockStyle.Top) {
                     int height = dockPanel.GetDockWindowSize(DockState.DockTop);
                     rect = new Rectangle(rect.X, rect.Y, rect.Width, height);
-                } else if (dock == DockStyle.Bottom) {
+                } else if(dock == DockStyle.Bottom) {
                     int height = dockPanel.GetDockWindowSize(DockState.DockBottom);
                     rect = new Rectangle(rect.X, rect.Bottom - height, rect.Width, height);
-                } else if (dock == DockStyle.Left) {
+                } else if(dock == DockStyle.Left) {
                     int width = dockPanel.GetDockWindowSize(DockState.DockLeft);
                     rect = new Rectangle(rect.X, rect.Y, width, rect.Height);
-                } else if (dock == DockStyle.Right) {
+                } else if(dock == DockStyle.Right) {
                     int width = dockPanel.GetDockWindowSize(DockState.DockRight);
                     rect = new Rectangle(rect.Right - width, rect.Y, width, rect.Height);
-                } else if (dock == DockStyle.Fill) {
+                } else if(dock == DockStyle.Fill) {
                     rect = dockPanel.DocumentWindowBounds;
                     rect.Location = dockPanel.PointToScreen(rect.Location);
                 }
@@ -81,46 +83,38 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
             }
 
             private void SetOutline(DockPane pane, DockStyle dock, int contentIndex) {
-                if (dock != DockStyle.Fill) {
+                if(dock != DockStyle.Fill) {
                     Rectangle rect = pane.DisplayingRectangle;
-                    if (dock == DockStyle.Right)
-                        rect.X += rect.Width / 2;
-                    if (dock == DockStyle.Bottom)
-                        rect.Y += rect.Height / 2;
-                    if (dock == DockStyle.Left || dock == DockStyle.Right)
-                        rect.Width -= rect.Width / 2;
-                    if (dock == DockStyle.Top || dock == DockStyle.Bottom)
-                        rect.Height -= rect.Height / 2;
+                    if(dock == DockStyle.Right) { rect.X += rect.Width / 2; }
+                    if(dock == DockStyle.Bottom) { rect.Y += rect.Height / 2; }
+                    if(dock == DockStyle.Left || dock == DockStyle.Right) { rect.Width -= rect.Width / 2; }
+                    if(dock == DockStyle.Top || dock == DockStyle.Bottom) { rect.Height -= rect.Height / 2; }
                     rect.Location = pane.PointToScreen(rect.Location);
 
                     SetDragForm(rect);
-                } else if (contentIndex == -1) {
+                } else if(contentIndex == -1) {
                     Rectangle rect = pane.DisplayingRectangle;
                     rect.Location = pane.PointToScreen(rect.Location);
                     SetDragForm(rect);
                 } else {
-                    using (GraphicsPath path = pane.TabStripControl.GetOutline(contentIndex)) {
-                        RectangleF rectF = path.GetBounds();
-                        Rectangle rect = new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
-                        using (Matrix matrix = new Matrix(rect, new Point[] { new Point(0, 0), new Point(rect.Width, 0), new Point(0, rect.Height) })) {
-                            path.Transform(matrix);
-                        }
-
-                        Region region = new Region(path);
-                        SetDragForm(rect, region);
+                    using GraphicsPath path = pane.TabStripControl.GetOutline(contentIndex);
+                    RectangleF rectF = path.GetBounds();
+                    Rectangle rect = new((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
+                    using(Matrix matrix = new Matrix(rect, [new Point(0, 0), new Point(rect.Width, 0), new Point(0, rect.Height)])) {
+                        path.Transform(matrix);
                     }
+
+                    Region region = new(path);
+                    SetDragForm(rect, region);
                 }
             }
 
             private void SetDragForm(Rectangle rect) {
                 DragForm.Bounds = rect;
-                if (rect == Rectangle.Empty) {
-                    if (DragForm.Region != null) {
-                        DragForm.Region.Dispose();
-                    }
-
+                if(rect == Rectangle.Empty) {
+                    DragForm.Region?.Dispose();
                     DragForm.Region = new Region(Rectangle.Empty);
-                } else if (DragForm.Region != null) {
+                } else if(DragForm.Region != null) {
                     DragForm.Region.Dispose();
                     DragForm.Region = null;
                 }
@@ -128,10 +122,7 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
             private void SetDragForm(Rectangle rect, Region region) {
                 DragForm.Bounds = rect;
-                if (DragForm.Region != null) {
-                    DragForm.Region.Dispose();
-                }
-
+                DragForm.Region?.Dispose();
                 DragForm.Region = region;
             }
         }

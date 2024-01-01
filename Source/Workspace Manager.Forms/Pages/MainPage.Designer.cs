@@ -34,6 +34,7 @@ namespace Nulo.Pages {
             StatusStripLabel = new ToolStripStatusLabel();
             MenuStrip = new MenuStrip();
             MenuStripFile = new ToolStripMenuItem();
+            MenuStripFileUpdate = new ToolStripMenuItem();
             MenuStripFileExit = new ToolStripMenuItem();
             MenuStripTheme = new ToolStripMenuItem();
             MenuStripThemeLight = new ToolStripMenuItem();
@@ -49,7 +50,6 @@ namespace Nulo.Pages {
             MenuStripWindowFloatPanel = new ToolStripMenuItem();
             DockPanel = new Panel();
             TopPanel = new Panel();
-            MenuStripFileUpdate = new ToolStripMenuItem();
             ToolStrip.SuspendLayout();
             StatusStrip.SuspendLayout();
             MenuStrip.SuspendLayout();
@@ -111,10 +111,17 @@ namespace Nulo.Pages {
             MenuStripFile.Size = new Size(54, 35);
             MenuStripFile.Text = "File";
             // 
+            // MenuStripFileUpdate
+            // 
+            MenuStripFileUpdate.Name = "MenuStripFileUpdate";
+            MenuStripFileUpdate.Size = new Size(172, 34);
+            MenuStripFileUpdate.Text = "Update";
+            MenuStripFileUpdate.Click += MenuStripFileUpdate_Click;
+            // 
             // MenuStripFileExit
             // 
             MenuStripFileExit.Name = "MenuStripFileExit";
-            MenuStripFileExit.Size = new Size(270, 34);
+            MenuStripFileExit.Size = new Size(172, 34);
             MenuStripFileExit.Text = "Exit";
             MenuStripFileExit.Click += MenuStripFileExit_Click;
             // 
@@ -215,13 +222,6 @@ namespace Nulo.Pages {
             TopPanel.Size = new Size(1058, 39);
             TopPanel.TabIndex = 0;
             // 
-            // MenuStripFileUpdate
-            // 
-            MenuStripFileUpdate.Name = "MenuStripFileUpdate";
-            MenuStripFileUpdate.Size = new Size(270, 34);
-            MenuStripFileUpdate.Text = "Update";
-            MenuStripFileUpdate.Click += MenuStripFileUpdate_Click;
-            // 
             // MainPage
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -230,6 +230,7 @@ namespace Nulo.Pages {
             Controls.Add(DockPanel);
             Controls.Add(TopPanel);
             Controls.Add(StatusStrip);
+            IsMdiContainer = true;
             MainMenuStrip = MenuStrip;
             MinimumSize = new Size(720, 480);
             Name = "MainPage";
