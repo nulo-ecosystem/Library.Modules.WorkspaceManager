@@ -304,12 +304,12 @@ namespace Nulo.Modules.WorkspaceManager {
         private Texts texts = new();
 
         public void UpdateTexts() {
-            if(workspaceData.GetTexts() is Texts texts) {
-                this.texts = texts;
-                if(menuItemSaveWorkspace is not null) {
-                    menuItemSaveWorkspace.Text = this.texts.SaveMenuItem;
-                    menuItemDeleteWorkspace.Text = this.texts.DeleteMenuItem;
-                }
+            var texts = workspaceData.GetTexts();
+            texts ??= new Texts();
+            this.texts = texts;
+            if(menuItemSaveWorkspace is not null) {
+                menuItemSaveWorkspace.Text = this.texts.SaveMenuItem;
+                menuItemDeleteWorkspace.Text = this.texts.DeleteMenuItem;
             }
         }
 
