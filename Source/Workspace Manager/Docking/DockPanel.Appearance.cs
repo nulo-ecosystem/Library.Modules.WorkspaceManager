@@ -21,18 +21,12 @@
         public ThemeBase Theme {
             get { return m_dockPanelTheme; }
             set {
-                if (value == null) {
-                    return;
-                }
-
-                if (m_dockPanelTheme.GetType() == value.GetType()) {
-                    return;
-                }
-
+                if(value == null) { return; }
+                if(m_dockPanelTheme.GetType() == value.GetType()) { return; }
                 m_dockPanelTheme?.CleanUp(this);
                 m_dockPanelTheme = value;
                 m_dockPanelTheme.ApplyTo(this);
-                m_dockPanelTheme.PostApply(this);
+                ThemeBase.PostApply(this);
             }
         }
     }

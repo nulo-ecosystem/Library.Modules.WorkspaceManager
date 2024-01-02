@@ -7,76 +7,84 @@ using static Nulo.Modules.WorkspaceManager.Docking.DockPanel.DockDragHandler;
 namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public sealed class DockPanelExtender {
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+
         public interface IDockPaneFactory {
+
             DockPane CreateDockPane(IDockContent content, DockState visibleState, bool show);
 
-            [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters", MessageId = "1#")]
             DockPane CreateDockPane(IDockContent content, FloatWindow floatWindow, bool show);
 
-            DockPane CreateDockPane(IDockContent content, DockPane previousPane, DockAlignment alignment,
-                                    double proportion, bool show);
+            DockPane CreateDockPane(IDockContent content, DockPane previousPane, DockAlignment alignment, double proportion, bool show);
 
-            [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters", MessageId = "1#")]
             DockPane CreateDockPane(IDockContent content, Rectangle floatWindowBounds, bool show);
         }
 
         public interface IDockPaneSplitterControlFactory {
+
             DockPane.SplitterControlBase CreateSplitterControl(DockPane pane);
         }
 
         public interface IWindowSplitterControlFactory {
+
             SplitterBase CreateSplitterControl(ISplitterHost host);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public interface IFloatWindowFactory {
+
             FloatWindow CreateFloatWindow(DockPanel dockPanel, DockPane pane);
+
             FloatWindow CreateFloatWindow(DockPanel dockPanel, DockPane pane, Rectangle bounds);
         }
 
         public interface IDockWindowFactory {
+
             DockWindow CreateDockWindow(DockPanel dockPanel, DockState dockState);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public interface IDockPaneCaptionFactory {
+
             DockPaneCaptionBase CreateDockPaneCaption(DockPane pane);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public interface IDockPaneStripFactory {
+
             DockPaneStripBase CreateDockPaneStrip(DockPane pane);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         public interface IAutoHideStripFactory {
+
             AutoHideStripBase CreateAutoHideStrip(DockPanel panel);
         }
 
         public interface IAutoHideWindowFactory {
+
             AutoHideWindowControl CreateAutoHideWindow(DockPanel panel);
         }
 
         public interface IPaneIndicatorFactory {
+
             IPaneIndicator CreatePaneIndicator(ThemeBase theme);
         }
 
         public interface IPanelIndicatorFactory {
+
             IPanelIndicator CreatePanelIndicator(DockStyle style, ThemeBase theme);
         }
 
         public interface IDockOutlineFactory {
+
             DockOutlineBase CreateDockOutline();
         }
 
         public interface IDockIndicatorFactory {
+
             DockIndicator CreateDockIndicator(DockDragHandler dockDragHandler);
         }
 
         #region DefaultDockPaneFactory
 
         private class DefaultDockPaneFactory : IDockPaneFactory {
+
             public DockPane CreateDockPane(IDockContent content, DockState visibleState, bool show) {
                 return new DockPane(content, visibleState, show);
             }
@@ -95,11 +103,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             }
         }
 
-        #endregion
+        #endregion DefaultDockPaneFactory
 
         #region DefaultFloatWindowFactory
 
         private class DefaultFloatWindowFactory : IFloatWindowFactory {
+
             public FloatWindow CreateFloatWindow(DockPanel dockPanel, DockPane pane) {
                 return new FloatWindow(dockPanel, pane);
             }
@@ -109,16 +118,13 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             }
         }
 
-        #endregion
+        #endregion DefaultFloatWindowFactory
 
         private IDockPaneFactory m_dockPaneFactory = null;
 
         public IDockPaneFactory DockPaneFactory {
             get {
-                if (m_dockPaneFactory == null) {
-                    m_dockPaneFactory = new DefaultDockPaneFactory();
-                }
-
+                m_dockPaneFactory ??= new DefaultDockPaneFactory();
                 return m_dockPaneFactory;
             }
             set {
@@ -134,10 +140,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         public IFloatWindowFactory FloatWindowFactory {
             get {
-                if (m_floatWindowFactory == null) {
-                    m_floatWindowFactory = new DefaultFloatWindowFactory();
-                }
-
+                m_floatWindowFactory ??= new DefaultFloatWindowFactory();
                 return m_floatWindowFactory;
             }
             set {
@@ -158,10 +161,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                 return m_autoHideStripFactory;
             }
             set {
-                if (m_autoHideStripFactory == value) {
-                    return;
-                }
-
+                if(m_autoHideStripFactory == value) { return; }
                 m_autoHideStripFactory = value;
             }
         }
@@ -171,10 +171,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         public IAutoHideWindowFactory AutoHideWindowFactory {
             get { return m_autoHideWindowFactory; }
             set {
-                if (m_autoHideWindowFactory == value) {
-                    return;
-                }
-
+                if(m_autoHideWindowFactory == value) { return; }
                 m_autoHideWindowFactory = value;
             }
         }

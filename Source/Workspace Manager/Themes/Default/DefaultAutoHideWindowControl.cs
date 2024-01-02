@@ -33,13 +33,13 @@ namespace Nulo.Modules.WorkspaceManager.Themes.Default {
         protected override void OnLayout(LayoutEventArgs levent) {
             DockPadding.All = 0;
             if(DockState == DockState.DockLeftAutoHide) {
-                m_splitter.Dock = DockStyle.Right;
+                MSplitter.Dock = DockStyle.Right;
             } else if(DockState == DockState.DockRightAutoHide) {
-                m_splitter.Dock = DockStyle.Left;
+                MSplitter.Dock = DockStyle.Left;
             } else if(DockState == DockState.DockTopAutoHide) {
-                m_splitter.Dock = DockStyle.Bottom;
+                MSplitter.Dock = DockStyle.Bottom;
             } else if(DockState == DockState.DockBottomAutoHide) {
-                m_splitter.Dock = DockStyle.Top;
+                MSplitter.Dock = DockStyle.Top;
             }
 
             Rectangle rectDisplaying = DisplayingRectangle;

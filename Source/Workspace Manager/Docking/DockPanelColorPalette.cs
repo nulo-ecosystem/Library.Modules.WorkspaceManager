@@ -141,6 +141,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     }
 
     public interface IPaletteFactory {
+
         void Initialize(DockPanelColorPalette palette);
     }
 

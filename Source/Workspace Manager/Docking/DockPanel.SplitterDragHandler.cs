@@ -5,7 +5,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
     partial class DockPanel {
 
-        private sealed class SplitterDragHandler : DragHandler {
+        private sealed class SplitterDragHandler(DockPanel dockPanel) : DragHandler(dockPanel) {
 
             private class SplitterOutline {
 
@@ -17,7 +17,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                     DragForm.Show(false);
                 }
 
-                DragForm m_dragForm;
+                private readonly DragForm m_dragForm;
+
                 private DragForm DragForm {
                     get { return m_dragForm; }
                 }
@@ -33,15 +34,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
                 private void SetDragForm(Rectangle rect) {
                     DragForm.Bounds = rect;
-                    if (rect == Rectangle.Empty)
+                    if(rect == Rectangle.Empty) {
                         DragForm.Region = new Region(Rectangle.Empty);
-                    else if (DragForm.Region != null)
+                    } else if(DragForm.Region != null) {
                         DragForm.Region = null;
+                    }
                 }
-            }
-
-            public SplitterDragHandler(DockPanel dockPanel)
-                : base(dockPanel) {
             }
 
             public new ISplitterDragSource DragSource {
@@ -50,12 +48,14 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             }
 
             private SplitterOutline m_outline;
+
             private SplitterOutline Outline {
                 get { return m_outline; }
                 set { m_outline = value; }
             }
 
             private Rectangle m_rectSplitter;
+
             private Rectangle RectSplitter {
                 get { return m_rectSplitter; }
                 set { m_rectSplitter = value; }
@@ -65,7 +65,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                 DragSource = dragSource;
                 RectSplitter = rectSplitter;
 
-                if (!BeginDrag()) {
+                if(!BeginDrag()) {
                     DragSource = null;
                     return;
                 }
@@ -81,56 +81,40 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
             protected override void OnEndDrag(bool abort) {
                 DockPanel.SuspendLayout(true);
-
                 Outline.Close();
-
-                if (!abort)
-                    DragSource.MoveSplitter(GetMovingOffset(Control.MousePosition));
-
+                if(!abort) { DragSource.MoveSplitter(GetMovingOffset(Control.MousePosition)); }
                 DragSource.EndDrag();
                 DockPanel.ResumeLayout(true, true);
             }
 
             private int GetMovingOffset(Point ptMouse) {
                 Rectangle rect = GetSplitterOutlineBounds(ptMouse);
-                if (DragSource.IsVertical)
-                    return rect.X - RectSplitter.X;
-                else
-                    return rect.Y - RectSplitter.Y;
+                return DragSource.IsVertical ? rect.X - RectSplitter.X : rect.Y - RectSplitter.Y;
             }
 
             private Rectangle GetSplitterOutlineBounds(Point ptMouse) {
                 Rectangle rectLimit = DragSource.DragLimitBounds;
-
                 Rectangle rect = RectSplitter;
-                if (rectLimit.Width <= 0 || rectLimit.Height <= 0)
-                    return rect;
-
-                if (DragSource.IsVertical) {
+                if(rectLimit.Width <= 0 || rectLimit.Height <= 0) { return rect; }
+                if(DragSource.IsVertical) {
                     rect.X += ptMouse.X - StartMousePosition.X;
                     rect.Height = rectLimit.Height;
                 } else {
                     rect.Y += ptMouse.Y - StartMousePosition.Y;
                     rect.Width = rectLimit.Width;
                 }
-
-                if (rect.Left < rectLimit.Left)
-                    rect.X = rectLimit.X;
-                if (rect.Top < rectLimit.Top)
-                    rect.Y = rectLimit.Y;
-                if (rect.Right > rectLimit.Right)
-                    rect.X -= rect.Right - rectLimit.Right;
-                if (rect.Bottom > rectLimit.Bottom)
-                    rect.Y -= rect.Bottom - rectLimit.Bottom;
-
+                if(rect.Left < rectLimit.Left) { rect.X = rectLimit.X; }
+                if(rect.Top < rectLimit.Top) { rect.Y = rectLimit.Y; }
+                if(rect.Right > rectLimit.Right) { rect.X -= rect.Right - rectLimit.Right; }
+                if(rect.Bottom > rectLimit.Bottom) { rect.Y -= rect.Bottom - rectLimit.Bottom; }
                 return rect;
             }
         }
 
         private SplitterDragHandler m_splitterDragHandler = null;
+
         private SplitterDragHandler GetSplitterDragHandler() {
-            if (m_splitterDragHandler == null)
-                m_splitterDragHandler = new SplitterDragHandler(this);
+            m_splitterDragHandler ??= new SplitterDragHandler(this);
             return m_splitterDragHandler;
         }
 

@@ -11,19 +11,19 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         public DockContent() {
             m_dockHandler = new DockContentHandler(this, new GetPersistStringCallback(GetPersistString));
             m_dockHandler.DockStateChanged += new EventHandler(DockHandler_DockStateChanged);
-            if (PatchController.EnableFontInheritanceFix != true) {
+            if(PatchController.EnableFontInheritanceFix != true) {
                 //Suggested as a fix by bensty regarding form resize
-                this.ParentChanged += new EventHandler(DockContent_ParentChanged);
+                ParentChanged += new EventHandler(DockContent_ParentChanged);
             }
         }
 
         //Suggested as a fix by bensty regarding form resize
         private void DockContent_ParentChanged(object Sender, EventArgs e) {
-            if (this.Parent != null)
-                this.Font = this.Parent.Font;
+            if(Parent != null) { Font = Parent.Font; }
         }
 
-        private DockContentHandler m_dockHandler = null;
+        private readonly DockContentHandler m_dockHandler;
+
         [Browsable(false)]
         public DockContentHandler DockHandler {
             get { return m_dockHandler; }
@@ -54,6 +54,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private string m_tabText = null;
+
         [Localizable(true)]
         [LocalizedCategory("Category_Docking")]
         [LocalizedDescription("DockContent_TabText_Description")]
@@ -139,7 +140,6 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             set { DockHandler.FloatPane = value; }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
         protected virtual string GetPersistString() {
             return GetType().ToString();
         }
@@ -185,6 +185,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             set { DockHandler.TabPageContextMenu = value; }
         }
 #endif
+
         /// <summary>
         /// Context menu strip.
         /// </summary>
@@ -199,11 +200,9 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         void IContextMenuStripHost.ApplyTheme() {
             DockHandler.ApplyTheme();
 
-            if (DockPanel != null) {
-                if (MainMenuStrip != null)
-                    DockPanel.Theme.ApplyTo(MainMenuStrip);
-                if (ContextMenuStrip != null)
-                    DockPanel.Theme.ApplyTo(ContextMenuStrip);
+            if(DockPanel != null) {
+                if(MainMenuStrip != null) { DockPanel.Theme.ApplyTo(MainMenuStrip); }
+                if(ContextMenuStrip != null) { DockPanel.Theme.ApplyTo(ContextMenuStrip); }
             }
         }
 
@@ -236,7 +235,6 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             DockHandler.Show(dockPanel, dockState);
         }
 
-        [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters")]
         public void Show(DockPanel dockPanel, Rectangle floatWindowBounds) {
             DockHandler.Show(dockPanel, floatWindowBounds);
         }
@@ -249,7 +247,6 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             DockHandler.Show(previousPane, alignment, proportion);
         }
 
-        [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters")]
         public void FloatAt(Rectangle floatWindowBounds) {
             DockHandler.FloatAt(floatWindowBounds);
         }
@@ -263,31 +260,37 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         #region IDockContent Members
+
         void IDockContent.OnActivated(EventArgs e) {
-            this.OnActivated(e);
+            OnActivated(e);
         }
 
         void IDockContent.OnDeactivate(EventArgs e) {
-            this.OnDeactivate(e);
+            OnDeactivate(e);
         }
-        #endregion
+
+        #endregion IDockContent Members
 
         #region Events
+
         private void DockHandler_DockStateChanged(object sender, EventArgs e) {
             OnDockStateChanged(e);
         }
 
-        private static readonly object DockStateChangedEvent = new object();
+        private static readonly object DockStateChangedEvent = new();
+
         [LocalizedCategory("Category_PropertyChanged")]
         [LocalizedDescription("Pane_DockStateChanged_Description")]
         public event EventHandler DockStateChanged {
             add { Events.AddHandler(DockStateChangedEvent, value); }
             remove { Events.RemoveHandler(DockStateChangedEvent, value); }
         }
+
         protected virtual void OnDockStateChanged(EventArgs e) {
             ((EventHandler)Events[DockStateChangedEvent])?.Invoke(this, e);
         }
-        #endregion
+
+        #endregion Events
 
         /// <summary>
         /// Overridden to avoid resize issues with nested controls
@@ -297,7 +300,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         /// http://support.microsoft.com/kb/953934
         /// </remarks>
         protected override void OnSizeChanged(EventArgs e) {
-            if (DockPanel != null && DockPanel.SupportDeeplyNestedContent && IsHandleCreated) {
+            if(DockPanel != null && DockPanel.SupportDeeplyNestedContent && IsHandleCreated) {
                 BeginInvoke((MethodInvoker)delegate {
                     base.OnSizeChanged(e);
                 });
@@ -306,8 +309,13 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             }
         }
 
-        public virtual void SetStyle(ToolStripExtender style) { }
-        public virtual void SetColors(DockContentColorPalette colorPalette) { }
-        public virtual void UpdateContent() { }
+        public virtual void SetStyle(ToolStripExtender style) {
+        }
+
+        public virtual void SetColors(DockContentColorPalette colorPalette) {
+        }
+
+        public virtual void UpdateContent() {
+        }
     }
 }

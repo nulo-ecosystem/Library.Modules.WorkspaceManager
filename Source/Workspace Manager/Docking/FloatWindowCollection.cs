@@ -5,21 +5,17 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public class FloatWindowCollection : ReadOnlyCollection<FloatWindow> {
 
-        internal FloatWindowCollection()
-            : base(new List<FloatWindow>()) {
+        internal FloatWindowCollection() : base(new List<FloatWindow>()) {
         }
 
         internal int Add(FloatWindow fw) {
-            if (Items.Contains(fw))
-                return Items.IndexOf(fw);
-
+            if(Items.Contains(fw)) { return Items.IndexOf(fw); }
             Items.Add(fw);
             return Count - 1;
         }
 
         internal void Dispose() {
-            for (int i = Count - 1; i >= 0; i--)
-                this[i].Close();
+            for(int i = Count - 1; i >= 0; i--) { this[i].Close(); }
         }
 
         internal void Remove(FloatWindow fw) {

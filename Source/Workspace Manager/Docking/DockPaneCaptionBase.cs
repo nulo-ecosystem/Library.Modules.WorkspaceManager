@@ -8,15 +8,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected internal DockPaneCaptionBase(DockPane pane) {
             m_dockPane = pane;
-
-            SetStyle(ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.ResizeRedraw |
-                ControlStyles.UserPaint |
-                ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.Selectable, false);
         }
 
-        private DockPane m_dockPane;
+        private readonly DockPane m_dockPane;
+
         public DockPane DockPane {
             get { return m_dockPane; }
         }
@@ -35,43 +32,35 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override void OnMouseUp(MouseEventArgs e) {
             base.OnMouseUp(e);
-
-            if (e.Button == MouseButtons.Right)
-                ShowTabPageContextMenu(new Point(e.X, e.Y));
+            if(e.Button == MouseButtons.Right) { ShowTabPageContextMenu(new Point(e.X, e.Y)); }
         }
 
         protected override void OnMouseDown(MouseEventArgs e) {
             base.OnMouseDown(e);
 
-            if (e.Button == MouseButtons.Left &&
-                DockPane.DockPanel.AllowEndUserDocking &&
-                DockPane.AllowDockDragAndDrop &&
-                DockPane.ActiveContent != null &&
-                (!DockHelper.IsDockStateAutoHide(DockPane.DockState) || CanDragAutoHide)) {
+            if(e.Button == MouseButtons.Left && DockPane.DockPanel.AllowEndUserDocking && DockPane.AllowDockDragAndDrop && DockPane.ActiveContent != null && (!DockHelper.IsDockStateAutoHide(DockPane.DockState) || CanDragAutoHide)) {
                 DockPane.DockPanel.BeginDrag(DockPane);
             }
         }
 
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
+        //[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override void WndProc(ref Message m) {
-            if (m.Msg == (int)Win32.Msgs.WM_LBUTTONDBLCLK) {
-                if (DockHelper.IsDockStateAutoHide(DockPane.DockState)) {
+            if(m.Msg == (int)Win32.Msgs.WM_LBUTTONDBLCLK) {
+                if(DockHelper.IsDockStateAutoHide(DockPane.DockState)) {
                     DockPane.DockPanel.ActiveAutoHideContent = null;
                     return;
                 }
-
-                if (DockPane.IsFloat)
+                if(DockPane.IsFloat) {
                     DockPane.RestoreToPanel();
-                else
+                } else {
                     DockPane.Float();
+                }
             }
             base.WndProc(ref m);
         }
 
         internal void RefreshChanges() {
-            if (IsDisposed)
-                return;
-
+            if(IsDisposed) { return; }
             OnRefreshChanges();
         }
 
@@ -84,7 +73,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         protected internal abstract int MeasureHeight();
 
         /// <summary>
-        /// Gets a value indicating whether dock panel can be dragged when in auto hide mode. 
+        /// Gets a value indicating whether dock panel can be dragged when in auto hide mode.
         /// Default is false.
         /// </summary>
         protected virtual bool CanDragAutoHide {

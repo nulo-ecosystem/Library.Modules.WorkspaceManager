@@ -17,7 +17,7 @@
     <Product>Workspace Manager ®</Product>
     <Description>A library for docking panels in .Net WinForms that facilitates the management of light and dark workspaces and themes. Tailored for the Nulo Ecosystem.</Description>
     <Copyright>Copyright © 2024 Nulo Ecosystem</Copyright>
-    <PackageProjectUrl>https://github.com/nulo-ecosystem/library-forms-WorkspaceManager/pkgs/nuget/Nulo.Modules.WorkspaceManager</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/nulo-ecosystem/library-modules-WorkspaceManager/pkgs/nuget/Nulo.Modules.WorkspaceManager</PackageProjectUrl>
     <PackageIcon>Icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/nulo-ecosystem/library-modules-WorkspaceManager</RepositoryUrl>
@@ -34,14 +34,18 @@
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <SignAssembly>False</SignAssembly>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>none</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>

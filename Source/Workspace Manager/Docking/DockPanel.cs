@@ -10,7 +10,7 @@ using System.Windows.Forms;
 // #2 Use "resfinder" in the toolbox bitmap attribute instead of the control name.
 // #3 use the "<default namespace>.<resourcename>" string to locate the resource.
 // See: http://www.bobpowell.net/toolboxbitmap.htm
-internal class resfinder {
+internal class Resfinder {
 }
 
 namespace Nulo.Modules.WorkspaceManager.Docking {
@@ -22,7 +22,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     /// <returns>Dock content deserialized from layout/stream.</returns>
     /// <remarks>
     /// The deserialization handler method should handle all possible exceptions.
-    /// 
+    ///
     /// If any exception happens during deserialization and is not handled, the program might crash or experience other issues.
     /// </remarks>
     [SuppressMessage("Microsoft.Naming", "CA1720:AvoidTypeNamesInParameters", MessageId = "0#")]
@@ -30,11 +30,10 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
     [LocalizedDescription("DockPanel_Description")]
     [Designer("System.Windows.Forms.Design.ControlDesigner, System.Design")]
-    [ToolboxBitmap(typeof(resfinder), "Nulo.Modules.WorkspaceManager.Docking.DockPanel.bmp")]
+    [ToolboxBitmap(typeof(Resfinder), "Nulo.Modules.WorkspaceManager.Docking.DockPanel.bmp")]
     [DefaultProperty("DocumentStyle")]
     [DefaultEvent("ActiveContentChanged")]
     public partial class DockPanel : Panel {
-
         private readonly FocusManagerImpl m_focusManager;
         private readonly DockPaneCollection m_panes;
         private readonly FloatWindowCollection m_floatWindows;
@@ -47,13 +46,14 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             ShowAutoHideContentOnHover = true;
 
             m_focusManager = new FocusManagerImpl(this);
-            m_panes = new DockPaneCollection();
-            m_floatWindows = new FloatWindowCollection();
+            m_panes = [];
+            m_floatWindows = [];
 
             SuspendLayout();
 
-            m_dummyControl = new DummyControl();
-            m_dummyControl.Bounds = new Rectangle(0, 0, 1, 1);
+            m_dummyControl = new DummyControl {
+                Bounds = new Rectangle(0, 0, 1, 1)
+            };
             Controls.Add(m_dummyControl);
 
             Theme.ApplyTo(this);
@@ -83,7 +83,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         /// Determines the color with which the client rectangle will be drawn.
         /// If this property is used instead of the BackColor it will not have any influence on the borders to the surrounding controls (DockPane).
         /// The BackColor property changes the borders of surrounding controls (DockPane).
-        /// Alternatively both properties may be used (BackColor to draw and define the color of the borders and DockBackColor to define the color of the client rectangle). 
+        /// Alternatively both properties may be used (BackColor to draw and define the color of the borders and DockBackColor to define the color of the client rectangle).
         /// For Backgroundimages: Set your prefered Image, then set the DockBackColor and the BackColor to the same Color (Control)
         /// </summary>
         [Description("Determines the color with which the client rectangle will be drawn.\r\n" +
@@ -95,9 +95,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             get {
                 return !m_BackColor.IsEmpty ? m_BackColor : base.BackColor;
             }
-
             set {
-                if (m_BackColor != value) {
+                if(m_BackColor != value) {
                     m_BackColor = value;
                     Refresh();
                 }
@@ -112,19 +111,16 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         internal AutoHideStripBase AutoHideStripControl {
             get {
-                if (m_autoHideStripControl == null) {
+                if(m_autoHideStripControl == null) {
                     m_autoHideStripControl = Theme.Extender.AutoHideStripFactory.CreateAutoHideStrip(this);
                     Controls.Add(m_autoHideStripControl);
                 }
-
                 return m_autoHideStripControl;
             }
         }
 
         internal void ResetAutoHideStripControl() {
-            if (m_autoHideStripControl != null)
-                m_autoHideStripControl.Dispose();
-
+            m_autoHideStripControl?.Dispose();
             m_autoHideStripControl = null;
         }
 
@@ -134,22 +130,21 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private void MdiClient_Layout(object sender, LayoutEventArgs e) {
-            if (DocumentStyle != DocumentStyle.DockingMdi)
-                return;
-
-            foreach (DockPane pane in Panes)
-                if (pane.DockState == DockState.Document)
+            if(DocumentStyle != DocumentStyle.DockingMdi) { return; }
+            foreach(DockPane pane in Panes) {
+                if(pane.DockState == DockState.Document) {
                     pane.SetContentBounds();
-
+                }
+            }
             InvalidateWindowRegion();
         }
 
         private bool m_disposed;
 
         protected override void Dispose(bool disposing) {
-            if (!m_disposed && disposing) {
+            if(!m_disposed && disposing) {
                 m_focusManager.Dispose();
-                if (m_mdiClientController != null) {
+                if(m_mdiClientController != null) {
                     m_mdiClientController.HandleAssigned -= new EventHandler(MdiClientHandleAssigned);
                     m_mdiClientController.MdiChildActivate -= new EventHandler(ParentFormMdiChildActivate);
                     m_mdiClientController.Layout -= new LayoutEventHandler(MdiClient_Layout);
@@ -158,10 +153,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                 FloatWindows.Dispose();
                 Panes.Dispose();
                 DummyContent.Dispose();
-
                 m_disposed = true;
             }
-
             base.Dispose(disposing);
         }
 
@@ -173,45 +166,47 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private bool m_allowEndUserDocking = !Win32Helper.IsRunningOnMono;
+
         [LocalizedCategory("Category_Docking")]
         [LocalizedDescription("DockPanel_AllowEndUserDocking_Description")]
         [DefaultValue(true)]
         public bool AllowEndUserDocking {
             get {
-                if (Win32Helper.IsRunningOnMono && m_allowEndUserDocking)
+                if(Win32Helper.IsRunningOnMono && m_allowEndUserDocking) {
                     m_allowEndUserDocking = false;
-
+                }
                 return m_allowEndUserDocking;
             }
-
             set {
-                if (Win32Helper.IsRunningOnMono && value)
+                if(Win32Helper.IsRunningOnMono && value) {
                     throw new InvalidOperationException("AllowEndUserDocking can only be false if running on Mono");
-
+                }
                 m_allowEndUserDocking = value;
             }
         }
 
         private bool m_allowEndUserNestedDocking = !Win32Helper.IsRunningOnMono;
+
         [LocalizedCategory("Category_Docking")]
         [LocalizedDescription("DockPanel_AllowEndUserNestedDocking_Description")]
         [DefaultValue(true)]
         public bool AllowEndUserNestedDocking {
             get {
-                if (Win32Helper.IsRunningOnMono && m_allowEndUserDocking)
+                if(Win32Helper.IsRunningOnMono && m_allowEndUserDocking) {
                     m_allowEndUserDocking = false;
+                }
                 return m_allowEndUserNestedDocking;
             }
-
             set {
-                if (Win32Helper.IsRunningOnMono && value)
+                if(Win32Helper.IsRunningOnMono && value) {
                     throw new InvalidOperationException("AllowEndUserNestedDocking can only be false if running on Mono");
-
+                }
                 m_allowEndUserNestedDocking = value;
             }
         }
 
         private DockContentCollection m_contents = new DockContentCollection();
+
         [Browsable(false)]
         public DockContentCollection Contents {
             get { return m_contents; }
@@ -222,6 +217,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private bool m_rightToLeftLayout = false;
+
         [DefaultValue(false)]
         [LocalizedCategory("Appearance")]
         [LocalizedDescription("DockPanel_RightToLeftLayout_Description")]
@@ -229,33 +225,31 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             get {
                 return m_rightToLeftLayout;
             }
-
             set {
-                if (m_rightToLeftLayout == value)
-                    return;
-
+                if(m_rightToLeftLayout == value) { return; }
                 m_rightToLeftLayout = value;
-                foreach (FloatWindow floatWindow in FloatWindows)
+                foreach(FloatWindow floatWindow in FloatWindows) {
                     floatWindow.RightToLeftLayout = value;
+                }
             }
         }
 
         protected override void OnRightToLeftChanged(EventArgs e) {
             base.OnRightToLeftChanged(e);
-            foreach (FloatWindow floatWindow in FloatWindows)
+            foreach(FloatWindow floatWindow in FloatWindows) {
                 floatWindow.RightToLeft = RightToLeft;
+            }
         }
 
         private bool m_showDocumentIcon = false;
+
         [DefaultValue(false)]
         [LocalizedCategory("Category_Docking")]
         [LocalizedDescription("DockPanel_ShowDocumentIcon_Description")]
         public bool ShowDocumentIcon {
             get { return m_showDocumentIcon; }
             set {
-                if (m_showDocumentIcon == value)
-                    return;
-
+                if(m_showDocumentIcon == value) { return; }
                 m_showDocumentIcon = value;
                 Refresh();
             }
@@ -300,18 +294,16 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         /// </summary>
         /// <remarks>
         /// This <see cref="Rectangle"/> is the center rectangle of <see cref="DockPanel"/> control.
-        /// 
+        ///
         /// Excluded spaces are for the following visual elements,
         /// * Auto hide strips on four sides.
         /// * Necessary paddings defined in themes.
-        /// 
+        ///
         /// Therefore, all dock contents mainly fall into this area (except auto hide window, which might slightly move beyond this area).
         /// </remarks>
         public Rectangle DockArea {
             get {
-                return new Rectangle(DockPadding.Left, DockPadding.Top,
-                    ClientRectangle.Width - DockPadding.Left - DockPadding.Right,
-                    ClientRectangle.Height - DockPadding.Top - DockPadding.Bottom);
+                return new Rectangle(DockPadding.Left, DockPadding.Top, ClientRectangle.Width - DockPadding.Left - DockPadding.Right, ClientRectangle.Height - DockPadding.Top - DockPadding.Bottom);
             }
         }
 
@@ -324,21 +316,15 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             get {
                 return m_dockBottomPortion;
             }
-
             set {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
-                if (Math.Abs(value - m_dockBottomPortion) < double.Epsilon)
-                    return;
-
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
+                if(Math.Abs(value - m_dockBottomPortion) < double.Epsilon) { return; }
                 m_dockBottomPortion = value;
-
-                if (m_dockBottomPortion < 1 && m_dockTopPortion < 1) {
-                    if (m_dockTopPortion + m_dockBottomPortion > 1)
+                if(m_dockBottomPortion < 1 && m_dockTopPortion < 1) {
+                    if(m_dockTopPortion + m_dockBottomPortion > 1) {
                         m_dockTopPortion = 1 - m_dockBottomPortion;
+                    }
                 }
-
                 PerformLayout();
             }
         }
@@ -352,18 +338,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             get {
                 return m_dockLeftPortion;
             }
-
             set {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
-                if (Math.Abs(value - m_dockLeftPortion) < double.Epsilon)
-                    return;
-
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
+                if(Math.Abs(value - m_dockLeftPortion) < double.Epsilon) { return; }
                 m_dockLeftPortion = value;
-
-                if (m_dockLeftPortion < 1 && m_dockRightPortion < 1) {
-                    if (m_dockLeftPortion + m_dockRightPortion > 1)
+                if(m_dockLeftPortion < 1 && m_dockRightPortion < 1) {
+                    if(m_dockLeftPortion + m_dockRightPortion > 1)
                         m_dockRightPortion = 1 - m_dockLeftPortion;
                 }
                 PerformLayout();
@@ -379,21 +359,15 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             get {
                 return m_dockRightPortion;
             }
-
             set {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
-                if (Math.Abs(value - m_dockRightPortion) < double.Epsilon)
-                    return;
-
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
+                if(Math.Abs(value - m_dockRightPortion) < double.Epsilon) { return; }
                 m_dockRightPortion = value;
-
-                if (m_dockLeftPortion < 1 && m_dockRightPortion < 1) {
-                    if (m_dockLeftPortion + m_dockRightPortion > 1)
+                if(m_dockLeftPortion < 1 && m_dockRightPortion < 1) {
+                    if(m_dockLeftPortion + m_dockRightPortion > 1) {
                         m_dockLeftPortion = 1 - m_dockRightPortion;
+                    }
                 }
-
                 PerformLayout();
             }
         }
@@ -407,19 +381,14 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             get {
                 return m_dockTopPortion;
             }
-
             set {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
-                if (Math.Abs(value - m_dockTopPortion) < double.Epsilon)
-                    return;
-
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
+                if(Math.Abs(value - m_dockTopPortion) < double.Epsilon) { return; }
                 m_dockTopPortion = value;
-
-                if (m_dockTopPortion < 1 && m_dockBottomPortion < 1) {
-                    if (m_dockTopPortion + m_dockBottomPortion > 1)
+                if(m_dockTopPortion < 1 && m_dockBottomPortion < 1) {
+                    if(m_dockTopPortion + m_dockBottomPortion > 1) {
                         m_dockBottomPortion = 1 - m_dockTopPortion;
+                    }
                 }
                 PerformLayout();
             }
@@ -431,26 +400,30 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         public void UpdateDockWindowZOrder(DockStyle dockStyle, bool fullPanelEdge) {
-            if (dockStyle == DockStyle.Left) {
-                if (fullPanelEdge)
+            if(dockStyle == DockStyle.Left) {
+                if(fullPanelEdge) {
                     DockWindows[DockState.DockLeft].SendToBack();
-                else
+                } else {
                     DockWindows[DockState.DockLeft].BringToFront();
-            } else if (dockStyle == DockStyle.Right) {
-                if (fullPanelEdge)
+                }
+            } else if(dockStyle == DockStyle.Right) {
+                if(fullPanelEdge) {
                     DockWindows[DockState.DockRight].SendToBack();
-                else
+                } else {
                     DockWindows[DockState.DockRight].BringToFront();
-            } else if (dockStyle == DockStyle.Top) {
-                if (fullPanelEdge)
+                }
+            } else if(dockStyle == DockStyle.Top) {
+                if(fullPanelEdge) {
                     DockWindows[DockState.DockTop].SendToBack();
-                else
+                } else {
                     DockWindows[DockState.DockTop].BringToFront();
-            } else if (dockStyle == DockStyle.Bottom) {
-                if (fullPanelEdge)
+                }
+            } else if(dockStyle == DockStyle.Bottom) {
+                if(fullPanelEdge) {
                     DockWindows[DockState.DockBottom].SendToBack();
-                else
+                } else {
                     DockWindows[DockState.DockBottom].BringToFront();
+                }
             }
         }
 
@@ -458,9 +431,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         public int DocumentsCount {
             get {
                 int count = 0;
-                foreach (IDockContent content in Documents)
-                    count++;
-
+                foreach(IDockContent content in Documents) { count++; }
                 return count;
             }
         }
@@ -469,20 +440,20 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             int count = DocumentsCount;
             IDockContent[] documents = new IDockContent[count];
             int i = 0;
-            foreach (IDockContent content in Documents) {
+            foreach(IDockContent content in Documents) {
                 documents[i] = content;
                 i++;
             }
-
             return documents;
         }
 
         [Browsable(false)]
         public IEnumerable<IDockContent> Documents {
             get {
-                foreach (IDockContent content in Contents) {
-                    if (content.DockHandler.DockState == DockState.Document)
+                foreach(IDockContent content in Contents) {
+                    if(content.DockHandler.DockState == DockState.Document) {
                         yield return content;
+                    }
                 }
             }
         }
@@ -509,36 +480,27 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private DocumentStyle m_documentStyle = DocumentStyle.DockingWindow;
+
         [LocalizedCategory("Category_Docking")]
         [LocalizedDescription("DockPanel_DocumentStyle_Description")]
         [DefaultValue(DocumentStyle.DockingWindow)]
         public DocumentStyle DocumentStyle {
             get { return m_documentStyle; }
             set {
-                if (value == m_documentStyle)
-                    return;
-
-                if (!Enum.IsDefined(typeof(DocumentStyle), value))
-                    throw new InvalidEnumArgumentException();
-
-                if (value == DocumentStyle.SystemMdi && DockWindows[DockState.Document].VisibleNestedPanes.Count > 0)
-                    throw new InvalidEnumArgumentException();
-
+                if(value == m_documentStyle) { return; }
+                if(!Enum.IsDefined(typeof(DocumentStyle), value)) { throw new InvalidEnumArgumentException(); }
+                if(value == DocumentStyle.SystemMdi && DockWindows[DockState.Document].VisibleNestedPanes.Count > 0) { throw new InvalidEnumArgumentException(); }
                 m_documentStyle = value;
-
                 SuspendLayout(true);
-
                 SetAutoHideWindowParent();
                 SetMdiClient();
                 InvalidateWindowRegion();
-
-                foreach (IDockContent content in Contents) {
-                    if (content.DockHandler.DockState == DockState.Document)
+                foreach(IDockContent content in Contents) {
+                    if(content.DockHandler.DockState == DockState.Document) {
                         content.DockHandler.SetPaneAndVisible(content.DockHandler.Pane);
+                    }
                 }
-
                 PerformMdiClientLayout();
-
                 ResumeLayout(true, true);
             }
         }
@@ -560,17 +522,15 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         public bool ShowAutoHideContentOnHover { get; set; }
 
         public int GetDockWindowSize(DockState dockState) {
-            if (dockState == DockState.DockLeft || dockState == DockState.DockRight) {
+            if(dockState == DockState.DockLeft || dockState == DockState.DockRight) {
                 int width = ClientRectangle.Width - DockPadding.Left - DockPadding.Right;
                 int dockLeftSize = m_dockLeftPortion >= 1 ? (int)m_dockLeftPortion : (int)(width * m_dockLeftPortion);
                 int dockRightSize = m_dockRightPortion >= 1 ? (int)m_dockRightPortion : (int)(width * m_dockRightPortion);
 
-                if (dockLeftSize < MeasurePane.MinSize)
-                    dockLeftSize = MeasurePane.MinSize;
-                if (dockRightSize < MeasurePane.MinSize)
-                    dockRightSize = MeasurePane.MinSize;
+                if(dockLeftSize < MeasurePane.MinSize) { dockLeftSize = MeasurePane.MinSize; }
+                if(dockRightSize < MeasurePane.MinSize) { dockRightSize = MeasurePane.MinSize; }
 
-                if (dockLeftSize + dockRightSize > width - MeasurePane.MinSize) {
+                if(dockLeftSize + dockRightSize > width - MeasurePane.MinSize) {
                     int adjust = (dockLeftSize + dockRightSize) - (width - MeasurePane.MinSize);
                     dockLeftSize -= adjust / 2;
                     dockRightSize -= adjust / 2;
@@ -579,17 +539,15 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                 return dockState == DockState.DockLeft ? dockLeftSize : dockRightSize;
             }
 
-            if (dockState == DockState.DockTop || dockState == DockState.DockBottom) {
+            if(dockState == DockState.DockTop || dockState == DockState.DockBottom) {
                 int height = ClientRectangle.Height - DockPadding.Top - DockPadding.Bottom;
                 int dockTopSize = m_dockTopPortion >= 1 ? (int)m_dockTopPortion : (int)(height * m_dockTopPortion);
                 int dockBottomSize = m_dockBottomPortion >= 1 ? (int)m_dockBottomPortion : (int)(height * m_dockBottomPortion);
 
-                if (dockTopSize < MeasurePane.MinSize)
-                    dockTopSize = MeasurePane.MinSize;
-                if (dockBottomSize < MeasurePane.MinSize)
-                    dockBottomSize = MeasurePane.MinSize;
+                if(dockTopSize < MeasurePane.MinSize) { dockTopSize = MeasurePane.MinSize; }
+                if(dockBottomSize < MeasurePane.MinSize) { dockBottomSize = MeasurePane.MinSize; }
 
-                if (dockTopSize + dockBottomSize > height - MeasurePane.MinSize) {
+                if(dockTopSize + dockBottomSize > height - MeasurePane.MinSize) {
                     int adjust = (dockTopSize + dockBottomSize) - (height - MeasurePane.MinSize);
                     dockTopSize -= adjust / 2;
                     dockBottomSize -= adjust / 2;
@@ -617,7 +575,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
             DockWindow documentDockWindow = DockWindows[DockState.Document];
 
-            if (ReferenceEquals(documentDockWindow.Parent, AutoHideWindow.Parent)) {
+            if(ReferenceEquals(documentDockWindow.Parent, AutoHideWindow.Parent)) {
                 AutoHideWindow.Parent.Controls.SetChildIndex(AutoHideWindow, 0);
                 documentDockWindow.Parent.Controls.SetChildIndex(documentDockWindow, 1);
             } else {
@@ -627,10 +585,10 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
             base.OnLayout(levent);
 
-            if (DocumentStyle == DocumentStyle.SystemMdi && MdiClientExists) {
+            if(DocumentStyle == DocumentStyle.SystemMdi && MdiClientExists) {
                 SetMdiClientBounds(SystemMdiClientBounds);
                 InvalidateWindowRegion();
-            } else if (DocumentStyle == DocumentStyle.DockingMdi) {
+            } else if(DocumentStyle == DocumentStyle.DockingMdi) {
                 InvalidateWindowRegion();
             }
 
@@ -643,136 +601,98 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
-
-            if (DockBackColor.ToArgb() == BackColor.ToArgb())
-                return;
-
+            if(DockBackColor.ToArgb() == BackColor.ToArgb()) { return; }
             Graphics g = e.Graphics;
             SolidBrush bgBrush = new SolidBrush(DockBackColor);
             g.FillRectangle(bgBrush, ClientRectangle);
         }
 
         internal void AddContent(IDockContent content) {
-            if (content == null)
-                throw (new ArgumentNullException());
-
-            if (!Contents.Contains(content)) {
+            ArgumentNullException.ThrowIfNull(content);
+            if(!Contents.Contains(content)) {
                 Contents.Add(content);
                 OnContentAdded(new DockContentEventArgs(content));
             }
         }
 
         internal void AddPane(DockPane pane) {
-            if (Panes.Contains(pane))
-                return;
-
+            if(Panes.Contains(pane)) { return; }
             Panes.Add(pane);
         }
 
         internal void AddFloatWindow(FloatWindow floatWindow) {
-            if (FloatWindows.Contains(floatWindow))
-                return;
-
+            if(FloatWindows.Contains(floatWindow)) { return; }
             FloatWindows.Add(floatWindow);
         }
 
         private void CalculateDockPadding() {
             DockPadding.All = Theme.Measures.DockPadding;
             int standard = AutoHideStripControl.MeasureHeight();
-            if (AutoHideStripControl.GetNumberOfPanes(DockState.DockLeftAutoHide) > 0)
-                DockPadding.Left = standard;
-            if (AutoHideStripControl.GetNumberOfPanes(DockState.DockRightAutoHide) > 0)
-                DockPadding.Right = standard;
-            if (AutoHideStripControl.GetNumberOfPanes(DockState.DockTopAutoHide) > 0)
-                DockPadding.Top = standard;
-            if (AutoHideStripControl.GetNumberOfPanes(DockState.DockBottomAutoHide) > 0)
-                DockPadding.Bottom = standard;
+            if(AutoHideStripControl.GetNumberOfPanes(DockState.DockLeftAutoHide) > 0) { DockPadding.Left = standard; }
+            if(AutoHideStripControl.GetNumberOfPanes(DockState.DockRightAutoHide) > 0) { DockPadding.Right = standard; }
+            if(AutoHideStripControl.GetNumberOfPanes(DockState.DockTopAutoHide) > 0) { DockPadding.Top = standard; }
+            if(AutoHideStripControl.GetNumberOfPanes(DockState.DockBottomAutoHide) > 0) { DockPadding.Bottom = standard; }
         }
 
         internal void RemoveContent(IDockContent content) {
-            if (content == null)
-                throw (new ArgumentNullException());
-
-            if (Contents.Contains(content)) {
-                Contents.Remove(content);
-                OnContentRemoved(new DockContentEventArgs(content));
-            }
+            ArgumentNullException.ThrowIfNull(content);
+            if(!Contents.Contains(content)) { return; }
+            Contents.Remove(content);
+            OnContentRemoved(new DockContentEventArgs(content));
         }
 
         internal void RemovePane(DockPane pane) {
-            if (!Panes.Contains(pane))
-                return;
-
+            if(!Panes.Contains(pane)) { return; }
             Panes.Remove(pane);
         }
 
         internal void RemoveFloatWindow(FloatWindow floatWindow) {
-            if (!FloatWindows.Contains(floatWindow))
-                return;
-
+            if(!FloatWindows.Contains(floatWindow)) { return; }
             FloatWindows.Remove(floatWindow);
-            if (FloatWindows.Count != 0)
-                return;
-
-            if (ParentForm == null)
-                return;
-
+            if(FloatWindows.Count != 0) { return; }
+            if(ParentForm == null) { return; }
             ParentForm.Focus();
         }
 
         public void SetPaneIndex(DockPane pane, int index) {
             int oldIndex = Panes.IndexOf(pane);
-            if (oldIndex == -1)
-                throw (new ArgumentException(Strings.DockPanel_SetPaneIndex_InvalidPane));
-
-            if (index < 0 || index > Panes.Count - 1)
-                if (index != -1)
-                    throw (new ArgumentOutOfRangeException(Strings.DockPanel_SetPaneIndex_InvalidIndex));
-
-            if (oldIndex == index)
-                return;
-            if (oldIndex == Panes.Count - 1 && index == -1)
-                return;
-
+            if(oldIndex == -1) { throw (new ArgumentException(Strings.DockPanel_SetPaneIndex_InvalidPane)); }
+            if(index < 0 || index > Panes.Count - 1) {
+                if(index != -1) { throw (new ArgumentOutOfRangeException(Strings.DockPanel_SetPaneIndex_InvalidIndex)); }
+            }
+            if(oldIndex == index) { return; }
+            if(oldIndex == Panes.Count - 1 && index == -1) { return; }
             Panes.Remove(pane);
-            if (index == -1)
+            if(index == -1) {
                 Panes.Add(pane);
-            else if (oldIndex < index)
+            } else if(oldIndex < index) {
                 Panes.AddAt(pane, index - 1);
-            else
+            } else {
                 Panes.AddAt(pane, index);
+            }
         }
 
         public void SuspendLayout(bool allWindows) {
             FocusManager.SuspendFocusTracking();
             SuspendLayout();
-            if (allWindows)
-                SuspendMdiClientLayout();
+            if(allWindows) { SuspendMdiClientLayout(); }
         }
 
         public void ResumeLayout(bool performLayout, bool allWindows) {
             FocusManager.ResumeFocusTracking();
             ResumeLayout(performLayout);
-            if (allWindows)
-                ResumeMdiClientLayout(performLayout);
+            if(allWindows) { ResumeMdiClientLayout(performLayout); }
         }
 
         internal Form ParentForm {
             get {
-                if (!IsParentFormValid())
-                    throw new InvalidOperationException(Strings.DockPanel_ParentForm_Invalid);
-
-                return GetMdiClientController().ParentForm;
+                return !IsParentFormValid() ? throw new InvalidOperationException(Strings.DockPanel_ParentForm_Invalid) : GetMdiClientController().ParentForm;
             }
         }
 
         private bool IsParentFormValid() {
-            if (DocumentStyle == DocumentStyle.DockingSdi || DocumentStyle == DocumentStyle.DockingWindow)
-                return true;
-
-            if (!MdiClientExists)
-                GetMdiClientController().RenewMdiClient();
-
+            if(DocumentStyle == DocumentStyle.DockingSdi || DocumentStyle == DocumentStyle.DockingWindow) { return true; }
+            if(!MdiClientExists) { GetMdiClientController().RenewMdiClient(); }
             return (MdiClientExists);
         }
 
@@ -783,13 +703,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private void SetAutoHideWindowParent() {
-            Control parent;
-            if (DocumentStyle == DocumentStyle.DockingMdi ||
-                DocumentStyle == DocumentStyle.SystemMdi)
-                parent = this.Parent;
-            else
-                parent = this;
-            if (AutoHideWindow.Parent != parent) {
+            Control parent = DocumentStyle == DocumentStyle.DockingMdi || DocumentStyle == DocumentStyle.SystemMdi ? Parent : this;
+            if(AutoHideWindow.Parent != parent) {
                 AutoHideWindow.Parent = parent;
                 AutoHideWindow.BringToFront();
             }
@@ -797,16 +712,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override void OnVisibleChanged(EventArgs e) {
             base.OnVisibleChanged(e);
-
-            if (Visible)
-                SetMdiClient();
+            if(Visible) { SetMdiClient(); }
         }
 
         private Rectangle SystemMdiClientBounds {
             get {
-                if (!IsParentFormValid() || !Visible)
-                    return Rectangle.Empty;
-
+                if(!IsParentFormValid() || !Visible) { return Rectangle.Empty; }
                 Rectangle rect = ParentForm.RectangleToClient(RectangleToScreen(DocumentWindowBounds));
                 return rect;
             }
@@ -815,49 +726,46 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         public Rectangle DocumentWindowBounds {
             get {
                 Rectangle rectDocumentBounds = DisplayRectangle;
-                if (DockWindows[DockState.DockLeft].Visible) {
+                if(DockWindows[DockState.DockLeft].Visible) {
                     rectDocumentBounds.X += DockWindows[DockState.DockLeft].Width;
                     rectDocumentBounds.Width -= DockWindows[DockState.DockLeft].Width;
                 }
-                if (DockWindows[DockState.DockRight].Visible)
+                if(DockWindows[DockState.DockRight].Visible) {
                     rectDocumentBounds.Width -= DockWindows[DockState.DockRight].Width;
-                if (DockWindows[DockState.DockTop].Visible) {
+                }
+                if(DockWindows[DockState.DockTop].Visible) {
                     rectDocumentBounds.Y += DockWindows[DockState.DockTop].Height;
                     rectDocumentBounds.Height -= DockWindows[DockState.DockTop].Height;
                 }
-                if (DockWindows[DockState.DockBottom].Visible)
+                if(DockWindows[DockState.DockBottom].Visible) {
                     rectDocumentBounds.Height -= DockWindows[DockState.DockBottom].Height;
-
+                }
                 return rectDocumentBounds;
-
             }
         }
 
         private PaintEventHandler m_dummyControlPaintEventHandler = null;
+
         private void InvalidateWindowRegion() {
-            if (DesignMode)
-                return;
-
-            if (m_dummyControlPaintEventHandler == null)
-                m_dummyControlPaintEventHandler = new PaintEventHandler(DummyControl_Paint);
-
+            if(DesignMode) { return; }
+            m_dummyControlPaintEventHandler ??= new PaintEventHandler(DummyControl_Paint);
             DummyControl.Paint += m_dummyControlPaintEventHandler;
             DummyControl.Invalidate();
         }
 
-        void DummyControl_Paint(object sender, PaintEventArgs e) {
+        private void DummyControl_Paint(object sender, PaintEventArgs e) {
             DummyControl.Paint -= m_dummyControlPaintEventHandler;
             UpdateWindowRegion();
         }
 
         private void UpdateWindowRegion() {
-            if (this.DocumentStyle == DocumentStyle.DockingMdi)
+            if(DocumentStyle == DocumentStyle.DockingMdi) {
                 UpdateWindowRegion_ClipContent();
-            else if (this.DocumentStyle == DocumentStyle.DockingSdi ||
-                this.DocumentStyle == DocumentStyle.DockingWindow)
+            } else if(DocumentStyle == DocumentStyle.DockingSdi || DocumentStyle == DocumentStyle.DockingWindow) {
                 UpdateWindowRegion_FullDocumentArea();
-            else if (this.DocumentStyle == DocumentStyle.SystemMdi)
+            } else if(DocumentStyle == DocumentStyle.SystemMdi) {
                 UpdateWindowRegion_EmptyDocumentArea();
+            }
         }
 
         private void UpdateWindowRegion_FullDocumentArea() {
@@ -866,29 +774,25 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         private void UpdateWindowRegion_EmptyDocumentArea() {
             Rectangle rect = DocumentWindowBounds;
-            SetRegion(new Rectangle[] { rect });
+            SetRegion([rect]);
         }
 
         private void UpdateWindowRegion_ClipContent() {
             int count = 0;
-            foreach (DockPane pane in this.Panes) {
-                if (!pane.Visible || pane.DockState != DockState.Document)
-                    continue;
-
+            foreach(DockPane pane in this.Panes) {
+                if(!pane.Visible || pane.DockState != DockState.Document) { continue; }
                 count++;
             }
 
-            if (count == 0) {
+            if(count == 0) {
                 SetRegion(null);
                 return;
             }
 
             Rectangle[] rects = new Rectangle[count];
             int i = 0;
-            foreach (DockPane pane in this.Panes) {
-                if (!pane.Visible || pane.DockState != DockState.Document)
-                    continue;
-
+            foreach(DockPane pane in this.Panes) {
+                if(!pane.Visible || pane.DockState != DockState.Document) { continue; }
                 rects[i] = RectangleToClient(pane.RectangleToScreen(pane.ContentRectangle));
                 i++;
             }
@@ -897,109 +801,100 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private Rectangle[] m_clipRects = null;
+
         private void SetRegion(Rectangle[] clipRects) {
-            if (!IsClipRectsChanged(clipRects))
-                return;
-
+            if(!IsClipRectsChanged(clipRects)) { return; }
             m_clipRects = clipRects;
-
-            if (m_clipRects == null || m_clipRects.GetLength(0) == 0)
+            if(m_clipRects == null || m_clipRects.GetLength(0) == 0) {
                 Region = null;
-            else {
+            } else {
                 Region region = new Region(new Rectangle(0, 0, this.Width, this.Height));
-                foreach (Rectangle rect in m_clipRects)
-                    region.Exclude(rect);
-                if (Region != null) {
-                    Region.Dispose();
-                }
-
+                foreach(Rectangle rect in m_clipRects) { region.Exclude(rect); }
+                Region?.Dispose();
                 Region = region;
             }
         }
 
         private bool IsClipRectsChanged(Rectangle[] clipRects) {
-            if (clipRects == null && m_clipRects == null)
+            if(clipRects == null && m_clipRects == null) {
                 return false;
-            else if ((clipRects == null) != (m_clipRects == null))
+            } else if(clipRects == null != (m_clipRects == null)) {
                 return true;
-
-            foreach (Rectangle rect in clipRects) {
-                bool matched = false;
-                foreach (Rectangle rect2 in m_clipRects) {
-                    if (rect == rect2) {
-                        matched = true;
-                        break;
-                    }
-                }
-                if (!matched)
-                    return true;
             }
-
-            foreach (Rectangle rect2 in m_clipRects) {
+            foreach(Rectangle rect in clipRects) {
                 bool matched = false;
-                foreach (Rectangle rect in clipRects) {
-                    if (rect == rect2) {
+                foreach(Rectangle rect2 in m_clipRects) {
+                    if(rect == rect2) {
                         matched = true;
                         break;
                     }
                 }
-                if (!matched)
-                    return true;
+                if(!matched) { return true; }
+            }
+            foreach(Rectangle rect2 in m_clipRects) {
+                bool matched = false;
+                foreach(Rectangle rect in clipRects) {
+                    if(rect == rect2) {
+                        matched = true;
+                        break;
+                    }
+                }
+                if(!matched) { return true; }
             }
             return false;
         }
 
         private static readonly object ActiveAutoHideContentChangedEvent = new object();
+
         [LocalizedCategory("Category_DockingNotification")]
         [LocalizedDescription("DockPanel_ActiveAutoHideContentChanged_Description")]
         public event EventHandler ActiveAutoHideContentChanged {
             add { Events.AddHandler(ActiveAutoHideContentChangedEvent, value); }
             remove { Events.RemoveHandler(ActiveAutoHideContentChangedEvent, value); }
         }
+
         protected virtual void OnActiveAutoHideContentChanged(EventArgs e) {
-            EventHandler handler = (EventHandler)Events[ActiveAutoHideContentChangedEvent];
-            if (handler != null)
-                handler(this, e);
+            ((EventHandler)Events[ActiveAutoHideContentChangedEvent])?.Invoke(this, e);
         }
+
         private void m_autoHideWindow_ActiveContentChanged(object sender, EventArgs e) {
             OnActiveAutoHideContentChanged(e);
         }
 
-
         private static readonly object ContentAddedEvent = new object();
+
         [LocalizedCategory("Category_DockingNotification")]
         [LocalizedDescription("DockPanel_ContentAdded_Description")]
         public event EventHandler<DockContentEventArgs> ContentAdded {
             add { Events.AddHandler(ContentAddedEvent, value); }
             remove { Events.RemoveHandler(ContentAddedEvent, value); }
         }
+
         protected virtual void OnContentAdded(DockContentEventArgs e) {
-            EventHandler<DockContentEventArgs> handler = (EventHandler<DockContentEventArgs>)Events[ContentAddedEvent];
-            if (handler != null)
-                handler(this, e);
+            ((EventHandler<DockContentEventArgs>)Events[ContentAddedEvent])?.Invoke(this, e);
         }
 
         private static readonly object ContentRemovedEvent = new object();
+
         [LocalizedCategory("Category_DockingNotification")]
         [LocalizedDescription("DockPanel_ContentRemoved_Description")]
         public event EventHandler<DockContentEventArgs> ContentRemoved {
             add { Events.AddHandler(ContentRemovedEvent, value); }
             remove { Events.RemoveHandler(ContentRemovedEvent, value); }
         }
+
         protected virtual void OnContentRemoved(DockContentEventArgs e) {
-            EventHandler<DockContentEventArgs> handler = (EventHandler<DockContentEventArgs>)Events[ContentRemovedEvent];
-            if (handler != null)
-                handler(this, e);
+            ((EventHandler<DockContentEventArgs>)Events[ContentRemovedEvent])?.Invoke(this, e);
         }
 
         internal void ResetDockWindows() {
-            if (m_autoHideWindow == null) {
+            if(m_autoHideWindow == null) {
                 return;
             }
 
             var old = m_dockWindows;
             LoadDockWindows();
-            foreach (var dockWindow in old) {
+            foreach(var dockWindow in old) {
                 Controls.Remove(dockWindow);
                 dockWindow.Dispose();
             }
@@ -1007,7 +902,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         internal void LoadDockWindows() {
             m_dockWindows = new DockWindowCollection(this);
-            foreach (var dockWindow in DockWindows) {
+            foreach(var dockWindow in DockWindows) {
                 Controls.Add(dockWindow);
             }
         }

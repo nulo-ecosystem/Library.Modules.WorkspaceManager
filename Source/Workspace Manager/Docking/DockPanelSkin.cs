@@ -6,6 +6,7 @@ using System.Drawing.Drawing2D;
 namespace Nulo.Modules.WorkspaceManager.Docking {
 
     #region DockPanelSkin classes
+
     /// <summary>
     /// The skin to use when displaying the DockPanel.
     /// The skin allows custom gradient color schemes to be used when drawing the
@@ -13,9 +14,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     /// </summary>
     [TypeConverter(typeof(DockPanelSkinConverter))]
     public class DockPanelSkin {
-
-        private AutoHideStripSkin m_autoHideStripSkin = new AutoHideStripSkin();
-        private DockPaneStripSkin m_dockPaneStripSkin = new DockPaneStripSkin();
+        private AutoHideStripSkin m_autoHideStripSkin = new();
+        private DockPaneStripSkin m_dockPaneStripSkin = new();
 
         /// <summary>
         /// The skin used to display the auto hide strips and tabs.
@@ -39,10 +39,9 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     /// </summary>
     [TypeConverter(typeof(AutoHideStripConverter))]
     public class AutoHideStripSkin {
-
-        private DockPanelGradient m_dockStripGradient = new DockPanelGradient();
-        private TabGradient m_TabGradient = new TabGradient();
-        private DockStripBackground m_DockStripBackground = new DockStripBackground();
+        private DockPanelGradient m_dockStripGradient = new();
+        private TabGradient m_TabGradient = new();
+        private DockStripBackground m_DockStripBackground = new();
 
         private Font m_textFont = SystemFonts.MenuFont;
 
@@ -85,8 +84,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     /// </summary>
     [TypeConverter(typeof(DockPaneStripConverter))]
     public class DockPaneStripSkin {
-        private DockPaneStripGradient m_DocumentGradient = new DockPaneStripGradient();
-        private DockPaneStripToolWindowGradient m_ToolWindowGradient = new DockPaneStripToolWindowGradient();
+        private DockPaneStripGradient m_DocumentGradient = new();
+        private DockPaneStripToolWindowGradient m_ToolWindowGradient = new();
         private Font m_textFont = SystemFonts.MenuFont;
 
         /// <summary>
@@ -120,8 +119,8 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     /// </summary>
     [TypeConverter(typeof(DockPaneStripGradientConverter))]
     public class DockPaneStripToolWindowGradient : DockPaneStripGradient {
-        private TabGradient m_activeCaptionGradient = new TabGradient();
-        private TabGradient m_inactiveCaptionGradient = new TabGradient();
+        private TabGradient m_activeCaptionGradient = new();
+        private TabGradient m_inactiveCaptionGradient = new();
 
         /// <summary>
         /// The skin used to display the active ToolWindow caption.
@@ -145,11 +144,10 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     /// </summary>
     [TypeConverter(typeof(DockPaneStripGradientConverter))]
     public class DockPaneStripGradient {
-        private DockPanelGradient m_dockStripGradient = new DockPanelGradient();
-        private TabGradient m_activeTabGradient = new TabGradient();
-        private TabGradient m_inactiveTabGradient = new TabGradient();
-        private TabGradient m_hoverTabGradient = new TabGradient();
-
+        private DockPanelGradient m_dockStripGradient = new();
+        private TabGradient m_activeTabGradient = new();
+        private TabGradient m_inactiveTabGradient = new();
+        private TabGradient m_hoverTabGradient = new();
 
         /// <summary>
         /// The gradient color skin for the DockStrip.
@@ -226,7 +224,6 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
     }
 
-
     /// <summary>
     /// The gradient color skin.
     /// </summary>
@@ -264,104 +261,80 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
     }
 
-    #endregion
+    #endregion DockPanelSkin classes
 
     #region Converters
-    public class DockPanelSkinConverter : ExpandableObjectConverter {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-            if (destinationType == typeof(DockPanelSkin))
-                return true;
 
-            return base.CanConvertTo(context, destinationType);
+    public class DockPanelSkinConverter : ExpandableObjectConverter {
+
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
+            return destinationType == typeof(DockPanelSkin) || base.CanConvertTo(context, destinationType);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
-            if (destinationType == typeof(String) && value is DockPanelSkin) {
-                return "DockPanelSkin";
-            }
+            if(destinationType == typeof(string) && value is DockPanelSkin) { return "DockPanelSkin"; }
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
 
     public class DockPanelGradientConverter : ExpandableObjectConverter {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-            if (destinationType == typeof(DockPanelGradient))
-                return true;
 
-            return base.CanConvertTo(context, destinationType);
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
+            return destinationType == typeof(DockPanelGradient) || base.CanConvertTo(context, destinationType);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
-            if (destinationType == typeof(String) && value is DockPanelGradient) {
-                return "DockPanelGradient";
-            }
+            if(destinationType == typeof(string) && value is DockPanelGradient) { return "DockPanelGradient"; }
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
 
     public class AutoHideStripConverter : ExpandableObjectConverter {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-            if (destinationType == typeof(AutoHideStripSkin))
-                return true;
 
-            return base.CanConvertTo(context, destinationType);
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
+            return destinationType == typeof(AutoHideStripSkin) || base.CanConvertTo(context, destinationType);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
-            if (destinationType == typeof(String) && value is AutoHideStripSkin) {
-                return "AutoHideStripSkin";
-            }
+            if(destinationType == typeof(string) && value is AutoHideStripSkin) { return "AutoHideStripSkin"; }
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
 
     public class DockPaneStripConverter : ExpandableObjectConverter {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-            if (destinationType == typeof(DockPaneStripSkin))
-                return true;
 
-            return base.CanConvertTo(context, destinationType);
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
+            return destinationType == typeof(DockPaneStripSkin) || base.CanConvertTo(context, destinationType);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
-            if (destinationType == typeof(String) && value is DockPaneStripSkin) {
-                return "DockPaneStripSkin";
-            }
+            if(destinationType == typeof(string) && value is DockPaneStripSkin) { return "DockPaneStripSkin"; }
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
 
     public class DockPaneStripGradientConverter : ExpandableObjectConverter {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-            if (destinationType == typeof(DockPaneStripGradient))
-                return true;
 
-            return base.CanConvertTo(context, destinationType);
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
+            return destinationType == typeof(DockPaneStripGradient) || base.CanConvertTo(context, destinationType);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
-            if (destinationType == typeof(String) && value is DockPaneStripGradient) {
-                return "DockPaneStripGradient";
-            }
+            if(destinationType == typeof(string) && value is DockPaneStripGradient) { return "DockPaneStripGradient"; }
             return base.ConvertTo(context, culture, value, destinationType);
         }
     }
 
     public class DockPaneTabGradientConverter : ExpandableObjectConverter {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
-            if (destinationType == typeof(TabGradient))
-                return true;
 
-            return base.CanConvertTo(context, destinationType);
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) {
+            return destinationType == typeof(TabGradient) || base.CanConvertTo(context, destinationType);
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType) {
-            TabGradient val = value as TabGradient;
-            if (destinationType == typeof(String) && val != null) {
-                return "DockPaneTabGradient";
-            }
-            return base.ConvertTo(context, culture, value, destinationType);
+            return destinationType == typeof(string) && value is TabGradient ? "DockPaneTabGradient" : base.ConvertTo(context, culture, value, destinationType);
         }
     }
-    #endregion
+
+    #endregion Converters
 }

@@ -5,7 +5,6 @@ using System.Windows.Forms;
 namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public static class Win32Helper {
-
         private static readonly bool _isRunningOnMono = Type.GetType("Mono.Runtime") != null;
 
         public static bool IsRunningOnMono { get { return _isRunningOnMono; } }

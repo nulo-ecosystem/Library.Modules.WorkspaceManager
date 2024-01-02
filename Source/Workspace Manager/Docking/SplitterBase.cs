@@ -16,21 +16,20 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             set {
                 SuspendLayout();
                 base.Dock = value;
-
-                if (Dock == DockStyle.Left || Dock == DockStyle.Right)
+                if(Dock == DockStyle.Left || Dock == DockStyle.Right) {
                     Width = SplitterSize;
-                else if (Dock == DockStyle.Top || Dock == DockStyle.Bottom)
+                } else if(Dock == DockStyle.Top || Dock == DockStyle.Bottom) {
                     Height = SplitterSize;
-                else
+                } else {
                     Bounds = Rectangle.Empty;
-
-                if (Dock == DockStyle.Left || Dock == DockStyle.Right)
+                }
+                if(Dock == DockStyle.Left || Dock == DockStyle.Right) {
                     Cursor = Cursors.VSplit;
-                else if (Dock == DockStyle.Top || Dock == DockStyle.Bottom)
+                } else if(Dock == DockStyle.Top || Dock == DockStyle.Bottom) {
                     Cursor = Cursors.HSplit;
-                else
+                } else {
                     Cursor = Cursors.Default;
-
+                }
                 ResumeLayout();
             }
         }
@@ -41,10 +40,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override void OnMouseDown(MouseEventArgs e) {
             base.OnMouseDown(e);
-
-            if (e.Button != MouseButtons.Left)
-                return;
-
+            if(e.Button != MouseButtons.Left) { return; }
             StartDrag();
         }
 
@@ -53,9 +49,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override void WndProc(ref Message m) {
             // eat the WM_MOUSEACTIVATE message
-            if (m.Msg == (int)Win32.Msgs.WM_MOUSEACTIVATE)
-                return;
-
+            if(m.Msg == (int)Win32.Msgs.WM_MOUSEACTIVATE) { return; }
             base.WndProc(ref m);
         }
     }

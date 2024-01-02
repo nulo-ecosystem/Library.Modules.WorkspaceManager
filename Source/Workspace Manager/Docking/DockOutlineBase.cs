@@ -5,9 +5,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public abstract class DockOutlineBase {
 
-        public DockOutlineBase() {
-            Init();
-        }
+        public DockOutlineBase() => Init();
 
         private void Init() {
             SetValues(Rectangle.Empty, null, DockStyle.None, -1);
@@ -15,50 +13,55 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private Rectangle m_oldFloatWindowBounds;
+
         protected Rectangle OldFloatWindowBounds {
             get { return m_oldFloatWindowBounds; }
         }
 
         private Control m_oldDockTo;
+
         protected Control OldDockTo {
             get { return m_oldDockTo; }
         }
 
         private DockStyle m_oldDock;
+
         protected DockStyle OldDock {
             get { return m_oldDock; }
         }
 
         private int m_oldContentIndex;
+
         protected int OldContentIndex {
             get { return m_oldContentIndex; }
         }
 
         protected bool SameAsOldValue {
             get {
-                return FloatWindowBounds == OldFloatWindowBounds &&
-                    DockTo == OldDockTo &&
-                    Dock == OldDock &&
-                    ContentIndex == OldContentIndex;
+                return FloatWindowBounds == OldFloatWindowBounds && DockTo == OldDockTo && Dock == OldDock && ContentIndex == OldContentIndex;
             }
         }
 
         private Rectangle m_floatWindowBounds;
+
         public Rectangle FloatWindowBounds {
             get { return m_floatWindowBounds; }
         }
 
         private Control m_dockTo;
+
         public Control DockTo {
             get { return m_dockTo; }
         }
 
         private DockStyle m_dock;
+
         public DockStyle Dock {
             get { return m_dock; }
         }
 
         private int m_contentIndex;
+
         public int ContentIndex {
             get { return m_contentIndex; }
         }
@@ -68,6 +71,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private bool m_flagTestDrop = false;
+
         public bool FlagTestDrop {
             get { return m_flagTestDrop; }
             set { m_flagTestDrop = value; }
@@ -93,11 +97,9 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private void TestChange() {
-            if (m_floatWindowBounds != m_oldFloatWindowBounds ||
-                m_dockTo != m_oldDockTo ||
-                m_dock != m_oldDock ||
-                m_contentIndex != m_oldContentIndex)
+            if(m_floatWindowBounds != m_oldFloatWindowBounds || m_dockTo != m_oldDockTo || m_dock != m_oldDock || m_contentIndex != m_oldContentIndex) {
                 OnShow();
+            }
         }
 
         public void Show() {

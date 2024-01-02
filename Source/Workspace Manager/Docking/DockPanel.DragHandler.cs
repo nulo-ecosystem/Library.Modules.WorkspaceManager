@@ -13,6 +13,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         ///   2. Override the OnDragging and OnEndDrag methods.
         /// </summary>
         public abstract class DragHandlerBase : NativeWindow, IMessageFilter {
+
             protected DragHandlerBase() {
             }
 
@@ -21,29 +22,25 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             }
 
             private Point m_startMousePosition = Point.Empty;
+
             protected Point StartMousePosition {
                 get { return m_startMousePosition; }
                 private set { m_startMousePosition = value; }
             }
 
             protected bool BeginDrag() {
-                if (DragControl == null)
-                    return false;
-
+                if(DragControl == null) { return false; }
                 StartMousePosition = Control.MousePosition;
-
-                if (!Win32Helper.IsRunningOnMono) {
-                    if (!NativeMethods.DragDetect(DragControl.Handle, StartMousePosition)) {
+                if(!Win32Helper.IsRunningOnMono) {
+                    if(!NativeMethods.DragDetect(DragControl.Handle, StartMousePosition)) {
                         return false;
                     }
                 }
-
                 DragControl.FindForm().Capture = true;
                 AssignHandle(DragControl.FindForm().Handle);
-                if (PatchController.EnableActiveXFix == false) {
+                if(PatchController.EnableActiveXFix == false) {
                     Application.AddMessageFilter(this);
                 }
-
                 return true;
             }
 
@@ -53,63 +50,59 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
             private void EndDrag(bool abort) {
                 ReleaseHandle();
-
-                if (PatchController.EnableActiveXFix == false) {
+                if(PatchController.EnableActiveXFix == false) {
                     Application.RemoveMessageFilter(this);
                 }
-
                 DragControl.FindForm().Capture = false;
-
                 OnEndDrag(abort);
             }
 
             bool IMessageFilter.PreFilterMessage(ref Message m) {
-                if (PatchController.EnableActiveXFix == false) {
-                    if (m.Msg == (int)Win32.Msgs.WM_MOUSEMOVE)
+                if(PatchController.EnableActiveXFix == false) {
+                    if(m.Msg == (int)Win32.Msgs.WM_MOUSEMOVE) {
                         OnDragging();
-                    else if (m.Msg == (int)Win32.Msgs.WM_LBUTTONUP)
+                    } else if(m.Msg == (int)Win32.Msgs.WM_LBUTTONUP) {
                         EndDrag(false);
-                    else if (m.Msg == (int)Win32.Msgs.WM_CAPTURECHANGED)
+                    } else if(m.Msg == (int)Win32.Msgs.WM_CAPTURECHANGED) {
                         EndDrag(!Win32Helper.IsRunningOnMono);
-                    else if (m.Msg == (int)Win32.Msgs.WM_KEYDOWN && (int)m.WParam == (int)Keys.Escape)
+                    } else if(m.Msg == (int)Win32.Msgs.WM_KEYDOWN && (int)m.WParam == (int)Keys.Escape) {
                         EndDrag(true);
+                    }
                 }
-
                 return OnPreFilterMessage(ref m);
             }
 
             protected virtual bool OnPreFilterMessage(ref Message m) {
-                if (PatchController.EnableActiveXFix == true) {
-                    if (m.Msg == (int)Win32.Msgs.WM_MOUSEMOVE)
+                if(PatchController.EnableActiveXFix == true) {
+                    if(m.Msg == (int)Win32.Msgs.WM_MOUSEMOVE) {
                         OnDragging();
-                    else if (m.Msg == (int)Win32.Msgs.WM_LBUTTONUP)
+                    } else if(m.Msg == (int)Win32.Msgs.WM_LBUTTONUP) {
                         EndDrag(false);
-                    else if (m.Msg == (int)Win32.Msgs.WM_CAPTURECHANGED)
+                    } else if(m.Msg == (int)Win32.Msgs.WM_CAPTURECHANGED) {
                         EndDrag(!Win32Helper.IsRunningOnMono);
-                    else if (m.Msg == (int)Win32.Msgs.WM_KEYDOWN && (int)m.WParam == (int)Keys.Escape)
+                    } else if(m.Msg == (int)Win32.Msgs.WM_KEYDOWN && (int)m.WParam == (int)Keys.Escape) {
                         EndDrag(true);
+                    }
                 }
-
                 return false;
             }
 
-            protected sealed override void WndProc(ref Message m) {
-                if (PatchController.EnableActiveXFix == true) {
+            protected override sealed void WndProc(ref Message m) {
+                if(PatchController.EnableActiveXFix == true) {
                     //Manually pre-filter message, rather than using
                     //Application.AddMessageFilter(this).  This fixes
                     //the docker control for ActiveX objects
-                    this.OnPreFilterMessage(ref m);
+                    _ = this.OnPreFilterMessage(ref m);
                 }
-
-                if (m.Msg == (int)Win32.Msgs.WM_CANCELMODE || m.Msg == (int)Win32.Msgs.WM_CAPTURECHANGED)
+                if(m.Msg == (int)Win32.Msgs.WM_CANCELMODE || m.Msg == (int)Win32.Msgs.WM_CAPTURECHANGED) {
                     EndDrag(true);
-
+                }
                 base.WndProc(ref m);
             }
         }
 
         public abstract class DragHandler : DragHandlerBase {
-            private DockPanel m_dockPanel;
+            private readonly DockPanel m_dockPanel;
 
             protected DragHandler(DockPanel dockPanel) {
                 m_dockPanel = dockPanel;
@@ -120,20 +113,20 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             }
 
             private IDragSource m_dragSource;
+
             protected IDragSource DragSource {
                 get { return m_dragSource; }
                 set { m_dragSource = value; }
             }
 
-            protected sealed override Control DragControl {
-                get { return DragSource == null ? null : DragSource.DragControl; }
+            protected override sealed Control DragControl {
+                get { return DragSource?.DragControl; }
             }
 
-            protected sealed override bool OnPreFilterMessage(ref Message m) {
-                if ((m.Msg == (int)Win32.Msgs.WM_KEYDOWN || m.Msg == (int)Win32.Msgs.WM_KEYUP) &&
-                    ((int)m.WParam == (int)Keys.ControlKey || (int)m.WParam == (int)Keys.ShiftKey))
+            protected override sealed bool OnPreFilterMessage(ref Message m) {
+                if((m.Msg == (int)Win32.Msgs.WM_KEYDOWN || m.Msg == (int)Win32.Msgs.WM_KEYUP) && ((int)m.WParam == (int)Keys.ControlKey || (int)m.WParam == (int)Keys.ShiftKey)) {
                     OnDragging();
-
+                }
                 return base.OnPreFilterMessage(ref m);
             }
         }

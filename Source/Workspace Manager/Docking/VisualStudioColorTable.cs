@@ -3,13 +3,8 @@ using System.Windows.Forms;
 
 namespace Nulo.Modules.WorkspaceManager.Docking {
 
-    public class VisualStudioColorTable : ProfessionalColorTable {
-
-        private DockPanelColorPalette _palette;
-
-        public VisualStudioColorTable(DockPanelColorPalette palette) {
-            _palette = palette;
-        }
+    public class VisualStudioColorTable(DockPanelColorPalette palette) : ProfessionalColorTable {
+        private readonly DockPanelColorPalette _palette = palette;
 
         public Color ButtonCheckedHoveredBorder {
             get { return _palette.CommandBarToolbarButtonCheckedHovered.Border; }
@@ -203,6 +198,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         public override Color StatusStripGradientBegin {
             get { return _palette.MainWindowStatusBarDefault.Background; }
         }
+
         public override Color StatusStripGradientEnd {
             get { return _palette.MainWindowStatusBarDefault.Background; }
         }
@@ -247,9 +243,11 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         public override Color OverflowButtonGradientBegin {
             get { return _palette.CommandBarToolbarDefault.OverflowButtonBackground; }
         }
+
         public override Color OverflowButtonGradientMiddle {
             get { return _palette.CommandBarToolbarDefault.OverflowButtonBackground; }
         }
+
         public override Color OverflowButtonGradientEnd {
             get { return _palette.CommandBarToolbarDefault.OverflowButtonBackground; }
         }

@@ -21,14 +21,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private class DefaultAutoHideStripFactory : DockPanelExtender.IAutoHideStripFactory {
+
             public AutoHideStripBase CreateAutoHideStrip(DockPanel panel) {
                 return new DefaultAutoHideStripBase(panel);
             }
 
-            internal class DefaultAutoHideStripBase : AutoHideStripBase {
-                public DefaultAutoHideStripBase(DockPanel panel)
-                    : base(panel) {
-                }
+            internal class DefaultAutoHideStripBase(DockPanel panel) : AutoHideStripBase(panel) {
 
                 protected override Rectangle GetTabBounds(Tab tab) {
                     return Rectangle.Empty;
@@ -42,46 +40,46 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
                     return 0;
                 }
             }
-
         }
 
         private class DefaultAutoHideWindowFactory : DockPanelExtender.IAutoHideWindowFactory {
+
             public DockPanel.AutoHideWindowControl CreateAutoHideWindow(DockPanel panel) {
                 return new DefaultAutoHideWindowControl(panel);
             }
 
-            private class DefaultAutoHideWindowControl : DockPanel.AutoHideWindowControl {
-                public DefaultAutoHideWindowControl(DockPanel dockPanel) : base(dockPanel) {
-                }
+            private class DefaultAutoHideWindowControl(DockPanel dockPanel) : DockPanel.AutoHideWindowControl(dockPanel) {
             }
         }
 
         private class DefaultWindowSplitterControlFactory : DockPanelExtender.IWindowSplitterControlFactory {
+
             public SplitterBase CreateSplitterControl(ISplitterHost host) {
                 return new SplitterBase();
             }
         }
 
         private class DefaultDockWindowFactory : DockPanelExtender.IDockWindowFactory {
+
             public DockWindow CreateDockWindow(DockPanel dockPanel, DockState dockState) {
                 return new DockWindow(dockPanel, dockState);
             }
         }
 
         private class DefaultDockPaneSplitterControlFactory : DockPanelExtender.IDockPaneSplitterControlFactory {
+
             public DockPane.SplitterControlBase CreateSplitterControl(DockPane pane) {
                 return new DockPane.SplitterControlBase(pane);
             }
         }
 
         private class DefaultDockPaneCaptionFactory : DockPanelExtender.IDockPaneCaptionFactory {
+
             public DockPaneCaptionBase CreateDockPaneCaption(DockPane pane) {
                 return new DefaultDockPaneCaption(pane);
             }
 
-            private class DefaultDockPaneCaption : DockPaneCaptionBase {
-                public DefaultDockPaneCaption(DockPane pane) : base(pane) {
-                }
+            private class DefaultDockPaneCaption(DockPane pane) : DockPaneCaptionBase(pane) {
 
                 protected internal override int MeasureHeight() {
                     return 0;
@@ -90,13 +88,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private class DefaultDockPaneStripFactory : DockPanelExtender.IDockPaneStripFactory {
+
             public DockPaneStripBase CreateDockPaneStrip(DockPane pane) {
                 return new DefaultDockPaneStrip(pane);
             }
 
-            private class DefaultDockPaneStrip : DockPaneStripBase {
-                public DefaultDockPaneStrip(DockPane pane) : base(pane) {
-                }
+            private class DefaultDockPaneStrip(DockPane pane) : DockPaneStripBase(pane) {
 
                 public override GraphicsPath GetOutline(int index) {
                     return new GraphicsPath();
@@ -120,17 +117,20 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private class DefaultDockIndicatorFactory : DockPanelExtender.IDockIndicatorFactory {
+
             public DockPanel.DockDragHandler.DockIndicator CreateDockIndicator(DockPanel.DockDragHandler dockDragHandler) {
                 return new DockPanel.DockDragHandler.DockIndicator(dockDragHandler);
             }
         }
 
         private class DefaultDockOutlineFactory : DockPanelExtender.IDockOutlineFactory {
+
             public DockOutlineBase CreateDockOutline() {
                 return new DefaultDockOutline();
             }
 
             private class DefaultDockOutline : DockOutlineBase {
+
                 protected override void OnClose() {
                 }
 
@@ -140,16 +140,13 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         private class DefaultPaneIndicatorFactory : DockPanelExtender.IPaneIndicatorFactory {
+
             public DockPanel.IPaneIndicator CreatePaneIndicator(ThemeBase theme) {
                 return new DefaultPaneIndicator(theme);
             }
 
-            private class DefaultPaneIndicator : DockPanel.IPaneIndicator {
-                private ThemeBase theme;
-
-                public DefaultPaneIndicator(ThemeBase theme) {
-                    this.theme = theme;
-                }
+            private class DefaultPaneIndicator(ThemeBase theme) : DockPanel.IPaneIndicator {
+                private readonly ThemeBase theme = theme;
 
                 public Point Location { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
                 public bool Visible { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
@@ -172,25 +169,19 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
                 public DockStyle Status { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-                public DockStyle HitTest(Point pt) {
-                    throw new System.NotImplementedException();
-                }
+                public DockStyle HitTest(Point pt) => throw new System.NotImplementedException();
             }
         }
 
         private class DefaultPanelIndicatorFactory : DockPanelExtender.IPanelIndicatorFactory {
+
             public DockPanel.IPanelIndicator CreatePanelIndicator(DockStyle style, ThemeBase theme) {
                 return new DefaultPanelIndicator(style, theme);
             }
 
-            private class DefaultPanelIndicator : DockPanel.IPanelIndicator {
-                private DockStyle style;
-                private ThemeBase theme;
-
-                public DefaultPanelIndicator(DockStyle style, ThemeBase theme) {
-                    this.style = style;
-                    this.theme = theme;
-                }
+            private class DefaultPanelIndicator(DockStyle style, ThemeBase theme) : DockPanel.IPanelIndicator {
+                private readonly DockStyle style = style;
+                private readonly ThemeBase theme = theme;
 
                 public Point Location { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
                 public bool Visible { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
@@ -203,9 +194,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
                 public DockStyle Status { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
-                public DockStyle HitTest(Point pt) {
-                    throw new System.NotImplementedException();
-                }
+                public DockStyle HitTest(Point pt) => throw new System.NotImplementedException();
             }
         }
     }

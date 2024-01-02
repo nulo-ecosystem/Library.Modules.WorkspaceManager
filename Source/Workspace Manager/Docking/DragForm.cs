@@ -24,6 +24,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
     //  1. Enabled = false;
     //  2. WM_NCHITTEST returns HTTRANSPARENT
     public class DragForm : Form {
+
         public DragForm() {
             FormBorderStyle = FormBorderStyle.None;
             ShowInTaskbar = false;
@@ -31,7 +32,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
             Enabled = false;
             TopMost = true;
             SizeChanged += (sender, args) => {
-                if (BackgroundColor != null) {
+                if(BackgroundColor != null) {
                     Invalidate();
                 }
             };
@@ -48,7 +49,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
         }
 
         protected override void WndProc(ref Message m) {
-            if (m.Msg == (int)Win32.Msgs.WM_NCHITTEST) {
+            if(m.Msg == (int)Win32.Msgs.WM_NCHITTEST) {
                 m.Result = (IntPtr)Win32.HitTest.HTTRANSPARENT;
                 return;
             }
@@ -58,12 +59,12 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         protected override void OnPaint(PaintEventArgs e) {
             base.OnPaint(e);
-            if (BackgroundColor == null) {
+            if(BackgroundColor == null) {
                 return;
             }
 
             var all = ClientRectangle;
-            if (all.Width > 10 && all.Height > 10) {
+            if(all.Width > 10 && all.Height > 10) {
                 var newLocation = new Point(all.Location.X + 5, all.Location.Y + 5);
                 var newSize = new Size(all.Width - 10, all.Height - 10);
                 var center = new Rectangle(newLocation, newSize);
@@ -78,9 +79,7 @@ namespace Nulo.Modules.WorkspaceManager.Docking {
 
         public virtual void Show(bool bActivate) {
             Show();
-
-            if (bActivate)
-                Activate();
+            if(bActivate) { Activate(); }
         }
     }
 }
