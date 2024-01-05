@@ -1,8 +1,4 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 

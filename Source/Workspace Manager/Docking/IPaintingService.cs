@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public interface IPaintingService {
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public class DockContent : Form, IDockContent {
 

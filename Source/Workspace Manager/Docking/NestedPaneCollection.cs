@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Drawing;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public sealed class NestedPaneCollection : ReadOnlyCollection<DockPane> {
         private readonly INestedPanesContainer m_container;

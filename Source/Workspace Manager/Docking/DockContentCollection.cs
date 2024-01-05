@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public class DockContentCollection : ReadOnlyCollection<IDockContent> {
         private static readonly List<IDockContent> _emptyList = new(0);

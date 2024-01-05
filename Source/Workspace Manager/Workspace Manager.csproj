@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Nulo.Modules.WorkspaceManager</RootNamespace>
-    <ImplicitUsings>disable</ImplicitUsings>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <AssemblyName>lib.wsm</AssemblyName>
@@ -76,6 +76,26 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="System.Collections" />
+    <Using Include="System.Collections.ObjectModel" />
+    <Using Include="System.ComponentModel" />
+    <Using Include="System.ComponentModel.Design" />
+    <Using Include="System.Diagnostics" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Drawing.Design" />
+    <Using Include="System.Drawing.Drawing2D" />
+    <Using Include="System.Drawing.Imaging" />
+    <Using Include="System.Globalization" />
+    <Using Include="System.IO.Compression" />
+    <Using Include="System.Resources" />
+    <Using Include="System.Runtime.InteropServices" />
+    <Using Include="System.Text" />
+    <Using Include="System.Windows.Forms.Design" />
+    <Using Include="System.Xml" />
+    <Using Include="System.Xml.Linq" />
   </ItemGroup>
 
 </Project>

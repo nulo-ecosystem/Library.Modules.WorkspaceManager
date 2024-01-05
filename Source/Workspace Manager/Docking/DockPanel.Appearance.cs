@@ -1,8 +1,5 @@
 ﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
-    using System;
-    using System.ComponentModel;
-
     public partial class DockPanel {
 
         [LocalizedCategory("Category_Docking")]

@@ -1,8 +1,4 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
 
 namespace Nulo.Modules.WorkspaceManager {
 
@@ -303,7 +299,7 @@ namespace Nulo.Modules.WorkspaceManager {
 
         private Texts texts = new();
 
-        public void UpdateTexts() {
+        public void TextsUpdate() {
             var texts = workspaceData.GetTexts();
             texts ??= new Texts();
             this.texts = texts;

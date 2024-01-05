@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     #region DockPanelSkin classes
 

@@ -1,11 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Security.Permissions;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     [ToolboxItem(false)]
     public partial class DockPane : UserControl, IDockDragSource {

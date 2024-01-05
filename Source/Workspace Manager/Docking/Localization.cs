@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     [AttributeUsage(AttributeTargets.All)]
     internal sealed class LocalizedDescriptionAttribute(string key) : DescriptionAttribute(key) {

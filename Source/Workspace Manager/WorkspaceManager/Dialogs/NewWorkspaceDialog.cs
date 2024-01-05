@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager {
+﻿namespace Nulo.Modules.WorkspaceManager {
 
     internal partial class NewWorkspaceDialog : Form {
         public string WorkspaceName { get; private set; }

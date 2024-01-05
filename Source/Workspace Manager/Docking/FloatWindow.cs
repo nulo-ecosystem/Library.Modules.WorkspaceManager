@@ -1,10 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Security.Permissions;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public class FloatWindow : Form, INestedPanesContainer, IDockDragSource {
         private NestedPaneCollection m_nestedPanes;

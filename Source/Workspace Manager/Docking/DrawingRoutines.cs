@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Drawing.Drawing2D;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public static class DrawingRoutines {
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public static class Win32Helper {
         private static readonly bool _isRunningOnMono = Type.GetType("Mono.Runtime") != null;

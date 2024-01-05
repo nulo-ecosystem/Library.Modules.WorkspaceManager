@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     [ProvideProperty("EnableVSStyle", typeof(ToolStrip))]
     public partial class ToolStripExtender : Component, IExtenderProvider {

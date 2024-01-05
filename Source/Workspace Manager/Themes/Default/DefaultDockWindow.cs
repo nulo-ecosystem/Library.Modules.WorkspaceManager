@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Drawing;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     /// <summary>
     /// Dock window of Visual Studio 2012 Light theme.

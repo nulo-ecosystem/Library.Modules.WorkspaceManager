@@ -27,7 +27,7 @@ namespace Nulo.Pages {
             style.SetStyle(ToolStrip);
             style.SetStyle(StatusStrip);
 
-            Program.WorkspaceManager.UpdateTexts();
+            Program.WorkspaceManager.TextsUpdate();
         }
 
         private void MenuStripFileUpdate_Click(object sender, EventArgs e) => Program.WorkspaceManager.UpdateWorkspace();

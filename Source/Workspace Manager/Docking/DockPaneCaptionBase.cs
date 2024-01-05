@@ -1,8 +1,4 @@
-﻿using System.Drawing;
-using System.Security.Permissions;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public abstract class DockPaneCaptionBase : Control {
 

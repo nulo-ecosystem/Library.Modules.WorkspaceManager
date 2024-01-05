@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager.Themes.Default {
+﻿namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 
     using Docking;
     using System.ComponentModel;

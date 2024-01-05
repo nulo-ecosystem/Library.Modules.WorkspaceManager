@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Forms;
-
-namespace Nulo.Modules.WorkspaceManager {
+﻿namespace Nulo.Modules.WorkspaceManager {
 
     internal partial class DeleteWorkspaceDialog : Form {
         public int IndexWorkspace { get; private set; }

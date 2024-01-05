@@ -1,7 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.Windows.Forms;
-using static Nulo.Modules.WorkspaceManager.Docking.DockPanel;
+﻿using static Nulo.Modules.WorkspaceManager.Docking.DockPanel;
 using static Nulo.Modules.WorkspaceManager.Docking.DockPanel.DockDragHandler;
 
 namespace Nulo.Modules.WorkspaceManager.Docking {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     [Flags]
     [Serializable]

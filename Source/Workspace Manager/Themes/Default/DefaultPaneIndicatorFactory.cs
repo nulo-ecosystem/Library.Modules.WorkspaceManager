@@ -1,8 +1,4 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 
 namespace Nulo.Modules.WorkspaceManager.Themes.Default {
 

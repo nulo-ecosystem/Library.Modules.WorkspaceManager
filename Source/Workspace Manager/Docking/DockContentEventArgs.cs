@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Nulo.Modules.WorkspaceManager.Docking {
+﻿namespace Nulo.Modules.WorkspaceManager.Docking {
 
     public class DockContentEventArgs(IDockContent content) : EventArgs {
         private readonly IDockContent m_content = content;
