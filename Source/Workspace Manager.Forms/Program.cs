@@ -1,7 +1,5 @@
 using Nulo.Modules.WorkspaceManager;
 using Nulo.Pages;
-using System;
-using System.Windows.Forms;
 
 namespace Nulo {
 

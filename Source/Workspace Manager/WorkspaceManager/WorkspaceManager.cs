@@ -62,7 +62,7 @@ namespace Nulo.Modules.WorkspaceManager {
 
                 DockPanel.LoadFromXml(xmlContent, GetInstanceByPanelType);
 
-                UpdateWorkspace();
+                WorkspaceUpdate();
             }
         }
 
@@ -133,7 +133,7 @@ namespace Nulo.Modules.WorkspaceManager {
             }
         }
 
-        public void UpdateWorkspace() {
+        public void WorkspaceUpdate() {
             foreach(var panel in DockPanel.Contents) { panel.UpdateContent(); }
         }
 

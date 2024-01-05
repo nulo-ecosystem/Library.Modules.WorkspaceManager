@@ -1,6 +1,4 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
-using System;
-using System.Collections.Generic;
 
 namespace Nulo.Modules.WorkspaceManager {
 

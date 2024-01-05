@@ -1,7 +1,5 @@
 using Nulo.Panels;
 using Nulo.Modules.WorkspaceManager.Docking;
-using System.Windows.Forms;
-using System;
 
 namespace Nulo.Pages {
 
@@ -30,7 +28,7 @@ namespace Nulo.Pages {
             Program.WorkspaceManager.TextsUpdate();
         }
 
-        private void MenuStripFileUpdate_Click(object sender, EventArgs e) => Program.WorkspaceManager.UpdateWorkspace();
+        private void MenuStripFileUpdate_Click(object sender, EventArgs e) => Program.WorkspaceManager.WorkspaceUpdate();
 
         private void MenuStripFileExit_Click(object sender, EventArgs e) => Application.Exit();
 

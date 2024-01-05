@@ -1,5 +1,4 @@
 ﻿using Nulo.Modules.WorkspaceManager.Docking;
-using System;
 
 namespace Nulo.Panels {
 
