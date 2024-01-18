@@ -199,23 +199,25 @@ namespace Nulo.Modules.WorkspaceManager {
         private ToolStripMenuItem menuStripWindowWorkspaces;
 
         public void SetMenuStripWorkspaces(ToolStripMenuItem menuStripWindow, ToolStripMenuItem menuStripWindowWorkspaces) {
-            this.menuStripWindow = menuStripWindow;
-            this.menuStripWindowWorkspaces = menuStripWindowWorkspaces;
+            if(menuStripWindow is not null && menuStripWindowWorkspaces is not null) {
+                this.menuStripWindow = menuStripWindow;
+                this.menuStripWindowWorkspaces = menuStripWindowWorkspaces;
 
-            defaultWorkspaces ??= workspaceData.LoadAllDefaultWorkspaces();
-            userWorkspaces ??= workspaceData.LoadAllUserWorkspaces();
-            currentPanels ??= [];
+                defaultWorkspaces ??= workspaceData.LoadAllDefaultWorkspaces();
+                userWorkspaces ??= workspaceData.LoadAllUserWorkspaces();
+                currentPanels ??= [];
 
-            if(menuItemSaveWorkspace is null) {
-                menuItemSaveWorkspace = new ToolStripMenuItem();
-                menuItemSaveWorkspace.Click += ItemNewWorkspace_Click;
+                if(menuItemSaveWorkspace is null) {
+                    menuItemSaveWorkspace = new ToolStripMenuItem();
+                    menuItemSaveWorkspace.Click += ItemNewWorkspace_Click;
+                }
+                if(menuItemDeleteWorkspace is null) {
+                    menuItemDeleteWorkspace = new ToolStripMenuItem();
+                    menuItemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
+                }
+
+                this.menuStripWindow.DropDownOpening += MenuStripWorkspaces_DropDownOpening;
             }
-            if(menuItemDeleteWorkspace is null) {
-                menuItemDeleteWorkspace = new ToolStripMenuItem();
-                menuItemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
-            }
-
-            this.menuStripWindow.DropDownOpening += MenuStripWorkspaces_DropDownOpening;
         }
 
         private void MenuStripWorkspaces_DropDownOpening(object sender, EventArgs e) {

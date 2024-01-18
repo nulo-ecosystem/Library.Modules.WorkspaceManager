@@ -11,7 +11,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Nulo.Modules.WorkspaceManager</PackageId>
     <Title>Workspace Manager</Title>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>kastney</Authors>
     <Company>Nulo Ecosystem</Company>
     <Product>Workspace Manager ®</Product>
@@ -39,12 +39,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>portable</DebugType>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>portable</DebugType>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
 
