@@ -147,22 +147,24 @@ namespace Nulo.Modules.WorkspaceManager {
         private ToolStripDropDownButton toolStripWorkspaces;
 
         public void SetToolStripWorkspaces(ToolStripDropDownButton toolStripWorkspaces) {
-            this.toolStripWorkspaces = toolStripWorkspaces;
+            if(toolStripWorkspaces is not null) {
+                this.toolStripWorkspaces = toolStripWorkspaces;
 
-            defaultWorkspaces ??= workspaceData.LoadAllDefaultWorkspaces();
-            userWorkspaces ??= workspaceData.LoadAllUserWorkspaces();
-            currentPanels ??= [];
+                defaultWorkspaces ??= workspaceData.LoadAllDefaultWorkspaces();
+                userWorkspaces ??= workspaceData.LoadAllUserWorkspaces();
+                currentPanels ??= [];
 
-            if(menuItemSaveWorkspace is null) {
-                menuItemSaveWorkspace = new ToolStripMenuItem();
-                menuItemSaveWorkspace.Click += ItemNewWorkspace_Click;
+                if(menuItemSaveWorkspace is null) {
+                    menuItemSaveWorkspace = new ToolStripMenuItem();
+                    menuItemSaveWorkspace.Click += ItemNewWorkspace_Click;
+                }
+                if(menuItemDeleteWorkspace is null) {
+                    menuItemDeleteWorkspace = new ToolStripMenuItem();
+                    menuItemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
+                }
+
+                this.toolStripWorkspaces.DropDownOpening += ToolStripWorksoaces_DropDownOpening;
             }
-            if(menuItemDeleteWorkspace is null) {
-                menuItemDeleteWorkspace = new ToolStripMenuItem();
-                menuItemDeleteWorkspace.Click += ItemDeleteWorkspace_Click;
-            }
-
-            this.toolStripWorkspaces.DropDownOpening += ToolStripWorksoaces_DropDownOpening;
         }
 
         private void ToolStripWorksoaces_DropDownOpening(object sender, EventArgs e) {
