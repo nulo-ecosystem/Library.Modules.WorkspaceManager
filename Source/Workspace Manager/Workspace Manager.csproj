@@ -64,6 +64,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Nulo.Modules.ControlKit.Buttons" Version="1.0.0-alpha" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Themes\Default\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

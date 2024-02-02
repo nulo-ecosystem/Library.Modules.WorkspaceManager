@@ -23,79 +23,84 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            SaveButton = new System.Windows.Forms.Button();
-            WorkspaceNameLabel = new System.Windows.Forms.Label();
-            WorkspaceNameText = new System.Windows.Forms.TextBox();
-            MessageErrorLabel = new System.Windows.Forms.Label();
+            WorkspaceNameLabel = new Label();
+            WorkspaceNameText = new TextBox();
+            MessageErrorLabel = new Label();
+            SaveButton = new ControlKit.Buttons.SmartPrimaryButton();
             SuspendLayout();
-            // 
-            // SaveButton
-            // 
-            SaveButton.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            SaveButton.Location = new System.Drawing.Point(436, 52);
-            SaveButton.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            SaveButton.Name = "SaveButton";
-            SaveButton.Size = new System.Drawing.Size(130, 35);
-            SaveButton.TabIndex = 1;
-            SaveButton.UseVisualStyleBackColor = true;
-            SaveButton.Click += SaveButton_Click;
             // 
             // WorkspaceNameLabel
             // 
-            WorkspaceNameLabel.Location = new System.Drawing.Point(12, 13);
+            WorkspaceNameLabel.Location = new Point(12, 30);
             WorkspaceNameLabel.Name = "WorkspaceNameLabel";
-            WorkspaceNameLabel.Size = new System.Drawing.Size(111, 31);
+            WorkspaceNameLabel.Size = new Size(111, 31);
             WorkspaceNameLabel.TabIndex = 2;
-            WorkspaceNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            WorkspaceNameLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
             // WorkspaceNameText
             // 
-            WorkspaceNameText.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            WorkspaceNameText.Location = new System.Drawing.Point(129, 13);
-            WorkspaceNameText.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            WorkspaceNameText.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            WorkspaceNameText.Location = new Point(129, 30);
+            WorkspaceNameText.Margin = new Padding(3, 4, 3, 4);
             WorkspaceNameText.Name = "WorkspaceNameText";
-            WorkspaceNameText.Size = new System.Drawing.Size(437, 31);
+            WorkspaceNameText.Size = new Size(487, 31);
             WorkspaceNameText.TabIndex = 0;
             WorkspaceNameText.TextChanged += WorkspaceNameText_TextChanged;
             WorkspaceNameText.KeyDown += WorkspaceNameText_KeyDown;
             // 
             // MessageErrorLabel
             // 
-            MessageErrorLabel.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            MessageErrorLabel.ForeColor = System.Drawing.Color.Red;
-            MessageErrorLabel.Location = new System.Drawing.Point(12, 52);
+            MessageErrorLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            MessageErrorLabel.ForeColor = Color.Red;
+            MessageErrorLabel.Location = new Point(12, 95);
             MessageErrorLabel.Name = "MessageErrorLabel";
-            MessageErrorLabel.Size = new System.Drawing.Size(418, 35);
+            MessageErrorLabel.Size = new Size(438, 35);
             MessageErrorLabel.TabIndex = 3;
-            MessageErrorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            MessageErrorLabel.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // SaveButton
+            // 
+            SaveButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            SaveButton.BackColor = SystemColors.Highlight;
+            SaveButton.BorderRadius = 20;
+            SaveButton.DisabledBackColor = Color.FromArgb(132, 179, 220);
+            SaveButton.DisabledForeColor = Color.LightCyan;
+            SaveButton.FlatAppearance.BorderSize = 0;
+            SaveButton.FlatStyle = FlatStyle.Flat;
+            SaveButton.ForeColor = Color.White;
+            SaveButton.Location = new Point(456, 92);
+            SaveButton.Name = "SaveButton";
+            SaveButton.Size = new Size(160, 40);
+            SaveButton.TabIndex = 4;
+            SaveButton.UseVisualStyleBackColor = false;
+            SaveButton.Click += SaveButton_Click;
             // 
             // NewWorkspaceDialog
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            BackColor = System.Drawing.SystemColors.Window;
-            ClientSize = new System.Drawing.Size(578, 99);
-            Controls.Add(MessageErrorLabel);
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Window;
+            ClientSize = new Size(628, 144);
             Controls.Add(SaveButton);
+            Controls.Add(MessageErrorLabel);
             Controls.Add(WorkspaceNameLabel);
             Controls.Add(WorkspaceNameText);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "NewWorkspaceDialog";
             ShowIcon = false;
             ShowInTaskbar = false;
-            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterScreen;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label WorkspaceNameLabel;
         private System.Windows.Forms.TextBox WorkspaceNameText;
         private System.Windows.Forms.Label MessageErrorLabel;
+        private ControlKit.Buttons.SmartPrimaryButton SaveButton;
     }
 }

@@ -120,14 +120,14 @@ namespace Nulo.Modules.WorkspaceManager {
         }
 
         private void ItemNewWorkspace_Click(object sender, EventArgs e) {
-            using var dialog = new NewWorkspaceDialog(userWorkspaces, defaultWorkspaces, texts);
+            using var dialog = new NewWorkspaceDialog(userWorkspaces, defaultWorkspaces, texts, DockPanel.Theme.DockContentColorPalette);
             if(dialog.ShowDialog() == DialogResult.OK && workspaceData.SaveUserWorkspace(new UserWorkspace { Key = dialog.WorkspaceName, Content = DockPanel.GenerateXml() })) {
                 userWorkspaces.Add(dialog.WorkspaceName);
             }
         }
 
         private void ItemDeleteWorkspace_Click(object sender, EventArgs e) {
-            using var dialog = new DeleteWorkspaceDialog(userWorkspaces, texts);
+            using var dialog = new DeleteWorkspaceDialog(userWorkspaces, texts, DockPanel.Theme.DockContentColorPalette);
             if(dialog.ShowDialog() == DialogResult.OK && workspaceData.DeleteUserWorkspace(new UserWorkspace { Key = userWorkspaces[dialog.IndexWorkspace] })) {
                 userWorkspaces.RemoveAt(dialog.IndexWorkspace);
             }
