@@ -42,7 +42,7 @@ namespace Nulo.Modules.WorkspaceManager {
         }
 
         private void UserWorkspaceOptions_KeyDown(object sender, KeyEventArgs e) {
-            RemoveButton_Click(null, null);
+            if(e.KeyCode == Keys.Enter) { RemoveButton_Click(null, null); }
         }
 
         #endregion Private Methods
