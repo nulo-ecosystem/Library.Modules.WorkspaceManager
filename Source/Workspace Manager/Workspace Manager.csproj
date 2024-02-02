@@ -11,7 +11,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Nulo.Modules.WorkspaceManager</PackageId>
     <Title>Workspace Manager</Title>
-    <Version>1.1.5</Version>
+    <Version>1.1.6</Version>
     <Authors>kastney</Authors>
     <Company>Nulo Ecosystem</Company>
     <Product>Workspace Manager ®</Product>
